@@ -23,41 +23,64 @@ const Index = () => {
     const loop = loopRef.current;
     if (!intro || !loop) return;
 
+    // Pre-buffer the loop video and pre-roll its first frame so it's
+    // already decoded and visually identical when we swap.
     loop.load();
+    let loopReady = false;
+    const markReady = () => { loopReady = true; };
+    loop.addEventListener("canplaythrough", markReady, { once: true });
+    loop.addEventListener("loadeddata", markReady, { once: true });
 
-    let fadeTimer: ReturnType<typeof setInterval> | null = null;
+    // Start the loop muted & invisible immediately, then pause at frame 0
+    // so the GPU already has the first frame textured.
+    const primeLoop = async () => {
+      try {
+        loop.currentTime = 0;
+        await loop.play();
+        loop.pause();
+        loop.currentTime = 0;
+      } catch {}
+    };
+    primeLoop();
 
-    const startCrossfade = () => {
-      intro.pause();
+    let swapped = false;
+    const swap = () => {
+      if (swapped) return;
+      swapped = true;
+      // Bring loop to front and start playing BEFORE changing opacity,
+      // so the first painted frame is identical to intro's last frame.
       loop.style.zIndex = "2";
-      loop.style.opacity = "0";
+      intro.style.zIndex = "1";
       loop.play().catch(() => {});
-      let opacity = 0;
-      fadeTimer = setInterval(() => {
-        opacity = Math.min(opacity + 0.05, 1);
-        loop.style.opacity = String(opacity);
-        intro.style.opacity = String(1 - opacity);
-        if (opacity >= 1) {
-          if (fadeTimer) clearInterval(fadeTimer);
-          intro.style.display = "none";
-          intro.src = "";
-        }
-      }, 30);
+
+      // Wait one rAF to ensure loop has rendered a frame, then crossfade
+      // via CSS transition (smooth, GPU-accelerated).
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          loop.style.transition = "opacity .35s linear";
+          intro.style.transition = "opacity .35s linear";
+          loop.style.opacity = "1";
+          intro.style.opacity = "0";
+          window.setTimeout(() => {
+            intro.style.display = "none";
+            intro.removeAttribute("src");
+            intro.load();
+          }, 450);
+        });
+      });
     };
 
+    // Trigger swap a touch before intro actually ends to hide any
+    // end-of-stream stutter. Fall back to ended/timeupdate.
     const onTime = () => {
-      if (intro.currentTime >= 5) {
+      const dur = isFinite(intro.duration) ? intro.duration : 0;
+      const trigger = dur > 0 ? Math.max(dur - 0.25, 0.1) : 4.85;
+      if (intro.currentTime >= trigger && (loopReady || intro.currentTime >= trigger + 0.5)) {
         intro.removeEventListener("timeupdate", onTime);
-        startCrossfade();
+        swap();
       }
     };
-    const onEnded = () => {
-      intro.pause();
-      loop.style.zIndex = "2";
-      loop.style.opacity = "1";
-      loop.play().catch(() => {});
-      intro.style.display = "none";
-    };
+    const onEnded = () => swap();
 
     intro.addEventListener("timeupdate", onTime);
     intro.addEventListener("ended", onEnded);
@@ -65,7 +88,8 @@ const Index = () => {
     return () => {
       intro.removeEventListener("timeupdate", onTime);
       intro.removeEventListener("ended", onEnded);
-      if (fadeTimer) clearInterval(fadeTimer);
+      loop.removeEventListener("canplaythrough", markReady);
+      loop.removeEventListener("loadeddata", markReady);
     };
   }, []);
 
