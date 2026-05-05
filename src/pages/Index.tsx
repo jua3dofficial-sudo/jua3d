@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import heroDesktop from "@/assets/hero-desktop.png";
 
 const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
