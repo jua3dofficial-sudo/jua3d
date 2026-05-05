@@ -364,6 +364,65 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        {/* DESKTOP & TABLET HERO */}
+        <section className="jua-desktop-hero" aria-label="JUA 3D Print Lab hero">
+          <div className="bg" />
+
+          <div className="topbar">
+            <div className="logo">JUA <span>3D</span> PRINT<br />LAB</div>
+            <a href="#contact" className="cta">GET A<br />QUOTE</a>
+          </div>
+
+          <div className="grid">
+            <div className="left">
+              <div className="toplabel">DESIGN • ENGINEER • PRINT</div>
+              <div>
+                <h1 className="h-jua">JUA 3D</h1>
+                <div className="h-printlab">PRINT LAB</div>
+              </div>
+              <div className="h-sub">
+                PRINTED
+                <span className="h-sub-2">PRECISION</span>
+              </div>
+              <div className="desc">FROM DIGITAL TO PHYSICAL</div>
+              <div className="support">BUILT FOR<br />REAL-WORLD APPLICATIONS</div>
+            </div>
+
+            <div />
+
+            <div className="right">
+              <div className="icon-row">
+                <div className="label">HIGH PRECISION<br />3D PRINTING</div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2 3 7v10l9 5 9-5V7z" /><path d="M3 7l9 5 9-5" /><path d="M12 12v10" />
+                </svg>
+              </div>
+              <div className="icon-row">
+                <div className="label">RAPID<br />PROTOTYPING</div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="14" width="18" height="6" rx="1" /><rect x="3" y="4" width="18" height="6" rx="1" />
+                </svg>
+              </div>
+              <div className="icon-row">
+                <div className="label">CUSTOM<br />MANUFACTURING</div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+                </svg>
+              </div>
+              <div className="icon-row">
+                <div className="label">FUNCTIONAL<br />PARTS</div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" />
+                  <path d="M12 4v3M12 17v3M4 12h3M17 12h3" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div className="bottomline">PROTOTYPES • PRODUCTS • PRODUCTION</div>
+        </section>
       </div>
     </>
   );
