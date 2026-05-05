@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* JUA 3D PRINT LAB - Industrial cinematic palette */
+    --background: 218 65% 7%;          /* deep #060E1C */
+    --foreground: 0 0% 100%;
+
+    --deep: 218 65% 7%;
+    --navy: 215 79% 19%;               /* #0A2A57 */
+    --blue: 213 73% 27%;               /* #123E78 */
+    --mid: 211 71% 35%;                /* #1A5299 */
+    --accent-blue: 211 79% 57%;        /* #3A8FE8 */
+    --dim: 0 0% 100%;                  /* with opacity utilities */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
