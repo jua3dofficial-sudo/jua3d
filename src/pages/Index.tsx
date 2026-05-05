@@ -87,7 +87,8 @@ const Index = () => {
         }
         .jua-hero .hero-video {
           position:absolute; top:0; left:0; width:100%; height:100%;
-          object-fit:cover; object-position:center center;
+          object-fit:contain; object-position:center center;
+          background:#060E1C;
           transition: opacity .8s ease;
         }
         .jua-hero #vid-intro { opacity:1; z-index:1; }
