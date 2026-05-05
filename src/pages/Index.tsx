@@ -1,183 +1,231 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const Index = () => {
+  const introRef = useRef<HTMLVideoElement>(null);
+  const loopRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     document.title = "JUA 3D Print Lab — Precision Manufacturing in Kerala";
-    const meta = document.querySelector('meta[name="description"]') || (() => {
-      const m = document.createElement("meta");
-      m.setAttribute("name", "description");
-      document.head.appendChild(m);
-      return m;
-    })();
+    const meta =
+      document.querySelector('meta[name="description"]') ||
+      (() => {
+        const m = document.createElement("meta");
+        m.setAttribute("name", "description");
+        document.head.appendChild(m);
+        return m;
+      })();
     meta.setAttribute(
       "content",
       "JUA 3D Print Lab — engineering, refining and delivering professional 3D printed objects across medicine, architecture, automotive and beyond."
     );
+
+    const intro = introRef.current;
+    const loop = loopRef.current;
+    if (!intro || !loop) return;
+
+    loop.load();
+
+    let fadeTimer: ReturnType<typeof setInterval> | null = null;
+
+    const startCrossfade = () => {
+      intro.pause();
+      loop.style.zIndex = "2";
+      loop.style.opacity = "0";
+      loop.play().catch(() => {});
+      let opacity = 0;
+      fadeTimer = setInterval(() => {
+        opacity = Math.min(opacity + 0.05, 1);
+        loop.style.opacity = String(opacity);
+        intro.style.opacity = String(1 - opacity);
+        if (opacity >= 1) {
+          if (fadeTimer) clearInterval(fadeTimer);
+          intro.style.display = "none";
+          intro.src = "";
+        }
+      }, 30);
+    };
+
+    const onTime = () => {
+      if (intro.currentTime >= 5) {
+        intro.removeEventListener("timeupdate", onTime);
+        startCrossfade();
+      }
+    };
+    const onEnded = () => {
+      intro.pause();
+      loop.style.zIndex = "2";
+      loop.style.opacity = "1";
+      loop.play().catch(() => {});
+      intro.style.display = "none";
+    };
+
+    intro.addEventListener("timeupdate", onTime);
+    intro.addEventListener("ended", onEnded);
+
+    return () => {
+      intro.removeEventListener("timeupdate", onTime);
+      intro.removeEventListener("ended", onEnded);
+      if (fadeTimer) clearInterval(fadeTimer);
+    };
   }, []);
 
   return (
-    <div className="jua-root">
+    <>
       <style>{`
-        .jua-root { width:100%; overflow-x:hidden; background:#060E1C; font-family:'Barlow',sans-serif; color:#fff; }
-        .jua-root *, .jua-root *::before, .jua-root *::after { box-sizing:border-box; }
-
-        nav.jua-nav {
-          position: fixed; top:0; left:0; right:0; z-index:100;
-          display:flex; align-items:center; justify-content:space-between;
-          padding: 22px 60px;
-          background: linear-gradient(to bottom, rgba(6,14,28,0.85) 0%, transparent 100%);
-          animation: juaFadeDown 1s ease 0.3s both;
+        .jua-hero-root, .jua-hero-root *, .jua-hero-root *::before, .jua-hero-root *::after {
+          margin: 0; padding: 0; box-sizing: border-box;
         }
-        .jua-logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:4px; color:#fff; line-height:1; }
-        .jua-logo span { color:#3A8FE8; }
-        .jua-nav-links { display:flex; gap:36px; list-style:none; margin:0; padding:0; }
-        .jua-nav-links a {
-          font-family:'Barlow',sans-serif; font-size:13px; font-weight:600;
-          letter-spacing:2px; text-transform:uppercase;
-          color:rgba(255,255,255,0.65); text-decoration:none; transition:color .3s;
+        .jua-hero-root {
+          --deep:#060E1C; --navy:#0A2A57; --blue:#123E78; --accent:#3A8FE8; --white:#FFFFFF;
+          font-family:'Barlow',sans-serif;
         }
-        .jua-nav-links a:hover { color:#fff; }
-        .jua-nav-cta {
-          font-family:'Barlow',sans-serif; font-size:12px; font-weight:600;
-          letter-spacing:2px; text-transform:uppercase; color:#fff;
-          border:1px solid rgba(255,255,255,0.4); padding:10px 24px; border-radius:2px;
-          text-decoration:none; transition:all .3s; backdrop-filter:blur(4px);
-        }
-        .jua-nav-cta:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.8); }
-
         .jua-hero {
-          position:relative; width:100%; height:100vh; min-height:600px;
-          overflow:hidden; display:flex; align-items:flex-end; justify-content:center;
+          position: fixed; top:0; left:0;
+          width:100vw; height:100vh; overflow:hidden;
+          display:flex; flex-direction:column; justify-content:space-between;
+          background: var(--deep);
         }
-        .jua-hero-video {
-          position:absolute; inset:0; width:100%; height:100%;
-          object-fit:cover; object-position:center top;
+        .jua-hero .hero-video {
+          position:absolute; top:0; left:0; width:100%; height:100%;
+          object-fit:cover; object-position:center center;
+          transition: opacity .8s ease;
         }
-        .jua-overlay-sides {
-          position:absolute; inset:0; pointer-events:none;
-          background: linear-gradient(to right, rgba(6,14,28,0.55) 0%, transparent 35%, transparent 65%, rgba(6,14,28,0.55) 100%);
+        .jua-hero #vid-intro { opacity:1; z-index:1; }
+        .jua-hero #vid-loop  { opacity:0; z-index:0; }
+
+        .jua-hero .ov { position:absolute; inset:0; pointer-events:none; }
+        .jua-hero .ov-top {
+          z-index:2;
+          background: linear-gradient(to bottom, rgba(6,14,28,.80) 0%, rgba(6,14,28,.05) 28%, transparent 50%);
         }
-        .jua-overlay-bottom {
-          position:absolute; inset:0; pointer-events:none;
-          background: linear-gradient(to bottom, transparent 40%, rgba(6,14,28,0.3) 65%, rgba(10,42,87,0.85) 85%, #060E1C 100%);
+        .jua-hero .ov-bottom {
+          z-index:2;
+          background: linear-gradient(to top, rgba(6,14,28,1) 0%, rgba(10,42,87,.75) 16%, transparent 42%);
+        }
+        .jua-hero .ov-sides {
+          z-index:2;
+          background: linear-gradient(to right, rgba(6,14,28,.55) 0%, transparent 22%, transparent 78%, rgba(6,14,28,.55) 100%);
         }
 
-        .jua-bottom-bar {
-          position:relative; z-index:10; width:100%;
-          padding: 0 60px 48px;
-          display:flex; align-items:flex-end; justify-content:space-between;
-          animation: juaFadeUp 1.2s ease 1.2s both;
+        .jua-hero nav {
+          position:relative; z-index:10;
+          display:flex; align-items:flex-start; justify-content:space-between;
+          padding: 22px 26px 0;
+          animation: juaFadeDown .7s ease .2s both;
         }
-        .jua-stat-strip { display:flex; gap:40px; }
-        .jua-stat-number { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
-        .jua-stat-label { font-size:11px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-top:2px; }
+        .jua-hero .logo {
+          font-family:'Bebas Neue',sans-serif;
+          font-size: clamp(18px,4.5vw,26px);
+          letter-spacing:3px; color:var(--white); line-height:1.15;
+        }
+        .jua-hero .logo span { color: var(--accent); }
+        .jua-hero .nav-cta {
+          font-family:'Barlow Condensed',sans-serif;
+          font-size: clamp(10px,2.2vw,13px);
+          font-weight:700; letter-spacing:2px; text-transform:uppercase;
+          color:var(--white);
+          border:1.5px solid rgba(255,255,255,.5);
+          padding:10px 18px; text-decoration:none;
+          background: rgba(10,42,87,.25); backdrop-filter: blur(8px);
+          line-height:1.3; text-align:center; transition: all .3s; display:inline-block;
+        }
+        .jua-hero .nav-cta:hover { background: rgba(58,143,232,.2); border-color: var(--accent); }
 
-        .jua-scroll-hint { display:flex; flex-direction:column; align-items:center; gap:8px; }
-        .jua-scroll-label {
-          font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase;
-          color:rgba(255,255,255,0.35); writing-mode:vertical-rl; text-orientation:mixed;
+        .jua-hero .hero-bottom {
+          position:relative; z-index:10;
+          padding: 0 26px 28px;
+          display:flex; flex-direction:column; gap:18px;
+          opacity:0; animation: juaFadeUp .9s ease 5.5s forwards;
         }
-        .jua-scroll-line {
-          width:1px; height:48px;
-          background: linear-gradient(to bottom, rgba(58,143,232,0.8), transparent);
-          animation: juaScrollPulse 2s ease-in-out infinite;
+        .jua-hero .scroll-wrap { display:flex; align-items:center; gap:10px; }
+        .jua-hero .scroll-line {
+          width:1px; height:38px;
+          background: linear-gradient(to bottom, var(--accent), transparent);
+          animation: juaPulse 2s ease-in-out infinite;
+        }
+        .jua-hero .scroll-text {
+          font-size:9px; font-weight:600; letter-spacing:3px; text-transform:uppercase;
+          color: rgba(255,255,255,.3); writing-mode: vertical-rl;
+        }
+        .jua-hero .stats {
+          display:flex; border-top:1px solid rgba(255,255,255,.1); padding-top:14px;
+        }
+        .jua-hero .stat { flex:1; }
+        .jua-hero .stat-num {
+          font-family:'Bebas Neue',sans-serif;
+          font-size: clamp(26px,6.5vw,36px);
+          color:var(--white); letter-spacing:1px; line-height:1;
+        }
+        .jua-hero .stat-label {
+          font-size: clamp(8px,1.8vw,10px);
+          font-weight:600; letter-spacing:2px; text-transform:uppercase;
+          color: rgba(255,255,255,.38); margin-top:3px; line-height:1.4;
         }
 
-        .jua-bridge {
-          position:relative; overflow:hidden;
-          background: linear-gradient(to bottom, #060E1C 0%, #0A2A57 100%);
-          padding: 80px 60px;
-          display:flex; align-items:center; gap:64px;
-        }
-        .jua-bridge-line { width:1px; height:80px; background: linear-gradient(to bottom, #3A8FE8, transparent); margin-bottom:24px; }
-        .jua-bridge-eyebrow { font-size:11px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:#3A8FE8; margin-bottom:16px; }
-        .jua-bridge-headline {
-          font-family:'Barlow Condensed',sans-serif; font-size:clamp(36px,4vw,56px);
-          font-weight:800; color:#fff; line-height:1.05; letter-spacing:1px; margin-bottom:20px;
-        }
-        .jua-bridge-body { font-size:15px; font-weight:300; color:rgba(255,255,255,0.6); line-height:1.8; max-width:480px; }
-
-        .jua-scan-line {
-          position:absolute; left:0; right:0; height:1px;
-          background: linear-gradient(to right, transparent, rgba(58,143,232,0.4), transparent);
-          animation: juaScanDown 8s linear infinite; top:0; pointer-events:none;
-        }
-
-        @keyframes juaFadeDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
-        @keyframes juaFadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
-        @keyframes juaScrollPulse { 0%,100%{opacity:.3;transform:scaleY(1);} 50%{opacity:1;transform:scaleY(1.1);} }
-        @keyframes juaScanDown { from{top:0%;} to{top:100%;} }
-
-        @media (max-width: 768px) {
-          nav.jua-nav { padding: 18px 24px; }
-          .jua-nav-links { display:none; }
-          .jua-bottom-bar { padding: 0 24px 32px; flex-direction:column; align-items:flex-start; gap:24px; }
-          .jua-stat-strip { gap:24px; }
-          .jua-stat-number { font-size:26px; }
-          .jua-bridge { padding: 60px 24px; }
-        }
+        @keyframes juaFadeDown { from{opacity:0;transform:translateY(-14px);} to{opacity:1;transform:translateY(0);} }
+        @keyframes juaFadeUp   { from{opacity:0;transform:translateY(14px);}  to{opacity:1;transform:translateY(0);} }
+        @keyframes juaPulse    { 0%,100%{opacity:.25;} 50%{opacity:1;} }
       `}</style>
 
-      <nav className="jua-nav">
-        <div className="jua-logo">JUA <span>3D</span> PRINT LAB</div>
-        <ul className="jua-nav-links">
-          <li><a href="#products">Products</a></li>
-          <li><a href="#industries">Industries</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a href="#contact" className="jua-nav-cta">Get a Quote</a>
-      </nav>
+      <div className="jua-hero-root">
+        <section className="jua-hero">
+          <video
+            id="vid-intro"
+            ref={introRef}
+            className="hero-video"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+          />
+          <video
+            id="vid-loop"
+            ref={loopRef}
+            className="hero-video"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1777990749/HEEERO_vddvpy.mp4"
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
 
-      <section className="jua-hero">
-        <video
-          className="jua-hero-video"
-          src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-        <div className="jua-overlay-sides" />
-        <div className="jua-overlay-bottom" />
+          <div className="ov ov-top" />
+          <div className="ov ov-bottom" />
+          <div className="ov ov-sides" />
 
-        <div className="jua-bottom-bar">
-          <div className="jua-stat-strip">
-            <div>
-              <div className="jua-stat-number">10+</div>
-              <div className="jua-stat-label">Industries Served</div>
+          <nav>
+            <div className="logo">
+              JUA <span>3D</span> PRINT<br />LAB
             </div>
-            <div>
-              <div className="jua-stat-number">50+</div>
-              <div className="jua-stat-label">Product Types</div>
+            <a href="#contact" className="nav-cta">
+              GET A<br />QUOTE
+            </a>
+          </nav>
+
+          <div className="hero-bottom">
+            <div className="scroll-wrap">
+              <div className="scroll-line" />
+              <span className="scroll-text">Scroll</span>
             </div>
-            <div>
-              <div className="jua-stat-number">100%</div>
-              <div className="jua-stat-label">Custom Orders</div>
+            <div className="stats">
+              <div className="stat">
+                <div className="stat-num">10+</div>
+                <div className="stat-label">Industries<br />Served</div>
+              </div>
+              <div className="stat">
+                <div className="stat-num">50+</div>
+                <div className="stat-label">Product<br />Types</div>
+              </div>
+              <div className="stat">
+                <div className="stat-num">100%</div>
+                <div className="stat-label">Custom<br />Orders</div>
+              </div>
             </div>
           </div>
-
-          <div className="jua-scroll-hint">
-            <div className="jua-scroll-line" />
-            <span className="jua-scroll-label">Scroll</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="jua-bridge">
-        <div className="jua-scan-line" />
-        <div style={{ flex: 1 }}>
-          <div className="jua-bridge-line" />
-          <div className="jua-bridge-eyebrow">Precision Manufacturing · Kerala, India</div>
-          <h1 className="jua-bridge-headline">FROM DIGITAL FILE<br />TO PHYSICAL REALITY.</h1>
-          <p className="jua-bridge-body">
-            We don't just print — we engineer, refine, and deliver objects that meet professional
-            standards across medicine, architecture, automotive, and beyond.
-          </p>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 
