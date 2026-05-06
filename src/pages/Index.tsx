@@ -510,6 +510,134 @@ const Index = () => {
           .s2-video-frame { max-width: 280px; }
           .s2-stats-row { gap: 24px; }
         }
+
+        /* ============ SECTION 3 — PRODUCTS SCROLL ============ */
+        .s3 {
+          width: 100%; padding: 80px 0 100px; position: relative; overflow: hidden;
+          background: linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
+          font-family:'Barlow',sans-serif;
+        }
+        .s3::before {
+          content:''; position:absolute; inset:0; pointer-events:none;
+          background-image:
+            linear-gradient(rgba(58,143,232,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(58,143,232,0.04) 1px, transparent 1px);
+          background-size:60px 60px;
+        }
+        .s3-header { text-align:center; padding:0 24px 56px; position:relative; z-index:2; }
+        .s3-eyebrow { display:inline-flex; align-items:center; gap:12px; margin-bottom:16px; }
+        .s3-eyebrow-line { width:28px; height:1px; background:#3A8FE8; }
+        .s3-eyebrow-text {
+          font-size:11px; font-weight:600; letter-spacing:4px;
+          text-transform:uppercase; color:#3A8FE8;
+        }
+        .s3-title {
+          font-family:'Barlow Condensed',sans-serif;
+          font-size:clamp(32px,5vw,56px); font-weight:800;
+          color:#FFFFFF; letter-spacing:1px; line-height:1;
+        }
+        .s3-title span { color:#3A8FE8; }
+        .s3-sub {
+          font-size:14px; font-weight:300; color:rgba(255,255,255,0.45);
+          margin-top:12px; letter-spacing:1px;
+        }
+        .s3-track-wrap {
+          position:relative; width:100%;
+          overflow-x:scroll; overflow-y:visible;
+          cursor:grab; user-select:none; scrollbar-width:none;
+        }
+        .s3-track-wrap::-webkit-scrollbar { display:none; }
+        .s3-track-wrap:active { cursor:grabbing; }
+        .s3-track-wrap::before, .s3-track-wrap::after {
+          content:''; position:absolute; top:0; bottom:0; width:120px; z-index:10; pointer-events:none;
+        }
+        .s3-track-wrap::before { left:0; background:linear-gradient(to right,#060E1C,transparent); }
+        .s3-track-wrap::after { right:0; background:linear-gradient(to left,#060E1C,transparent); }
+        .s3-track { display:flex; gap:28px; padding:40px 80px 60px; width:max-content; }
+        .prod-card {
+          position:relative; flex-shrink:0; width:260px;
+          display:flex; flex-direction:column; align-items:center;
+          transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
+          transform:scale(0.82); opacity:0.45; cursor:pointer;
+        }
+        .prod-card.active { transform:scale(1); opacity:1; }
+        .prod-img-wrap {
+          position:relative; width:220px; height:260px;
+          border-radius:16px; overflow:hidden;
+          background:linear-gradient(145deg,#0A2A57,#060E1C);
+          border:1px solid rgba(58,143,232,0.1);
+          transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .prod-card.active .prod-img-wrap {
+          border-color:rgba(58,143,232,0.5);
+          box-shadow: 0 0 0 1px rgba(58,143,232,0.2), 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(58,143,232,0.15);
+        }
+        .prod-img-wrap img {
+          width:100%; height:100%; object-fit:cover; object-position:center;
+          transition: transform 0.6s ease; display:block;
+        }
+        .prod-card.active .prod-img-wrap img { transform:scale(1.05); }
+        .corner-tl,.corner-tr,.corner-bl,.corner-br {
+          position:absolute; width:16px; height:16px;
+          opacity:0; transition: opacity 0.4s ease; z-index:3;
+        }
+        .corner-tl { top:8px; left:8px; border-top:2px solid #3A8FE8; border-left:2px solid #3A8FE8; }
+        .corner-tr { top:8px; right:8px; border-top:2px solid #3A8FE8; border-right:2px solid #3A8FE8; }
+        .corner-bl { bottom:8px; left:8px; border-bottom:2px solid #3A8FE8; border-left:2px solid #3A8FE8; }
+        .corner-br { bottom:8px; right:8px; border-bottom:2px solid #3A8FE8; border-right:2px solid #3A8FE8; }
+        .prod-card.active .corner-tl,
+        .prod-card.active .corner-tr,
+        .prod-card.active .corner-bl,
+        .prod-card.active .corner-br { opacity:1; }
+        .active-badge {
+          position:absolute; top:12px; left:50%;
+          transform:translateX(-50%) translateY(-6px);
+          background:linear-gradient(135deg,#123E78,#3A8FE8);
+          color:#fff; font-size:8px; font-weight:700;
+          letter-spacing:2.5px; text-transform:uppercase;
+          padding:4px 10px; border-radius:20px;
+          opacity:0; transition: opacity 0.4s ease, transform 0.4s ease;
+          white-space:nowrap; z-index:4;
+        }
+        .prod-card.active .active-badge { opacity:1; transform:translateX(-50%) translateY(0); }
+        .prod-name {
+          margin-top:18px;
+          font-family:'Barlow Condensed',sans-serif;
+          font-size:15px; font-weight:700;
+          letter-spacing:2.5px; text-transform:uppercase;
+          color:rgba(255,255,255,0.4); text-align:center;
+          transition: color 0.4s ease;
+        }
+        .prod-card.active .prod-name { color:#FFFFFF; }
+        .prod-cat {
+          font-size:10px; font-weight:400;
+          letter-spacing:2px; text-transform:uppercase;
+          color:rgba(58,143,232,0); margin-top:5px; text-align:center;
+          transition: color 0.4s ease;
+        }
+        .prod-card.active .prod-cat { color:#3A8FE8; }
+        .prod-dot {
+          width:4px; height:4px; border-radius:50%;
+          background:rgba(255,255,255,0.15); margin-top:10px;
+          transition: background 0.4s ease, transform 0.4s ease;
+        }
+        .prod-card.active .prod-dot { background:#3A8FE8; transform:scale(1.5); }
+        .s3-dots {
+          display:flex; justify-content:center; gap:8px;
+          margin-top:36px; position:relative; z-index:2;
+        }
+        .s3-dot {
+          width:6px; height:6px; border-radius:50%;
+          background:rgba(255,255,255,0.15);
+          transition: all 0.3s ease; cursor:pointer;
+        }
+        .s3-dot.active { background:#3A8FE8; width:24px; border-radius:3px; }
+        @media (max-width:768px) {
+          .prod-card { width:180px; }
+          .prod-img-wrap { width:160px; height:190px; }
+          .s3-track { gap:20px; padding:32px 40px 48px; }
+          .s3-track-wrap::before, .s3-track-wrap::after { width:60px; }
+        }
       `}</style>
 
       <div className="jua-hero-root">
