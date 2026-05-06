@@ -38,9 +38,12 @@ const Index = () => {
       setTimeout(updateActive, 350);
     };
 
+    let autoTimer: ReturnType<typeof setInterval> | null = null;
+    const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
+
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true; startX = e.pageX - wrap.offsetLeft; scrollLeft = wrap.scrollLeft;
-      wrap.style.cursor = "grabbing"; clearInterval(autoTimer);
+      wrap.style.cursor = "grabbing"; stopAuto();
     };
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging) return; e.preventDefault();
@@ -49,7 +52,7 @@ const Index = () => {
     };
     const onMouseUp = () => { if (isDragging) { isDragging = false; wrap.style.cursor = "grab"; snap(); } };
     const onTouchStart = (e: TouchEvent) => {
-      startX = e.touches[0].pageX; scrollLeft = wrap.scrollLeft; clearInterval(autoTimer);
+      startX = e.touches[0].pageX; scrollLeft = wrap.scrollLeft; stopAuto();
     };
     const onTouchMove = (e: TouchEvent) => {
       wrap.scrollLeft = scrollLeft + (startX - e.touches[0].pageX) * 1.2;
@@ -77,7 +80,7 @@ const Index = () => {
     cards[1]?.scrollIntoView({ block: "nearest", inline: "center" });
     setTimeout(updateActive, 100);
 
-    const autoTimer = setInterval(() => {
+    autoTimer = setInterval(() => {
       if (!isDragging) {
         const next = (activeIndex + 1) % cards.length;
         cards[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
