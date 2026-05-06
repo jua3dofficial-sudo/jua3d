@@ -96,7 +96,7 @@ const Index = () => {
       wrap.removeEventListener("touchmove", onTouchMove);
       wrap.removeEventListener("touchend", snap);
       wrap.removeEventListener("scroll", onScroll);
-      clearInterval(autoTimer);
+      stopAuto();
       cancelAnimationFrame(rafId);
     };
   }, []);
