@@ -330,7 +330,13 @@ const Index = () => {
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 80px; height: 80px; object-fit: contain; margin-bottom: 28px;
+          width: 160px;
+          height: 160px;
+          object-fit: contain;
+          margin-bottom: 28px;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
           filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(58,143,232,0.6));
         }
         .s2-headline {
