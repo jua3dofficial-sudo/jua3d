@@ -5,6 +5,98 @@ import jua3dLabLogo from "@/assets/jua-3d-lab-logo.png";
 const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
+  const trackWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wrap = trackWrapRef.current;
+    if (!wrap) return;
+    const cards = Array.from(wrap.querySelectorAll<HTMLDivElement>(".prod-card"));
+    const dots = Array.from(document.querySelectorAll<HTMLDivElement>(".s3-dot"));
+    let isDragging = false, startX = 0, scrollLeft = 0, activeIndex = -1, rafId = 0;
+
+    const getActiveCard = () => {
+      const r = wrap.getBoundingClientRect();
+      const c = r.left + r.width / 2;
+      let closest = 0, min = Infinity;
+      cards.forEach((card, i) => {
+        const cr = card.getBoundingClientRect();
+        const d = Math.abs(cr.left + cr.width / 2 - c);
+        if (d < min) { min = d; closest = i; }
+      });
+      return closest;
+    };
+    const updateActive = () => {
+      const idx = getActiveCard();
+      if (idx === activeIndex) return;
+      activeIndex = idx;
+      cards.forEach((c, i) => c.classList.toggle("active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    };
+    const snap = () => {
+      const idx = getActiveCard();
+      cards[idx]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      setTimeout(updateActive, 350);
+    };
+
+    const onMouseDown = (e: MouseEvent) => {
+      isDragging = true; startX = e.pageX - wrap.offsetLeft; scrollLeft = wrap.scrollLeft;
+      wrap.style.cursor = "grabbing"; clearInterval(autoTimer);
+    };
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return; e.preventDefault();
+      wrap.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX) * 1.4;
+      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateActive);
+    };
+    const onMouseUp = () => { if (isDragging) { isDragging = false; wrap.style.cursor = "grab"; snap(); } };
+    const onTouchStart = (e: TouchEvent) => {
+      startX = e.touches[0].pageX; scrollLeft = wrap.scrollLeft; clearInterval(autoTimer);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      wrap.scrollLeft = scrollLeft + (startX - e.touches[0].pageX) * 1.2;
+      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateActive);
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateActive);
+    };
+
+    wrap.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
+    wrap.addEventListener("touchmove", onTouchMove, { passive: true });
+    wrap.addEventListener("touchend", snap);
+    wrap.addEventListener("scroll", onScroll, { passive: true });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        cards[i]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        setTimeout(updateActive, 400);
+      });
+    });
+
+    cards[1]?.scrollIntoView({ block: "nearest", inline: "center" });
+    setTimeout(updateActive, 100);
+
+    const autoTimer = setInterval(() => {
+      if (!isDragging) {
+        const next = (activeIndex + 1) % cards.length;
+        cards[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        setTimeout(updateActive, 400);
+      }
+    }, 3500);
+
+    return () => {
+      wrap.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      wrap.removeEventListener("touchstart", onTouchStart);
+      wrap.removeEventListener("touchmove", onTouchMove);
+      wrap.removeEventListener("touchend", snap);
+      wrap.removeEventListener("scroll", onScroll);
+      clearInterval(autoTimer);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   useEffect(() => {
     document.title = "JUA 3D Print Lab — Precision Manufacturing in Kerala";
