@@ -323,7 +323,7 @@ const Index = () => {
           display: flex; flex-direction: column; justify-content: center;
           padding: 80px 56px 80px 64px; max-width: 52%;
         }
-        .s2-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+        .s2-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
         .s2-eyebrow-line { width: 32px; height: 1px; background: #3A8FE8; }
         .s2-eyebrow-text {
           font-size: 11px; font-weight: 600; letter-spacing: 4px;
@@ -333,7 +333,7 @@ const Index = () => {
           width: 192px;
           height: 192px;
           object-fit: contain;
-          margin-bottom: 32px;
+          margin-bottom: 16px;
           display: block;
           margin-left: auto;
           margin-right: auto;
@@ -341,7 +341,8 @@ const Index = () => {
           filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
         }
         @media (min-width: 768px) {
-          .s2-logo { width: 224px; height: 224px; margin-bottom: 36px; filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(58,143,232,0.7)); }
+          .s2-logo { width: 224px; height: 224px; margin-bottom: 20px; filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(58,143,232,0.7)); }
+          .s2-eyebrow { margin-bottom: 18px; }
         }
         .s2-headline {
           font-family: 'Barlow Condensed', sans-serif;
