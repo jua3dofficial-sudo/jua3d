@@ -549,7 +549,7 @@ const Index = () => {
         .s3-track-wrap::-webkit-scrollbar { display:none; }
         .s3-track-wrap:active { cursor:grabbing; }
         .s3-track-wrap::before, .s3-track-wrap::after {
-          content:''; position:absolute; top:0; bottom:0; width:120px; z-index:10; pointer-events:none;
+          content:''; position:absolute; top:0; bottom:0; width:0px; z-index:10; pointer-events:none;
         }
         .s3-track-wrap::before { left:0; background:linear-gradient(to right,#060E1C,transparent); }
         .s3-track-wrap::after { right:0; background:linear-gradient(to left,#060E1C,transparent); }
