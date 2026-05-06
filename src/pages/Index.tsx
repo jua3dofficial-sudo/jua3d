@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import heroDesktop from "@/assets/hero-desktop.png";
+import jua3dLabLogo from "@/assets/jua-3d-lab-logo.png";
 
 const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
@@ -544,7 +545,7 @@ const Index = () => {
               </div>
               <img
                 className="s2-logo"
-                src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1778037058/ChatGPT_Image_May_6_2026_08_38_32_AM_vhbfjf.webp"
+                src={jua3dLabLogo}
                 alt="JUA 3D Print Lab Logo"
               />
               <h2 className="s2-headline">
