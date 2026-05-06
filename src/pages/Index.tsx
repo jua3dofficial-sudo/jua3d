@@ -330,14 +330,18 @@ const Index = () => {
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 160px;
-          height: 160px;
+          width: 192px;
+          height: 192px;
           object-fit: contain;
-          margin-bottom: 28px;
+          margin-bottom: 32px;
           display: block;
           margin-left: auto;
           margin-right: auto;
-          filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(58,143,232,0.6));
+          image-rendering: -webkit-optimize-contrast;
+          filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
+        }
+        @media (min-width: 768px) {
+          .s2-logo { width: 224px; height: 224px; margin-bottom: 36px; filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(58,143,232,0.7)); }
         }
         .s2-headline {
           font-family: 'Barlow Condensed', sans-serif;
