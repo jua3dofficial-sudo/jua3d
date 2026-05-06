@@ -838,6 +838,51 @@ const Index = () => {
             </div>
           </div>
         </div>
+
+        {/* SECTION 3 — PRODUCTS SCROLL */}
+        <section className="s3" id="products">
+          <div className="s3-header">
+            <div className="s3-eyebrow">
+              <div className="s3-eyebrow-line" />
+              <span className="s3-eyebrow-text">What We Print</span>
+              <div className="s3-eyebrow-line" />
+            </div>
+            <h2 className="s3-title">OUR <span>PRECISION</span> PRODUCTS</h2>
+            <p className="s3-sub">Drag to explore · Each object printed to perfection</p>
+          </div>
+
+          <div className="s3-track-wrap" ref={trackWrapRef}>
+            <div className="s3-track">
+              {[
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_28_57_AM_1_arlblw.webp", name: "Anatomical Brain", cat: "Medical & Healthcare" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_26_44_AM_1_d9suyk.webp", name: "Collectible Rabbit", cat: "Toys & Collectibles" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_30_27_AM_1_u3ddmp.webp", name: "Dental Gum Model", cat: "Medical & Healthcare" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_33_48_AM_wz2kjj.webp", name: "Designer Tissue Box", cat: "Smart Home Utility" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040601/ChatGPT_Image_May_6_2026_09_39_12_AM_ursh6k.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
+              ].map((p, i) => (
+                <div className="prod-card" key={i} data-index={i}>
+                  <div className="prod-img-wrap">
+                    <div className="corner-tl" /><div className="corner-tr" />
+                    <div className="corner-bl" /><div className="corner-br" />
+                    <div className="active-badge">Featured</div>
+                    <img src={p.src} alt={p.name} loading="lazy" />
+                  </div>
+                  <div className="prod-name">{p.name}</div>
+                  <div className="prod-cat">{p.cat}</div>
+                  <div className="prod-dot" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="s3-dots">
+            {Array.from({ length: 7 }).map((_, i) => (
+              <div key={i} className={`s3-dot${i === 0 ? " active" : ""}`} data-i={i} />
+            ))}
+          </div>
+        </section>
       </div>
     </>
   );
