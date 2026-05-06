@@ -423,6 +423,88 @@ const Index = () => {
 
           <div className="bottomline">PROTOTYPES • PRODUCTS • PRODUCTION</div>
         </section>
+
+        {/* SECTION 2 — TRUST & EXPERTISE */}
+        <div className="jua-s2-wrap">
+          <section className="s2">
+            <div className="glow-orb" />
+            <div className="s2-left">
+              <div className="s2-eyebrow">
+                <div className="s2-eyebrow-line" />
+                <span className="s2-eyebrow-text">The JUA Standard</span>
+              </div>
+              <img
+                className="s2-logo"
+                src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1778037058/ChatGPT_Image_May_6_2026_08_38_32_AM_vhbfjf.webp"
+                alt="JUA 3D Print Lab Logo"
+              />
+              <h2 className="s2-headline">
+                Precision You Can <em>Touch.</em><br />
+                Results You Can <em>Trust.</em>
+              </h2>
+              <div className="s2-divider" />
+              <p className="s2-body">
+                At JUA 3D Print Lab, we've mastered the art of turning complex ideas into{" "}
+                <strong>tangible, high-quality products.</strong> Serving 10+ industries across
+                medical, architecture, automotive, and beyond — our team combines advanced 3D printing
+                technology with deep engineering expertise. When quality is non-negotiable,{" "}
+                <strong>professionals choose JUA.</strong>
+              </p>
+              <div className="s2-cta-row">
+                <a href="#contact" className="s2-cta-btn">Work With Us</a>
+                <a href="#products" className="s2-cta-link">See Our Work</a>
+              </div>
+              <div className="s2-stats-row">
+                <div className="s2-stat-item">
+                  <div className="s2-stat-num">10<span>+</span></div>
+                  <div className="s2-stat-label">Industries</div>
+                </div>
+                <div className="s2-stat-item">
+                  <div className="s2-stat-num">50<span>+</span></div>
+                  <div className="s2-stat-label">Product Types</div>
+                </div>
+                <div className="s2-stat-item">
+                  <div className="s2-stat-num">100<span>%</span></div>
+                  <div className="s2-stat-label">Custom Made</div>
+                </div>
+              </div>
+            </div>
+            <div className="s2-right">
+              <div className="s2-video-frame">
+                <div className="s2-corner s2-corner-tl" />
+                <div className="s2-corner s2-corner-tr" />
+                <div className="s2-corner s2-corner-bl" />
+                <div className="s2-corner s2-corner-br" />
+                <video
+                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              </div>
+            </div>
+          </section>
+
+          <div className="cap-strip">
+            <div className="cap-track">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} style={{ display: "flex" }}>
+                  <div className="cap-item"><span className="cap-icon">⬡</span><span className="cap-text">High Precision Printing</span></div>
+                  <div className="cap-item"><span className="cap-icon">⚡</span><span className="cap-text">Rapid Prototyping</span></div>
+                  <div className="cap-item"><span className="cap-icon">⚙️</span><span className="cap-text">Custom Manufacturing</span></div>
+                  <div className="cap-item"><span className="cap-icon">🏥</span><span className="cap-text">Medical Grade Output</span></div>
+                  <div className="cap-item"><span className="cap-icon">🏛</span><span className="cap-text">Architectural Scale Models</span></div>
+                  <div className="cap-item"><span className="cap-icon">🚗</span><span className="cap-text">Automotive Parts</span></div>
+                  <div className="cap-item"><span className="cap-icon">📦</span><span className="cap-text">Industrial Supply</span></div>
+                  <div className="cap-item"><span className="cap-icon">⏱</span><span className="cap-text">Fast Turnaround</span></div>
+                  <div className="cap-item"><span className="cap-icon">✅</span><span className="cap-text">Quality Guaranteed</span></div>
+                  <div className="cap-item"><span className="cap-icon">🎯</span><span className="cap-text">Micron-Level Accuracy</span></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
