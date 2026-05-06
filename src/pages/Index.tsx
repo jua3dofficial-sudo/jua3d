@@ -12,78 +12,86 @@ const Index = () => {
     if (!wrap) return;
     const cards = Array.from(wrap.querySelectorAll<HTMLDivElement>(".prod-card"));
     const dots = Array.from(document.querySelectorAll<HTMLDivElement>(".s3-dot"));
+
     let activeIndex = -1;
     let isDragging = false;
-    let startX = 0;
-    let scrollStart = 0;
+    let dragStartX = 0;
+    let dragScrollL = 0;
     let autoTimer: ReturnType<typeof setInterval> | null = null;
+    let ticking = false;
 
-    const getClosestIndex = () => {
-      const wrapCentre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
-      let closest = 0;
-      let minDist = Infinity;
-      cards.forEach((card, i) => {
-        const rect = card.getBoundingClientRect();
-        const cardCentre = rect.left + rect.width / 2;
-        const dist = Math.abs(cardCentre - wrapCentre);
-        if (dist < minDist) { minDist = dist; closest = i; }
+    const getClosest = () => {
+      const centre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
+      let best = 0, bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const r = c.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - centre);
+        if (d < bestDist) { bestDist = d; best = i; }
       });
-      return closest;
+      return best;
     };
 
-    const updateActive = () => {
-      const idx = getClosestIndex();
+    const applyActive = (idx: number) => {
       if (idx === activeIndex) return;
       activeIndex = idx;
       cards.forEach((c, i) => c.classList.toggle("active", i === idx));
       dots.forEach((d, i) => d.classList.toggle("active", i === idx));
     };
 
-    const snapToActive = () => {
-      const idx = getClosestIndex();
+    const scheduleUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        applyActive(getClosest());
+        ticking = false;
+      });
+    };
+
+    const snapTo = (idx: number) => {
       cards[idx]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-      setTimeout(updateActive, 400);
+      setTimeout(() => applyActive(getClosest()), 420);
     };
 
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
     const startAuto = () => {
+      stopAuto();
       autoTimer = setInterval(() => {
         const next = (activeIndex + 1) % cards.length;
-        cards[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        setTimeout(updateActive, 400);
-      }, 3000);
+        snapTo(next);
+      }, 3200);
     };
 
-    const onScroll = () => updateActive();
+    const onScroll = () => scheduleUpdate();
 
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true;
-      startX = e.pageX;
-      scrollStart = wrap.scrollLeft;
+      dragStartX = e.clientX;
+      dragScrollL = wrap.scrollLeft;
       wrap.style.cursor = "grabbing";
       stopAuto();
     };
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
-      wrap.scrollLeft = scrollStart - (e.pageX - startX) * 1.4;
-      updateActive();
+      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.5;
+      scheduleUpdate();
     };
     const onMouseUp = () => {
       if (!isDragging) return;
       isDragging = false;
       wrap.style.cursor = "grab";
-      snapToActive();
+      snapTo(getClosest());
     };
 
     const onTouchStart = (e: TouchEvent) => {
-      startX = e.touches[0].pageX;
-      scrollStart = wrap.scrollLeft;
+      dragStartX = e.touches[0].clientX;
+      dragScrollL = wrap.scrollLeft;
       stopAuto();
     };
     const onTouchMove = (e: TouchEvent) => {
-      wrap.scrollLeft = scrollStart - (e.touches[0].pageX - startX) * 1.2;
-      updateActive();
+      wrap.scrollLeft = dragScrollL - (e.touches[0].clientX - dragStartX) * 1.3;
+      scheduleUpdate();
     };
+    const onTouchEnd = () => snapTo(getClosest());
 
     wrap.addEventListener("scroll", onScroll, { passive: true });
     wrap.addEventListener("mousedown", onMouseDown);
@@ -91,29 +99,31 @@ const Index = () => {
     window.addEventListener("mouseup", onMouseUp);
     wrap.addEventListener("touchstart", onTouchStart, { passive: true });
     wrap.addEventListener("touchmove", onTouchMove, { passive: true });
-    wrap.addEventListener("touchend", snapToActive);
+    wrap.addEventListener("touchend", onTouchEnd);
 
     const dotHandlers: Array<() => void> = dots.map((dot, i) => {
-      const h = () => {
-        stopAuto();
-        cards[i]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        setTimeout(updateActive, 400);
-      };
+      const h = () => { stopAuto(); snapTo(i); };
       dot.addEventListener("click", h);
       return h;
     });
 
-    cards[1]?.scrollIntoView({ block: "nearest", inline: "center" });
-    setTimeout(() => { updateActive(); startAuto(); }, 150);
+    const initTimeout = setTimeout(() => {
+      const card = cards[1];
+      if (card) {
+        wrap.scrollLeft = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
+      }
+      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
+    }, 100);
 
     return () => {
+      clearTimeout(initTimeout);
       wrap.removeEventListener("scroll", onScroll);
       wrap.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
       wrap.removeEventListener("touchstart", onTouchStart);
       wrap.removeEventListener("touchmove", onTouchMove);
-      wrap.removeEventListener("touchend", snapToActive);
+      wrap.removeEventListener("touchend", onTouchEnd);
       dots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
       stopAuto();
     };
@@ -531,16 +541,21 @@ const Index = () => {
 
         /* ============ SECTION 3 — PRODUCTS SCROLL ============ */
         .s3 {
-          width: 100%; padding: 80px 0 100px; position: relative; overflow: hidden;
-          background: linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
+          width:100%;
+          padding:80px 0 100px;
+          background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
+          position:relative;
+          overflow:hidden;
           font-family:'Barlow',sans-serif;
         }
         .s3::before {
-          content:''; position:absolute; inset:0; pointer-events:none;
+          content:''; position:absolute; inset:0;
           background-image:
             linear-gradient(rgba(58,143,232,0.04) 1px, transparent 1px),
             linear-gradient(90deg, rgba(58,143,232,0.04) 1px, transparent 1px);
           background-size:60px 60px;
+          pointer-events:none;
+          z-index:0;
         }
         .s3-header { text-align:center; padding:0 24px 56px; position:relative; z-index:2; }
         .s3-eyebrow { display:inline-flex; align-items:center; gap:12px; margin-bottom:16px; }
@@ -563,86 +578,89 @@ const Index = () => {
           position:relative; width:100%;
           overflow-x:scroll; overflow-y:visible;
           cursor:grab; user-select:none; scrollbar-width:none;
+          -webkit-overflow-scrolling:touch;
         }
         .s3-track-wrap::-webkit-scrollbar { display:none; }
         .s3-track-wrap:active { cursor:grabbing; }
-        .s3-track-wrap::before, .s3-track-wrap::after {
-          content:''; position:absolute; top:0; bottom:0; width:0px; z-index:10; pointer-events:none;
+        .s3-track {
+          display:flex; gap:32px;
+          padding:48px 60px 64px;
+          width:max-content; align-items:center;
         }
-        .s3-track-wrap::before { left:0; background:linear-gradient(to right,#060E1C,transparent); }
-        .s3-track-wrap::after { right:0; background:linear-gradient(to left,#060E1C,transparent); }
-        .s3-track { display:flex; gap:28px; padding:40px 80px 60px; width:max-content; }
         .prod-card {
-          position:relative; flex-shrink:0; width:260px;
+          position:relative; flex-shrink:0; width:300px;
           display:flex; flex-direction:column; align-items:center;
           transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
-          transform:scale(0.82); opacity:0.45; cursor:pointer;
+          transform:scale(0.84); opacity:0.6; cursor:pointer;
         }
         .prod-card.active { transform:scale(1); opacity:1; }
         .prod-img-wrap {
-          position:relative; width:220px; height:260px;
-          border-radius:16px; overflow:hidden;
-          background:linear-gradient(145deg,#0A2A57,#060E1C);
-          border:1px solid rgba(58,143,232,0.1);
+          position:relative; width:260px; height:300px;
+          border-radius:18px; overflow:hidden;
+          background:linear-gradient(145deg,#0d2d5e,#060E1C);
+          border:1px solid rgba(58,143,232,0.12);
           transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
         .prod-card.active .prod-img-wrap {
-          border-color:rgba(58,143,232,0.5);
-          box-shadow: 0 0 0 1px rgba(58,143,232,0.2), 0 0 40px rgba(58,143,232,0.15);
+          border-color:rgba(58,143,232,0.55);
+          box-shadow:
+            0 0 0 1px rgba(58,143,232,0.25),
+            0 24px 64px rgba(0,0,0,0.6),
+            0 0 48px rgba(58,143,232,0.18);
         }
         .prod-img-wrap img {
           width:100%; height:100%; object-fit:cover; object-position:center;
           transition: transform 0.6s ease; display:block;
         }
-        .prod-card.active .prod-img-wrap img { transform:scale(1.05); }
+        .prod-card.active .prod-img-wrap img { transform:scale(1.06); }
         .corner-tl,.corner-tr,.corner-bl,.corner-br {
-          position:absolute; width:16px; height:16px;
+          position:absolute; width:18px; height:18px;
           opacity:0; transition: opacity 0.4s ease; z-index:3;
         }
-        .corner-tl { top:8px; left:8px; border-top:2px solid #3A8FE8; border-left:2px solid #3A8FE8; }
-        .corner-tr { top:8px; right:8px; border-top:2px solid #3A8FE8; border-right:2px solid #3A8FE8; }
-        .corner-bl { bottom:8px; left:8px; border-bottom:2px solid #3A8FE8; border-left:2px solid #3A8FE8; }
-        .corner-br { bottom:8px; right:8px; border-bottom:2px solid #3A8FE8; border-right:2px solid #3A8FE8; }
+        .corner-tl { top:10px; left:10px; border-top:2px solid #3A8FE8; border-left:2px solid #3A8FE8; border-radius:3px 0 0 0; }
+        .corner-tr { top:10px; right:10px; border-top:2px solid #3A8FE8; border-right:2px solid #3A8FE8; border-radius:0 3px 0 0; }
+        .corner-bl { bottom:10px; left:10px; border-bottom:2px solid #3A8FE8; border-left:2px solid #3A8FE8; border-radius:0 0 0 3px; }
+        .corner-br { bottom:10px; right:10px; border-bottom:2px solid #3A8FE8; border-right:2px solid #3A8FE8; border-radius:0 0 3px 0; }
         .prod-card.active .corner-tl,
         .prod-card.active .corner-tr,
         .prod-card.active .corner-bl,
         .prod-card.active .corner-br { opacity:1; }
         .active-badge {
-          position:absolute; top:12px; left:50%;
-          transform:translateX(-50%) translateY(-6px);
+          position:absolute; top:14px; left:50%;
+          transform:translateX(-50%) translateY(-8px);
           background:linear-gradient(135deg,#123E78,#3A8FE8);
           color:#fff; font-size:8px; font-weight:700;
           letter-spacing:2.5px; text-transform:uppercase;
-          padding:4px 10px; border-radius:20px;
+          padding:5px 12px; border-radius:20px;
           opacity:0; transition: opacity 0.4s ease, transform 0.4s ease;
-          white-space:nowrap; z-index:4;
+          white-space:nowrap; z-index:4; pointer-events:none;
         }
         .prod-card.active .active-badge { opacity:1; transform:translateX(-50%) translateY(0); }
         .prod-name {
-          margin-top:18px;
+          margin-top:20px;
           font-family:'Barlow Condensed',sans-serif;
-          font-size:15px; font-weight:700;
+          font-size:16px; font-weight:700;
           letter-spacing:2.5px; text-transform:uppercase;
-          color:rgba(255,255,255,0.4); text-align:center;
+          color:rgba(255,255,255,0.35); text-align:center;
           transition: color 0.4s ease;
         }
         .prod-card.active .prod-name { color:#FFFFFF; }
         .prod-cat {
           font-size:10px; font-weight:400;
           letter-spacing:2px; text-transform:uppercase;
-          color:rgba(58,143,232,0); margin-top:5px; text-align:center;
+          color:transparent; margin-top:6px; text-align:center;
           transition: color 0.4s ease;
         }
         .prod-card.active .prod-cat { color:#3A8FE8; }
         .prod-dot {
           width:4px; height:4px; border-radius:50%;
-          background:rgba(255,255,255,0.15); margin-top:10px;
+          background:rgba(255,255,255,0.15); margin-top:12px;
           transition: background 0.4s ease, transform 0.4s ease;
         }
-        .prod-card.active .prod-dot { background:#3A8FE8; transform:scale(1.5); }
+        .prod-card.active .prod-dot { background:#3A8FE8; transform:scale(1.6); }
         .s3-dots {
           display:flex; justify-content:center; gap:8px;
-          margin-top:36px; position:relative; z-index:2;
+          margin-top:40px; position:relative; z-index:2;
         }
         .s3-dot {
           width:6px; height:6px; border-radius:50%;
@@ -650,11 +668,20 @@ const Index = () => {
           transition: all 0.3s ease; cursor:pointer;
         }
         .s3-dot.active { background:#3A8FE8; width:24px; border-radius:3px; }
+        @media(min-width:769px) and (max-width:1024px) {
+          .prod-card { width:260px; }
+          .prod-img-wrap { width:228px; height:268px; }
+          .s3-track { gap:28px; padding:44px 60px 60px; }
+        }
         @media (max-width:768px) {
-          .prod-card { width:180px; }
-          .prod-img-wrap { width:160px; height:190px; }
-          .s3-track { gap:20px; padding:32px 40px 48px; }
-          .s3-track-wrap::before, .s3-track-wrap::after { width:60px; }
+          .prod-card { width:210px; }
+          .prod-img-wrap { width:186px; height:222px; }
+          .s3-track { gap:20px; padding:36px 32px 52px; }
+        }
+        @media (max-width:400px) {
+          .prod-card { width:185px; }
+          .prod-img-wrap { width:165px; height:200px; }
+          .s3-track { gap:16px; padding:32px 24px 48px; }
         }
       `}</style>
 
