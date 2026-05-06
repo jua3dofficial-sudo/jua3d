@@ -305,6 +305,104 @@ const Index = () => {
           .jua-desktop-hero .h-printlab { font-size: clamp(56px,8vw,96px); }
           .jua-desktop-hero .h-sub { font-size: clamp(28px,3.6vw,44px); }
         }
+
+        /* ============ SECTION 2 — TRUST & EXPERTISE ============ */
+        .jua-s2-wrap { position: relative; z-index: 6; margin-top: 100vh; font-family:'Barlow',sans-serif; }
+        .s2 {
+          width: 100%; min-height: 100vh;
+          background: linear-gradient(160deg, #060E1C 0%, #0A2A57 50%, #060E1C 100%);
+          display: flex; align-items: stretch; position: relative; overflow: hidden;
+        }
+        .glow-orb {
+          position: absolute; width: 500px; height: 500px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(58,143,232,0.12) 0%, transparent 70%);
+          top: -100px; left: -100px; pointer-events: none; z-index: 0;
+        }
+        .s2-left {
+          position: relative; z-index: 2; flex: 1;
+          display: flex; flex-direction: column; justify-content: center;
+          padding: 80px 56px 80px 64px; max-width: 52%;
+        }
+        .s2-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+        .s2-eyebrow-line { width: 32px; height: 1px; background: #3A8FE8; }
+        .s2-eyebrow-text {
+          font-size: 11px; font-weight: 600; letter-spacing: 4px;
+          text-transform: uppercase; color: #3A8FE8;
+        }
+        .s2-logo {
+          width: 80px; height: 80px; object-fit: contain; margin-bottom: 28px;
+          filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(58,143,232,0.6));
+        }
+        .s2-headline {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: clamp(34px, 3.8vw, 52px); font-weight: 800;
+          color: #FFFFFF; line-height: 1.05; letter-spacing: 0.5px; margin-bottom: 24px;
+        }
+        .s2-headline em { font-style: normal; color: #3A8FE8; }
+        .s2-divider { width: 48px; height: 2px; background: linear-gradient(to right, #3A8FE8, transparent); margin-bottom: 24px; }
+        .s2-body {
+          font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.62);
+          line-height: 1.85; max-width: 440px; margin-bottom: 40px;
+        }
+        .s2-body strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+        .s2-cta-row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .s2-cta-btn {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+          color: #FFFFFF; background: linear-gradient(135deg, #123E78, #3A8FE8);
+          padding: 14px 32px; text-decoration: none; border-radius: 2px;
+          transition: all 0.3s; box-shadow: 0 4px 24px rgba(58,143,232,0.25);
+        }
+        .s2-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 32px rgba(58,143,232,0.4); }
+        .s2-cta-link {
+          font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(255,255,255,0.4); text-decoration: none;
+          display: flex; align-items: center; gap: 8px; transition: color 0.3s;
+        }
+        .s2-cta-link:hover { color: #FFFFFF; }
+        .s2-cta-link::after { content: '→'; font-size: 14px; }
+        .s2-stats-row {
+          display: flex; gap: 40px; margin-top: 52px; padding-top: 32px;
+          border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .s2-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #FFFFFF; letter-spacing: 1px; line-height: 1; }
+        .s2-stat-num span { color: #3A8FE8; }
+        .s2-stat-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 4px; }
+        .s2-right {
+          position: relative; z-index: 2; flex: 1; max-width: 48%;
+          display: flex; align-items: center; justify-content: center; padding: 48px 48px 48px 0;
+        }
+        .s2-video-frame {
+          position: relative; width: 100%; max-width: 480px; aspect-ratio: 9/16;
+          border-radius: 20px; overflow: hidden;
+          box-shadow: 0 0 0 1px rgba(58,143,232,0.15), 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(58,143,232,0.08);
+        }
+        .s2-video-frame video { width: 100%; height: 100%; object-fit: cover; }
+        .s2-video-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(6,14,28,0.5) 100%); pointer-events: none; }
+        .s2-corner { position: absolute; width: 20px; height: 20px; z-index: 3; }
+        .s2-corner-tl { top: -1px; left: -1px; border-top: 2px solid #3A8FE8; border-left: 2px solid #3A8FE8; border-radius: 4px 0 0 0; }
+        .s2-corner-tr { top: -1px; right: -1px; border-top: 2px solid #3A8FE8; border-right: 2px solid #3A8FE8; border-radius: 0 4px 0 0; }
+        .s2-corner-bl { bottom: -1px; left: -1px; border-bottom: 2px solid #3A8FE8; border-left: 2px solid #3A8FE8; border-radius: 0 0 0 4px; }
+        .s2-corner-br { bottom: -1px; right: -1px; border-bottom: 2px solid #3A8FE8; border-right: 2px solid #3A8FE8; border-radius: 0 0 4px 0; }
+        .cap-strip {
+          width: 100%;
+          background: linear-gradient(90deg, #060E1C, #0A2A57, #060E1C);
+          border-top: 1px solid rgba(58,143,232,0.12);
+          border-bottom: 1px solid rgba(58,143,232,0.12);
+          overflow: hidden; position: relative; z-index: 2;
+        }
+        .cap-track { display: flex; width: max-content; animation: s2ScrollLeft 28s linear infinite; padding: 20px 0; }
+        .cap-item { display: flex; align-items: center; gap: 12px; padding: 0 48px; white-space: nowrap; border-right: 1px solid rgba(255,255,255,0.07); }
+        .cap-icon { font-size: 18px; opacity: 0.8; }
+        .cap-text { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+        @keyframes s2ScrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @media (max-width: 768px) {
+          .s2 { flex-direction: column; min-height: auto; }
+          .s2-left { max-width: 100%; padding: 60px 24px 40px; }
+          .s2-right { max-width: 100%; padding: 0 24px 60px; justify-content: center; }
+          .s2-video-frame { max-width: 280px; }
+          .s2-stats-row { gap: 24px; }
+        }
       `}</style>
 
       <div className="jua-hero-root">
@@ -423,6 +521,88 @@ const Index = () => {
 
           <div className="bottomline">PROTOTYPES • PRODUCTS • PRODUCTION</div>
         </section>
+
+        {/* SECTION 2 — TRUST & EXPERTISE */}
+        <div className="jua-s2-wrap">
+          <section className="s2">
+            <div className="glow-orb" />
+            <div className="s2-left">
+              <div className="s2-eyebrow">
+                <div className="s2-eyebrow-line" />
+                <span className="s2-eyebrow-text">The JUA Standard</span>
+              </div>
+              <img
+                className="s2-logo"
+                src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1778037058/ChatGPT_Image_May_6_2026_08_38_32_AM_vhbfjf.webp"
+                alt="JUA 3D Print Lab Logo"
+              />
+              <h2 className="s2-headline">
+                Precision You Can <em>Touch.</em><br />
+                Results You Can <em>Trust.</em>
+              </h2>
+              <div className="s2-divider" />
+              <p className="s2-body">
+                At JUA 3D Print Lab, we've mastered the art of turning complex ideas into{" "}
+                <strong>tangible, high-quality products.</strong> Serving 10+ industries across
+                medical, architecture, automotive, and beyond — our team combines advanced 3D printing
+                technology with deep engineering expertise. When quality is non-negotiable,{" "}
+                <strong>professionals choose JUA.</strong>
+              </p>
+              <div className="s2-cta-row">
+                <a href="#contact" className="s2-cta-btn">Work With Us</a>
+                <a href="#products" className="s2-cta-link">See Our Work</a>
+              </div>
+              <div className="s2-stats-row">
+                <div className="s2-stat-item">
+                  <div className="s2-stat-num">10<span>+</span></div>
+                  <div className="s2-stat-label">Industries</div>
+                </div>
+                <div className="s2-stat-item">
+                  <div className="s2-stat-num">50<span>+</span></div>
+                  <div className="s2-stat-label">Product Types</div>
+                </div>
+                <div className="s2-stat-item">
+                  <div className="s2-stat-num">100<span>%</span></div>
+                  <div className="s2-stat-label">Custom Made</div>
+                </div>
+              </div>
+            </div>
+            <div className="s2-right">
+              <div className="s2-video-frame">
+                <div className="s2-corner s2-corner-tl" />
+                <div className="s2-corner s2-corner-tr" />
+                <div className="s2-corner s2-corner-bl" />
+                <div className="s2-corner s2-corner-br" />
+                <video
+                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              </div>
+            </div>
+          </section>
+
+          <div className="cap-strip">
+            <div className="cap-track">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} style={{ display: "flex" }}>
+                  <div className="cap-item"><span className="cap-icon">⬡</span><span className="cap-text">High Precision Printing</span></div>
+                  <div className="cap-item"><span className="cap-icon">⚡</span><span className="cap-text">Rapid Prototyping</span></div>
+                  <div className="cap-item"><span className="cap-icon">⚙️</span><span className="cap-text">Custom Manufacturing</span></div>
+                  <div className="cap-item"><span className="cap-icon">🏥</span><span className="cap-text">Medical Grade Output</span></div>
+                  <div className="cap-item"><span className="cap-icon">🏛</span><span className="cap-text">Architectural Scale Models</span></div>
+                  <div className="cap-item"><span className="cap-icon">🚗</span><span className="cap-text">Automotive Parts</span></div>
+                  <div className="cap-item"><span className="cap-icon">📦</span><span className="cap-text">Industrial Supply</span></div>
+                  <div className="cap-item"><span className="cap-icon">⏱</span><span className="cap-text">Fast Turnaround</span></div>
+                  <div className="cap-item"><span className="cap-icon">✅</span><span className="cap-text">Quality Guaranteed</span></div>
+                  <div className="cap-item"><span className="cap-icon">🎯</span><span className="cap-text">Micron-Level Accuracy</span></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
