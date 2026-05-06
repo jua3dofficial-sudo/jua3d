@@ -12,92 +12,110 @@ const Index = () => {
     if (!wrap) return;
     const cards = Array.from(wrap.querySelectorAll<HTMLDivElement>(".prod-card"));
     const dots = Array.from(document.querySelectorAll<HTMLDivElement>(".s3-dot"));
-    let isDragging = false, startX = 0, scrollLeft = 0, activeIndex = -1, rafId = 0;
+    let activeIndex = -1;
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let autoTimer: ReturnType<typeof setInterval> | null = null;
 
-    const getActiveCard = () => {
-      const r = wrap.getBoundingClientRect();
-      const c = r.left + r.width / 2;
-      let closest = 0, min = Infinity;
+    const getClosestIndex = () => {
+      const wrapCentre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
+      let closest = 0;
+      let minDist = Infinity;
       cards.forEach((card, i) => {
-        const cr = card.getBoundingClientRect();
-        const d = Math.abs(cr.left + cr.width / 2 - c);
-        if (d < min) { min = d; closest = i; }
+        const rect = card.getBoundingClientRect();
+        const cardCentre = rect.left + rect.width / 2;
+        const dist = Math.abs(cardCentre - wrapCentre);
+        if (dist < minDist) { minDist = dist; closest = i; }
       });
       return closest;
     };
+
     const updateActive = () => {
-      const idx = getActiveCard();
+      const idx = getClosestIndex();
       if (idx === activeIndex) return;
       activeIndex = idx;
       cards.forEach((c, i) => c.classList.toggle("active", i === idx));
       dots.forEach((d, i) => d.classList.toggle("active", i === idx));
     };
-    const snap = () => {
-      const idx = getActiveCard();
+
+    const snapToActive = () => {
+      const idx = getClosestIndex();
       cards[idx]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-      setTimeout(updateActive, 350);
+      setTimeout(updateActive, 400);
     };
 
-    let autoTimer: ReturnType<typeof setInterval> | null = null;
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
+    const startAuto = () => {
+      autoTimer = setInterval(() => {
+        const next = (activeIndex + 1) % cards.length;
+        cards[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        setTimeout(updateActive, 400);
+      }, 3000);
+    };
+
+    const onScroll = () => updateActive();
 
     const onMouseDown = (e: MouseEvent) => {
-      isDragging = true; startX = e.pageX - wrap.offsetLeft; scrollLeft = wrap.scrollLeft;
-      wrap.style.cursor = "grabbing"; stopAuto();
+      isDragging = true;
+      startX = e.pageX;
+      scrollStart = wrap.scrollLeft;
+      wrap.style.cursor = "grabbing";
+      stopAuto();
     };
     const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return; e.preventDefault();
-      wrap.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX) * 1.4;
-      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateActive);
+      if (!isDragging) return;
+      wrap.scrollLeft = scrollStart - (e.pageX - startX) * 1.4;
+      updateActive();
     };
-    const onMouseUp = () => { if (isDragging) { isDragging = false; wrap.style.cursor = "grab"; snap(); } };
-    const onTouchStart = (e: TouchEvent) => {
-      startX = e.touches[0].pageX; scrollLeft = wrap.scrollLeft; stopAuto();
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      wrap.scrollLeft = scrollLeft + (startX - e.touches[0].pageX) * 1.2;
-      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateActive);
-    };
-    const onScroll = () => {
-      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateActive);
+    const onMouseUp = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      wrap.style.cursor = "grab";
+      snapToActive();
     };
 
+    const onTouchStart = (e: TouchEvent) => {
+      startX = e.touches[0].pageX;
+      scrollStart = wrap.scrollLeft;
+      stopAuto();
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      wrap.scrollLeft = scrollStart - (e.touches[0].pageX - startX) * 1.2;
+      updateActive();
+    };
+
+    wrap.addEventListener("scroll", onScroll, { passive: true });
     wrap.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     wrap.addEventListener("touchstart", onTouchStart, { passive: true });
     wrap.addEventListener("touchmove", onTouchMove, { passive: true });
-    wrap.addEventListener("touchend", snap);
-    wrap.addEventListener("scroll", onScroll, { passive: true });
+    wrap.addEventListener("touchend", snapToActive);
 
-    dots.forEach((dot, i) => {
-      dot.addEventListener("click", () => {
+    const dotHandlers: Array<() => void> = dots.map((dot, i) => {
+      const h = () => {
+        stopAuto();
         cards[i]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
         setTimeout(updateActive, 400);
-      });
+      };
+      dot.addEventListener("click", h);
+      return h;
     });
 
     cards[1]?.scrollIntoView({ block: "nearest", inline: "center" });
-    setTimeout(updateActive, 100);
-
-    autoTimer = setInterval(() => {
-      if (!isDragging) {
-        const next = (activeIndex + 1) % cards.length;
-        cards[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        setTimeout(updateActive, 400);
-      }
-    }, 3500);
+    setTimeout(() => { updateActive(); startAuto(); }, 150);
 
     return () => {
+      wrap.removeEventListener("scroll", onScroll);
       wrap.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
       wrap.removeEventListener("touchstart", onTouchStart);
       wrap.removeEventListener("touchmove", onTouchMove);
-      wrap.removeEventListener("touchend", snap);
-      wrap.removeEventListener("scroll", onScroll);
+      wrap.removeEventListener("touchend", snapToActive);
+      dots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
       stopAuto();
-      cancelAnimationFrame(rafId);
     };
   }, []);
 
