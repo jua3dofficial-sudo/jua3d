@@ -570,7 +570,7 @@ const Index = () => {
         }
         .prod-card.active .prod-img-wrap {
           border-color:rgba(58,143,232,0.5);
-          box-shadow: 0 0 0 1px rgba(58,143,232,0.2), 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(58,143,232,0.15);
+          box-shadow: 0 0 0 1px rgba(58,143,232,0.2), 0 0 40px rgba(58,143,232,0.15);
         }
         .prod-img-wrap img {
           width:100%; height:100%; object-fit:cover; object-position:center;
