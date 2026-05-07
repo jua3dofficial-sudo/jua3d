@@ -545,6 +545,7 @@ const Index = () => {
           padding:80px 0 100px;
           background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
           position:relative;
+          z-index:6;
           overflow:hidden;
           font-family:'Barlow',sans-serif;
         }
