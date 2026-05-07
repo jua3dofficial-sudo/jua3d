@@ -83,7 +83,7 @@ const Index = () => {
     };
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
-      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.5;
+      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.0;
       scheduleUpdate();
     };
     const onMouseUp = () => {
