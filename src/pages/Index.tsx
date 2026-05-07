@@ -8,6 +8,14 @@ const Index = () => {
   const trackWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const wrap = trackWrapRef.current;
     if (!wrap) return;
     const cards = Array.from(wrap.querySelectorAll<HTMLDivElement>(".prod-card"));
@@ -48,7 +56,10 @@ const Index = () => {
     };
 
     const snapTo = (idx: number) => {
-      cards[idx]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      const card = cards[idx];
+      if (!card) return;
+      const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
+      wrap.scrollTo({ left: target, behavior: "smooth" });
       setTimeout(() => applyActive(getClosest()), 420);
     };
 
@@ -107,13 +118,14 @@ const Index = () => {
       return h;
     });
 
-    const initTimeout = setTimeout(() => {
+    const init = () => {
       const card = cards[1];
       if (card) {
         wrap.scrollLeft = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
       }
       setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
-    }, 100);
+    };
+    const initTimeout = setTimeout(init, 600);
 
     return () => {
       clearTimeout(initTimeout);
