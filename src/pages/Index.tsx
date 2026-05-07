@@ -48,7 +48,10 @@ const Index = () => {
     };
 
     const snapTo = (idx: number) => {
-      cards[idx]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      const card = cards[idx];
+      if (!card) return;
+      const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
+      wrap.scrollTo({ left: target, behavior: "smooth" });
       setTimeout(() => applyActive(getClosest()), 420);
     };
 
