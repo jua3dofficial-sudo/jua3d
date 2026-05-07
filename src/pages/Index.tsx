@@ -8,6 +8,14 @@ const Index = () => {
   const trackWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const wrap = trackWrapRef.current;
     if (!wrap) return;
     const cards = Array.from(wrap.querySelectorAll<HTMLDivElement>(".prod-card"));
