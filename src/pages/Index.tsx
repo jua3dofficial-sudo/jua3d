@@ -110,13 +110,14 @@ const Index = () => {
       return h;
     });
 
-    const initTimeout = setTimeout(() => {
+    const init = () => {
       const card = cards[1];
       if (card) {
         wrap.scrollLeft = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
       }
       setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
-    }, 100);
+    };
+    const initTimeout = setTimeout(init, 600);
 
     return () => {
       clearTimeout(initTimeout);
