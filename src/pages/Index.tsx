@@ -83,7 +83,7 @@ const Index = () => {
     };
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
-      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.5;
+      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.0;
       scheduleUpdate();
     };
     const onMouseUp = () => {
@@ -592,6 +592,7 @@ const Index = () => {
           overflow-x:scroll; overflow-y:visible;
           cursor:grab; user-select:none; scrollbar-width:none;
           -webkit-overflow-scrolling:touch;
+          scroll-behavior:smooth;
         }
         .s3-track-wrap::-webkit-scrollbar { display:none; }
         .s3-track-wrap:active { cursor:grabbing; }
@@ -605,6 +606,7 @@ const Index = () => {
           display:flex; flex-direction:column; align-items:center;
           transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
           transform:scale(0.84); opacity:0.6; cursor:pointer;
+          will-change: transform;
         }
         .prod-card.active { transform:scale(1); opacity:1; }
         .prod-img-wrap {
@@ -613,6 +615,7 @@ const Index = () => {
           background:linear-gradient(145deg,#0d2d5e,#060E1C);
           border:1px solid rgba(58,143,232,0.12);
           transition: border-color 0.5s ease, box-shadow 0.5s ease;
+          padding:12px;
         }
         .prod-card.active .prod-img-wrap {
           border-color:rgba(58,143,232,0.55);
@@ -622,7 +625,7 @@ const Index = () => {
             0 0 48px rgba(58,143,232,0.18);
         }
         .prod-img-wrap img {
-          width:100%; height:100%; object-fit:cover; object-position:center;
+          width:100%; height:100%; object-fit:contain; object-position:center;
           transition: transform 0.6s ease; display:block;
         }
         .prod-card.active .prod-img-wrap img { transform:scale(1.06); }
