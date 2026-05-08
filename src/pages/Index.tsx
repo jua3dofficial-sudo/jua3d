@@ -165,7 +165,10 @@ const Index = () => {
 
     return () => {
       clearTimeout(initTimeout);
+      if (userInteractTO) clearTimeout(userInteractTO);
+      cancelTween();
       wrap.removeEventListener("scroll", onScroll);
+      wrap.removeEventListener("wheel", onWheel);
       wrap.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
