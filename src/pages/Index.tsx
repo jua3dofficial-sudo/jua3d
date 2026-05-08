@@ -57,11 +57,33 @@ const Index = () => {
       });
     };
 
+    const cancelTween = () => {
+      if (tweenRAF !== null) { cancelAnimationFrame(tweenRAF); tweenRAF = null; }
+    };
+
+    const tweenScrollTo = (target: number, duration = 700) => {
+      cancelTween();
+      const start = wrap.scrollLeft;
+      const change = target - start;
+      if (Math.abs(change) < 0.5) return;
+      const startTime = performance.now();
+      // easeInOutCubic – smooth, no overshoot
+      const ease = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const step = (now: number) => {
+        const t = Math.min(1, (now - startTime) / duration);
+        wrap.scrollLeft = start + change * ease(t);
+        scheduleUpdate();
+        if (t < 1) tweenRAF = requestAnimationFrame(step);
+        else tweenRAF = null;
+      };
+      tweenRAF = requestAnimationFrame(step);
+    };
+
     const snapTo = (idx: number) => {
       const card = cards[idx];
       if (!card) return;
       const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
-      wrap.scrollTo({ left: target, behavior: "smooth" });
+      tweenScrollTo(target, 750);
       setTimeout(() => applyActive(getClosest()), 420);
     };
 
@@ -74,6 +96,12 @@ const Index = () => {
       }, 3200);
     };
 
+    const pauseAutoTemporarily = () => {
+      stopAuto();
+      if (userInteractTO) clearTimeout(userInteractTO);
+      userInteractTO = setTimeout(() => startAuto(), 4500);
+    };
+
     const onScroll = () => scheduleUpdate();
 
     const onMouseDown = (e: MouseEvent) => {
@@ -81,6 +109,7 @@ const Index = () => {
       dragStartX = e.clientX;
       dragScrollL = wrap.scrollLeft;
       wrap.style.cursor = "grabbing";
+      cancelTween();
       stopAuto();
     };
     const onMouseMove = (e: MouseEvent) => {
@@ -93,20 +122,25 @@ const Index = () => {
       isDragging = false;
       wrap.style.cursor = "grab";
       snapTo(getClosest());
+      pauseAutoTemporarily();
     };
 
     const onTouchStart = (e: TouchEvent) => {
       dragStartX = e.touches[0].clientX;
       dragScrollL = wrap.scrollLeft;
+      cancelTween();
       stopAuto();
     };
     const onTouchMove = (e: TouchEvent) => {
-      wrap.scrollLeft = dragScrollL - (e.touches[0].clientX - dragStartX) * 1.3;
+      wrap.scrollLeft = dragScrollL - (e.touches[0].clientX - dragStartX) * 1.0;
       scheduleUpdate();
     };
-    const onTouchEnd = () => snapTo(getClosest());
+    const onTouchEnd = () => { snapTo(getClosest()); pauseAutoTemporarily(); };
+
+    const onWheel = () => { cancelTween(); pauseAutoTemporarily(); };
 
     wrap.addEventListener("scroll", onScroll, { passive: true });
+    wrap.addEventListener("wheel", onWheel, { passive: true });
     wrap.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
@@ -115,7 +149,7 @@ const Index = () => {
     wrap.addEventListener("touchend", onTouchEnd);
 
     const dotHandlers: Array<() => void> = dots.map((dot, i) => {
-      const h = () => { stopAuto(); snapTo(i); };
+      const h = () => { pauseAutoTemporarily(); snapTo(i); };
       dot.addEventListener("click", h);
       return h;
     });
