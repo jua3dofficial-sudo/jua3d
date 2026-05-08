@@ -935,9 +935,6 @@ const Index = () => {
               ].map((p, i) => (
                 <div className="prod-card" key={i} data-index={i}>
                   <div className="prod-img-wrap">
-                    <div className="corner-tl" /><div className="corner-tr" />
-                    <div className="corner-bl" /><div className="corner-br" />
-                    <div className="active-badge">Featured</div>
                     <img src={p.src} alt={p.name} loading="lazy" />
                   </div>
                   <div className="prod-name">{p.name}</div>
