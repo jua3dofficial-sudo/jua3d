@@ -27,6 +27,8 @@ const Index = () => {
     let dragScrollL = 0;
     let autoTimer: ReturnType<typeof setInterval> | null = null;
     let ticking = false;
+    let tweenRAF: number | null = null;
+    let userInteractTO: ReturnType<typeof setTimeout> | null = null;
 
     const getClosest = () => {
       const centre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
