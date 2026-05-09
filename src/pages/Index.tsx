@@ -980,7 +980,7 @@ const Index = () => {
         .s4-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(18,62,120,0.7) 0%,rgba(10,42,87,0.4) 40%,transparent 70%);filter:blur(60px);z-index:1;animation:s4glow 4s ease-in-out infinite;}
         @keyframes s4glow{0%,100%{opacity:0.7;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
         .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:600px;margin:0 auto;}
-        .s4-video-wrap video{width:100%;display:block;mix-blend-mode:luminosity;filter:brightness(0.95) contrast(1.1) saturate(1.2) hue-rotate(200deg);opacity:0.92;}
+        .s4-video-wrap video{width:100%;display:block;filter:brightness(1.0);}
         .s4-watermark-cover{position:absolute;bottom:14%;right:4%;z-index:4;background:linear-gradient(135deg,#0A2A57,#123E78);padding:6px 14px;border-radius:4px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(0,0,0,0.5);}
         .s4-watermark-cover-logo{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.9);line-height:1;}
         .s4-watermark-cover-dot{width:5px;height:5px;border-radius:50%;background:#3A8FE8;flex-shrink:0;}
