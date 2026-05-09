@@ -6,6 +6,45 @@ const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
+  const s4VidRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const vid = s4VidRef.current;
+    if (!vid) return;
+    const CLIP_END = 8;
+    const STEP = 1 / 30;
+    let direction = 1;
+    let rafId: number | null = null;
+    const tick = () => {
+      if (direction === 1) {
+        vid.currentTime += STEP;
+        if (vid.currentTime >= CLIP_END) { vid.currentTime = CLIP_END; direction = -1; }
+      } else {
+        vid.currentTime -= STEP;
+        if (vid.currentTime <= 0) { vid.currentTime = 0; direction = 1; }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    const onMeta = () => { vid.currentTime = 0; vid.pause(); rafId = requestAnimationFrame(tick); };
+    vid.addEventListener("loadedmetadata", onMeta);
+    if (vid.readyState >= 1) onMeta();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (rafId == null) rafId = requestAnimationFrame(tick);
+        } else if (rafId != null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(vid);
+    return () => {
+      vid.removeEventListener("loadedmetadata", onMeta);
+      if (rafId != null) cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
@@ -952,58 +991,44 @@ const Index = () => {
           </div>
         </section>
 
-        {/* SECTION 4 — WE DESIGN · WE ENGINEER · WE PRINT */}
+        {/* SECTION 4 — PRODUCT ANIMATION SHOWCASE (ping-pong) */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s4{position:relative;width:100%;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);display:flex;flex-direction:column;align-items:center;overflow:hidden;padding-bottom:80px;}
-        .s4::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.04) 1px, transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px, transparent 1px);background-size:70px 70px;pointer-events:none;z-index:0;}
-        .s4-top{position:relative;z-index:2;text-align:center;padding:64px 24px 40px;width:100%;}
-        .s4-eyebrow{font-size:11px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#3A8FE8;margin-bottom:14px;opacity:0.8;font-family:'Barlow',sans-serif;}
-        .s4-top-tag{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,12vw,140px);letter-spacing:8px;color:#FFFFFF;line-height:0.9;animation:s4wipeIn 1s cubic-bezier(0.77,0,0.175,1) 0.2s both;}
-        .s4-top-line{width:60px;height:2px;background:linear-gradient(to right,transparent,#3A8FE8,transparent);margin:18px auto 0;}
-        .s4-video-outer{position:relative;z-index:2;width:100%;max-width:520px;padding:0 20px;margin:0 auto;}
-        .s4-video-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle, rgba(58,143,232,0.14) 0%, transparent 70%);filter:blur(48px);z-index:1;animation:s4glowPulse 3.5s ease-in-out infinite;}
-        @keyframes s4glowPulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
-        .s4-video-outer video{position:relative;z-index:2;width:100%;display:block;mix-blend-mode:screen;filter:brightness(1.1) contrast(1.1) saturate(0.9);}
-        .s4-bottom{position:relative;z-index:2;width:100%;max-width:880px;padding:0 32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-top:-20px;}
-        .s4-btag{display:flex;flex-direction:column;}
-        .s4-btag-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;margin-bottom:8px;opacity:0.75;font-family:'Barlow',sans-serif;}
-        .s4-btag-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,88px);letter-spacing:4px;line-height:0.9;color:#FFFFFF;animation:s4wipeIn 1s cubic-bezier(0.77,0,0.175,1) both;}
-        .s4-btag:nth-child(1) .s4-btag-word{animation-delay:0.4s;}
-        .s4-btag:nth-child(3) .s4-btag-word{animation-delay:0.7s;}
-        .s4-btag:nth-child(3){text-align:right;}
-        .s4-btag-line{width:40px;height:1px;background:linear-gradient(to right,#3A8FE8,transparent);margin-top:12px;}
-        .s4-btag:nth-child(3) .s4-btag-line{margin-left:auto;background:linear-gradient(to left,#3A8FE8,transparent);}
-        .s4-sep{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,88px);color:rgba(58,143,232,0.3);line-height:0.9;align-self:flex-start;padding-top:28px;flex-shrink:0;}
-        @keyframes s4wipeIn{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0 0% 0 0);}}
-        @media(max-width:560px){.s4-bottom{flex-direction:column;gap:32px;}.s4-sep{display:none;}.s4-btag:nth-child(3){text-align:left;}.s4-btag:nth-child(3) .s4-btag-line{margin-left:0;background:linear-gradient(to right,#3A8FE8,transparent);}}
+        .s4{position:relative;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
+        .s4-fade-top{position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
+        .s4-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
+        .s4-fade-left{position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(to right,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
+        .s4-fade-right{position:absolute;top:0;right:0;bottom:0;width:120px;background:linear-gradient(to left,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
+        .s4-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(18,62,120,0.7) 0%,rgba(10,42,87,0.4) 40%,transparent 70%);filter:blur(60px);z-index:1;animation:s4glow 4s ease-in-out infinite;}
+        @keyframes s4glow{0%,100%{opacity:0.7;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
+        .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:600px;margin:0 auto;}
+        .s4-video-wrap video{width:100%;display:block;mix-blend-mode:luminosity;filter:brightness(0.95) contrast(1.1) saturate(1.2) hue-rotate(200deg);opacity:0.92;}
+        .s4-watermark-cover{position:absolute;bottom:14%;right:4%;z-index:4;background:linear-gradient(135deg,#0A2A57,#123E78);padding:6px 14px;border-radius:4px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(0,0,0,0.5);}
+        .s4-watermark-cover-logo{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.9);line-height:1;}
+        .s4-watermark-cover-dot{width:5px;height:5px;border-radius:50%;background:#3A8FE8;flex-shrink:0;}
+        .s4-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.03) 1px,transparent 1px);background-size:60px 60px;z-index:2;pointer-events:none;mix-blend-mode:overlay;}
+        .s4-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.2),transparent);z-index:4;animation:s4scan 5s linear infinite;pointer-events:none;}
+        @keyframes s4scan{from{top:0%;}to{top:100%;}}
+        @media(max-width:600px){.s4-fade-left,.s4-fade-right{width:60px;}.s4-fade-top{height:100px;}.s4-fade-bottom{height:120px;}}
         ` }} />
         <section className="s4">
-          <div className="s4-top">
-            <div className="s4-eyebrow">JUA 3D Print Lab · Showcase</div>
-            <div className="s4-top-tag">WE DESIGN</div>
-            <div className="s4-top-line" />
-          </div>
-          <div className="s4-video-outer">
-            <div className="s4-video-glow" />
+          <div className="s4-glow" />
+          <div className="s4-grid" />
+          <div className="s4-scan" />
+          <div className="s4-fade-top" />
+          <div className="s4-fade-bottom" />
+          <div className="s4-fade-left" />
+          <div className="s4-fade-right" />
+          <div className="s4-video-wrap">
             <video
+              ref={s4VidRef}
               src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778324562/Astronaut_moon_sculpture_rotatin__202605081235_szg61l.mp4"
-              autoPlay
               muted
-              loop
               playsInline
+              preload="auto"
             />
-          </div>
-          <div className="s4-bottom">
-            <div className="s4-btag">
-              <div className="s4-btag-label">02 — Built to spec</div>
-              <div className="s4-btag-word">WE<br/>ENGINEER</div>
-              <div className="s4-btag-line" />
-            </div>
-            <div className="s4-sep">·</div>
-            <div className="s4-btag">
-              <div className="s4-btag-label">03 — Digital to physical</div>
-              <div className="s4-btag-word">WE<br/>PRINT</div>
-              <div className="s4-btag-line" />
+            <div className="s4-watermark-cover">
+              <div className="s4-watermark-cover-dot" />
+              <div className="s4-watermark-cover-logo">JUA 3D</div>
             </div>
           </div>
         </section>
