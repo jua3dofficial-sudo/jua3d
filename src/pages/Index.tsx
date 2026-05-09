@@ -963,7 +963,7 @@ const Index = () => {
         .s4-video-outer{position:relative;z-index:2;width:100%;max-width:520px;padding:0 20px;margin:0 auto;}
         .s4-video-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle, rgba(58,143,232,0.14) 0%, transparent 70%);filter:blur(48px);z-index:1;animation:s4glowPulse 3.5s ease-in-out infinite;}
         @keyframes s4glowPulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
-        .s4-video-outer video{position:relative;z-index:2;width:100%;display:block;mix-blend-mode:screen;filter:brightness(1.2) contrast(1.05) saturate(1.1);}
+        .s4-video-outer video{position:relative;z-index:2;width:100%;display:block;mix-blend-mode:screen;filter:brightness(1.1) contrast(1.1) saturate(0.9);}
         .s4-bottom{position:relative;z-index:2;width:100%;max-width:880px;padding:0 32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-top:-20px;}
         .s4-btag{display:flex;flex-direction:column;}
         .s4-btag-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;margin-bottom:8px;opacity:0.75;font-family:'Barlow',sans-serif;}
@@ -986,7 +986,7 @@ const Index = () => {
           <div className="s4-video-outer">
             <div className="s4-video-glow" />
             <video
-              src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778216972/From_KlickPin_CF_Try_Unique_office_desk_styling_that_are_trending_right_now_across_Pinterest_boards_for_ideas_worth_saving_right_now_-_Pin-1131810950125763185_l9qyxn.mp4"
+              src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778324562/Astronaut_moon_sculpture_rotatin__202605081235_szg61l.mp4"
               autoPlay
               muted
               loop
