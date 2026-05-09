@@ -954,67 +954,37 @@ const Index = () => {
 
         {/* SECTION 4 — WE DESIGN · WE ENGINEER · WE PRINT */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s4{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:#060E1C;}
-        .s4-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(18,62,120,0.55) 0%, transparent 70%),radial-gradient(ellipse 40% 40% at 50% 80%, rgba(58,143,232,0.08) 0%, transparent 60%),linear-gradient(180deg, #060E1C 0%, #0A2A57 50%, #060E1C 100%);z-index:0;}
-        .s4-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(58,143,232,0.05) 1px, transparent 1px);background-size:80px 80px;z-index:1;pointer-events:none;}
-        .s4-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(to right, transparent, rgba(58,143,232,0.3), transparent);animation:s4scanDown 6s linear infinite;z-index:2;pointer-events:none;}
-        @keyframes s4scanDown{from{top:-2px;}to{top:100%;}}
-        .s4-video-wrap{position:relative;z-index:5;width:min(500px, 85vw);aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;}
-        .s4-video-wrap video{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:brightness(1.15) contrast(1.05) saturate(1.1);}
-        .s4-char-glow{position:absolute;inset:10%;border-radius:50%;background:radial-gradient(circle, rgba(58,143,232,0.18) 0%, transparent 70%);filter:blur(40px);z-index:4;animation:s4glowPulse 3s ease-in-out infinite;}
-        @keyframes s4glowPulse{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
-        .s4-taglines{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;justify-content:center;pointer-events:none;}
-        .tag-left{align-self:flex-start;padding-left:clamp(16px,5vw,80px);margin-bottom:auto;padding-top:clamp(60px,12vh,120px);}
-        .tag-right{align-self:flex-end;padding-right:clamp(16px,5vw,80px);text-align:right;}
-        .tag-bottom{align-self:flex-start;padding-left:clamp(16px,5vw,80px);padding-bottom:clamp(60px,12vh,120px);margin-top:auto;}
-        .tag-label{font-size:clamp(8px,1.2vw,11px);font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;margin-bottom:6px;opacity:0.8;font-family:'Barlow',sans-serif;}
-        .tag-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,120px);letter-spacing:4px;line-height:0.9;color:rgba(255,255,255,0.08);-webkit-text-stroke:1px rgba(255,255,255,0.25);position:relative;overflow:hidden;display:block;}
-        .tag-word::after{content:attr(data-text);position:absolute;left:0;top:0;color:#FFFFFF;-webkit-text-stroke:0;clip-path:inset(0 100% 0 0);animation:s4revealText 1.2s cubic-bezier(0.77,0,0.175,1) forwards;}
-        .tag-left .tag-word::after{animation-delay:0.2s;}
-        .tag-right .tag-word::after{animation-delay:0.7s;}
-        .tag-bottom .tag-word::after{animation-delay:1.2s;}
-        @keyframes s4revealText{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0 0% 0 0);}}
-        .tag-sub{font-size:clamp(9px,1.3vw,12px);font-weight:400;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:8px;font-family:'Barlow',sans-serif;}
-        .tag-line{width:40px;height:1px;background:linear-gradient(to right,#3A8FE8,transparent);margin-top:10px;}
-        .tag-right .tag-line{margin-left:auto;background:linear-gradient(to left,#3A8FE8,transparent);}
-        .s4-marquee-wrap{position:relative;z-index:6;width:100%;border-top:1px solid rgba(58,143,232,0.12);border-bottom:1px solid rgba(58,143,232,0.12);overflow:hidden;padding:18px 0;background:rgba(6,14,28,0.6);backdrop-filter:blur(8px);}
-        .s4-marquee{display:flex;width:max-content;animation:s4marquee 18s linear infinite;}
-        .s4-marquee-item{display:flex;align-items:center;gap:24px;padding:0 48px;white-space:nowrap;}
-        .s4-marquee-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3vw,36px);letter-spacing:6px;color:rgba(255,255,255,0.15);-webkit-text-stroke:1px rgba(255,255,255,0.2);}
-        .s4-marquee-text.accent{color:transparent;-webkit-text-stroke:1px #3A8FE8;}
-        .s4-marquee-dot{width:5px;height:5px;border-radius:50%;background:#3A8FE8;opacity:0.5;flex-shrink:0;}
-        @keyframes s4marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-        @media(max-width:600px){.s4-video-wrap{width:90vw;}.tag-word{font-size:clamp(42px,14vw,72px);}.s4-marquee-text{font-size:22px;}}
+        .s4{position:relative;width:100%;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);display:flex;flex-direction:column;align-items:center;overflow:hidden;padding-bottom:80px;}
+        .s4::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.04) 1px, transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px, transparent 1px);background-size:70px 70px;pointer-events:none;z-index:0;}
+        .s4-top{position:relative;z-index:2;text-align:center;padding:64px 24px 40px;width:100%;}
+        .s4-eyebrow{font-size:11px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#3A8FE8;margin-bottom:14px;opacity:0.8;font-family:'Barlow',sans-serif;}
+        .s4-top-tag{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,12vw,140px);letter-spacing:8px;color:#FFFFFF;line-height:0.9;animation:s4wipeIn 1s cubic-bezier(0.77,0,0.175,1) 0.2s both;}
+        .s4-top-line{width:60px;height:2px;background:linear-gradient(to right,transparent,#3A8FE8,transparent);margin:18px auto 0;}
+        .s4-video-outer{position:relative;z-index:2;width:100%;max-width:520px;padding:0 20px;margin:0 auto;}
+        .s4-video-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle, rgba(58,143,232,0.14) 0%, transparent 70%);filter:blur(48px);z-index:1;animation:s4glowPulse 3.5s ease-in-out infinite;}
+        @keyframes s4glowPulse{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+        .s4-video-outer video{position:relative;z-index:2;width:100%;display:block;mix-blend-mode:screen;filter:brightness(1.2) contrast(1.05) saturate(1.1);}
+        .s4-bottom{position:relative;z-index:2;width:100%;max-width:880px;padding:0 32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-top:-20px;}
+        .s4-btag{display:flex;flex-direction:column;}
+        .s4-btag-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;margin-bottom:8px;opacity:0.75;font-family:'Barlow',sans-serif;}
+        .s4-btag-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,88px);letter-spacing:4px;line-height:0.9;color:#FFFFFF;animation:s4wipeIn 1s cubic-bezier(0.77,0,0.175,1) both;}
+        .s4-btag:nth-child(1) .s4-btag-word{animation-delay:0.4s;}
+        .s4-btag:nth-child(3) .s4-btag-word{animation-delay:0.7s;}
+        .s4-btag:nth-child(3){text-align:right;}
+        .s4-btag-line{width:40px;height:1px;background:linear-gradient(to right,#3A8FE8,transparent);margin-top:12px;}
+        .s4-btag:nth-child(3) .s4-btag-line{margin-left:auto;background:linear-gradient(to left,#3A8FE8,transparent);}
+        .s4-sep{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,88px);color:rgba(58,143,232,0.3);line-height:0.9;align-self:flex-start;padding-top:28px;flex-shrink:0;}
+        @keyframes s4wipeIn{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0 0% 0 0);}}
+        @media(max-width:560px){.s4-bottom{flex-direction:column;gap:32px;}.s4-sep{display:none;}.s4-btag:nth-child(3){text-align:left;}.s4-btag:nth-child(3) .s4-btag-line{margin-left:0;background:linear-gradient(to right,#3A8FE8,transparent);}}
         ` }} />
         <section className="s4">
-          <div className="s4-bg" />
-          <div className="s4-grid" />
-          <div className="s4-scan" />
-          <div className="s4-taglines">
-            <div className="tag-left">
-              <div className="tag-label">01 — Concept to CAD</div>
-              <div className="tag-word" data-text="WE">WE</div>
-              <div className="tag-word" data-text="DESIGN">DESIGN</div>
-              <div className="tag-line" />
-              <div className="tag-sub">Every product starts with precision</div>
-            </div>
-            <div className="tag-right">
-              <div className="tag-label">02 — Built to spec</div>
-              <div className="tag-word" data-text="WE">WE</div>
-              <div className="tag-word" data-text="ENGINEER">ENGINEER</div>
-              <div className="tag-line" />
-              <div className="tag-sub">Tolerances that industry demands</div>
-            </div>
-            <div className="tag-bottom">
-              <div className="tag-label">03 — Digital to physical</div>
-              <div className="tag-word" data-text="WE">WE</div>
-              <div className="tag-word" data-text="PRINT">PRINT</div>
-              <div className="tag-line" />
-              <div className="tag-sub">Layer by layer. Flawless every time</div>
-            </div>
+          <div className="s4-top">
+            <div className="s4-eyebrow">JUA 3D Print Lab · Showcase</div>
+            <div className="s4-top-tag">WE DESIGN</div>
+            <div className="s4-top-line" />
           </div>
-          <div className="s4-video-wrap">
-            <div className="s4-char-glow" />
+          <div className="s4-video-outer">
+            <div className="s4-video-glow" />
             <video
               src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778216972/From_KlickPin_CF_Try_Unique_office_desk_styling_that_are_trending_right_now_across_Pinterest_boards_for_ideas_worth_saving_right_now_-_Pin-1131810950125763185_l9qyxn.mp4"
               autoPlay
@@ -1023,28 +993,20 @@ const Index = () => {
               playsInline
             />
           </div>
-        </section>
-
-        <div className="s4-marquee-wrap">
-          <div className="s4-marquee">
-            {[0, 1].map((k) => (
-              <div className="s4-marquee-item" key={k}>
-                <span className="s4-marquee-text">WE DESIGN</span>
-                <span className="s4-marquee-dot" />
-                <span className="s4-marquee-text accent">WE ENGINEER</span>
-                <span className="s4-marquee-dot" />
-                <span className="s4-marquee-text">WE PRINT</span>
-                <span className="s4-marquee-dot" />
-                <span className="s4-marquee-text accent">JUA 3D PRINT LAB</span>
-                <span className="s4-marquee-dot" />
-                <span className="s4-marquee-text">PRECISION MANUFACTURING</span>
-                <span className="s4-marquee-dot" />
-                <span className="s4-marquee-text accent">10+ INDUSTRIES</span>
-                <span className="s4-marquee-dot" />
-              </div>
-            ))}
+          <div className="s4-bottom">
+            <div className="s4-btag">
+              <div className="s4-btag-label">02 — Built to spec</div>
+              <div className="s4-btag-word">WE<br/>ENGINEER</div>
+              <div className="s4-btag-line" />
+            </div>
+            <div className="s4-sep">·</div>
+            <div className="s4-btag">
+              <div className="s4-btag-label">03 — Digital to physical</div>
+              <div className="s4-btag-word">WE<br/>PRINT</div>
+              <div className="s4-btag-line" />
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
