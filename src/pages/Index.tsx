@@ -6,7 +6,6 @@ const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
-  const s4VidRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const vid = s4VidRef.current;
