@@ -6,43 +6,22 @@ const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
-  const s4VidRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const vid = s4VidRef.current;
+    const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
-    const CLIP_END = 8;
-    const STEP = 1 / 30;
-    let direction = 1;
-    let rafId: number | null = null;
-    const tick = () => {
-      if (direction === 1) {
-        vid.currentTime += STEP;
-        if (vid.currentTime >= CLIP_END) { vid.currentTime = CLIP_END; direction = -1; }
-      } else {
-        vid.currentTime -= STEP;
-        if (vid.currentTime <= 0) { vid.currentTime = 0; direction = 1; }
+    const onTimeUpdate = () => {
+      if (vid.currentTime >= 8) {
+        vid.currentTime = 0;
       }
-      rafId = requestAnimationFrame(tick);
     };
-    const onMeta = () => { vid.currentTime = 0; vid.pause(); rafId = requestAnimationFrame(tick); };
-    vid.addEventListener("loadedmetadata", onMeta);
-    if (vid.readyState >= 1) onMeta();
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (rafId == null) rafId = requestAnimationFrame(tick);
-        } else if (rafId != null) {
-          cancelAnimationFrame(rafId);
-          rafId = null;
-        }
-      });
-    }, { threshold: 0.1 });
-    observer.observe(vid);
+    vid.addEventListener("timeupdate", onTimeUpdate);
+    vid.play().catch(() => {
+      const resume = () => { vid.play(); document.removeEventListener("click", resume); };
+      document.addEventListener("click", resume, { once: true });
+    });
     return () => {
-      vid.removeEventListener("loadedmetadata", onMeta);
-      if (rafId != null) cancelAnimationFrame(rafId);
-      observer.disconnect();
+      vid.removeEventListener("timeupdate", onTimeUpdate);
     };
   }, []);
 
@@ -1001,7 +980,7 @@ const Index = () => {
         .s4-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(18,62,120,0.7) 0%,rgba(10,42,87,0.4) 40%,transparent 70%);filter:blur(60px);z-index:1;animation:s4glow 4s ease-in-out infinite;}
         @keyframes s4glow{0%,100%{opacity:0.7;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
         .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:600px;margin:0 auto;}
-        .s4-video-wrap video{width:100%;display:block;mix-blend-mode:luminosity;filter:brightness(0.95) contrast(1.1) saturate(1.2) hue-rotate(200deg);opacity:0.92;}
+        .s4-video-wrap video{width:100%;display:block;filter:brightness(1.0);}
         .s4-watermark-cover{position:absolute;bottom:14%;right:4%;z-index:4;background:linear-gradient(135deg,#0A2A57,#123E78);padding:6px 14px;border-radius:4px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(0,0,0,0.5);}
         .s4-watermark-cover-logo{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.9);line-height:1;}
         .s4-watermark-cover-dot{width:5px;height:5px;border-radius:50%;background:#3A8FE8;flex-shrink:0;}
@@ -1020,11 +999,13 @@ const Index = () => {
           <div className="s4-fade-right" />
           <div className="s4-video-wrap">
             <video
-              ref={s4VidRef}
+              id="s4vid"
               src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778324562/Astronaut_moon_sculpture_rotatin__202605081235_szg61l.mp4"
+              autoPlay
               muted
               playsInline
               preload="auto"
+              style={{ width: "100%", display: "block", filter: "brightness(1.0)" }}
             />
             <div className="s4-watermark-cover">
               <div className="s4-watermark-cover-dot" />
