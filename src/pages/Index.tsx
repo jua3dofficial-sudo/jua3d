@@ -999,11 +999,13 @@ const Index = () => {
           <div className="s4-fade-right" />
           <div className="s4-video-wrap">
             <video
-              ref={s4VidRef}
+              id="s4vid"
               src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778324562/Astronaut_moon_sculpture_rotatin__202605081235_szg61l.mp4"
+              autoPlay
               muted
               playsInline
               preload="auto"
+              style={{ width: "100%", display: "block", filter: "brightness(1.0)" }}
             />
             <div className="s4-watermark-cover">
               <div className="s4-watermark-cover-dot" />
