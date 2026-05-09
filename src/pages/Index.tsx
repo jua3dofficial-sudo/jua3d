@@ -8,40 +8,20 @@ const Index = () => {
   const trackWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const vid = s4VidRef.current;
+    const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
-    const CLIP_END = 8;
-    const STEP = 1 / 30;
-    let direction = 1;
-    let rafId: number | null = null;
-    const tick = () => {
-      if (direction === 1) {
-        vid.currentTime += STEP;
-        if (vid.currentTime >= CLIP_END) { vid.currentTime = CLIP_END; direction = -1; }
-      } else {
-        vid.currentTime -= STEP;
-        if (vid.currentTime <= 0) { vid.currentTime = 0; direction = 1; }
+    const onTimeUpdate = () => {
+      if (vid.currentTime >= 8) {
+        vid.currentTime = 0;
       }
-      rafId = requestAnimationFrame(tick);
     };
-    const onMeta = () => { vid.currentTime = 0; vid.pause(); rafId = requestAnimationFrame(tick); };
-    vid.addEventListener("loadedmetadata", onMeta);
-    if (vid.readyState >= 1) onMeta();
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (rafId == null) rafId = requestAnimationFrame(tick);
-        } else if (rafId != null) {
-          cancelAnimationFrame(rafId);
-          rafId = null;
-        }
-      });
-    }, { threshold: 0.1 });
-    observer.observe(vid);
+    vid.addEventListener("timeupdate", onTimeUpdate);
+    vid.play().catch(() => {
+      const resume = () => { vid.play(); document.removeEventListener("click", resume); };
+      document.addEventListener("click", resume, { once: true });
+    });
     return () => {
-      vid.removeEventListener("loadedmetadata", onMeta);
-      if (rafId != null) cancelAnimationFrame(rafId);
-      observer.disconnect();
+      vid.removeEventListener("timeupdate", onTimeUpdate);
     };
   }, []);
 
