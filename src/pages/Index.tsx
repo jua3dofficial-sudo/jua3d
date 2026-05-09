@@ -6,6 +6,45 @@ const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
+  const s4VidRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const vid = s4VidRef.current;
+    if (!vid) return;
+    const CLIP_END = 8;
+    const STEP = 1 / 30;
+    let direction = 1;
+    let rafId: number | null = null;
+    const tick = () => {
+      if (direction === 1) {
+        vid.currentTime += STEP;
+        if (vid.currentTime >= CLIP_END) { vid.currentTime = CLIP_END; direction = -1; }
+      } else {
+        vid.currentTime -= STEP;
+        if (vid.currentTime <= 0) { vid.currentTime = 0; direction = 1; }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    const onMeta = () => { vid.currentTime = 0; vid.pause(); rafId = requestAnimationFrame(tick); };
+    vid.addEventListener("loadedmetadata", onMeta);
+    if (vid.readyState >= 1) onMeta();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (rafId == null) rafId = requestAnimationFrame(tick);
+        } else if (rafId != null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(vid);
+    return () => {
+      vid.removeEventListener("loadedmetadata", onMeta);
+      if (rafId != null) cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
