@@ -72,6 +72,117 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    const wrap = document.getElementById("s5wrap");
+    if (!wrap) return;
+    const cards = Array.from(document.querySelectorAll<HTMLDivElement>(".s5-card"));
+    const navdots = Array.from(document.querySelectorAll<HTMLDivElement>(".s5-navdot"));
+    let activeIndex = -1;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragScrollL = 0;
+    let autoTimer: ReturnType<typeof setInterval> | null = null;
+    let ticking = false;
+
+    const getClosest = () => {
+      const centre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
+      let best = 0, bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const r = c.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - centre);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      return best;
+    };
+    const applyActive = (idx: number) => {
+      if (idx === activeIndex) return;
+      activeIndex = idx;
+      cards.forEach((c, i) => c.classList.toggle("active", i === idx));
+      navdots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    };
+    const scheduleUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { applyActive(getClosest()); ticking = false; });
+    };
+    const snapTo = (idx: number) => {
+      const card = cards[idx];
+      if (!card) return;
+      const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
+      wrap.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(() => applyActive(getClosest()), 420);
+    };
+    const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
+    const startAuto = () => {
+      stopAuto();
+      autoTimer = setInterval(() => {
+        const next = (activeIndex + 1) % cards.length;
+        snapTo(next);
+      }, 3000);
+    };
+
+    const onScroll = () => scheduleUpdate();
+    const onMouseDown = (e: MouseEvent) => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragScrollL = wrap.scrollLeft;
+      wrap.style.cursor = "grabbing";
+      stopAuto();
+    };
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.4;
+      scheduleUpdate();
+    };
+    const onMouseUp = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      wrap.style.cursor = "grab";
+      snapTo(getClosest());
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      dragStartX = e.touches[0].clientX;
+      dragScrollL = wrap.scrollLeft;
+      stopAuto();
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      wrap.scrollLeft = dragScrollL - (e.touches[0].clientX - dragStartX) * 1.3;
+      scheduleUpdate();
+    };
+    const onTouchEnd = () => snapTo(getClosest());
+    const dotHandlers = navdots.map((dot, i) => {
+      const h = () => { stopAuto(); snapTo(i); };
+      dot.addEventListener("click", h);
+      return h;
+    });
+
+    wrap.addEventListener("scroll", onScroll, { passive: true });
+    wrap.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
+    wrap.addEventListener("touchmove", onTouchMove, { passive: true });
+    wrap.addEventListener("touchend", onTouchEnd);
+
+    const initTO = setTimeout(() => {
+      snapTo(1);
+      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 300);
+    }, 700);
+
+    return () => {
+      stopAuto();
+      clearTimeout(initTO);
+      wrap.removeEventListener("scroll", onScroll);
+      wrap.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      wrap.removeEventListener("touchstart", onTouchStart);
+      wrap.removeEventListener("touchmove", onTouchMove);
+      wrap.removeEventListener("touchend", onTouchEnd);
+      navdots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
+    };
+  }, []);
+
+  useEffect(() => {
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
     if (window.location.hash) {
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -1057,6 +1168,76 @@ const Index = () => {
               <div className="s4-watermark-cover-dot" />
               <div className="s4-watermark-cover-logo">JUA 3D</div>
             </div>
+          </div>
+        </section>
+
+        {/* SECTION 5 — SECOND PRODUCT SCROLL */}
+        <style dangerouslySetInnerHTML={{ __html: `
+        .s5{width:100%;padding:80px 0 100px;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 45%,#060E1C 100%);position:relative;overflow:hidden;z-index:6;}
+        .s5::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+        .s5-header{text-align:center;padding:0 24px 56px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;}
+        .s5-eyebrow{display:inline-flex;align-items:center;gap:12px;}
+        .s5-eyebrow-line{width:28px;height:1px;background:#3A8FE8;}
+        .s5-eyebrow-text{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;font-family:'Barlow',sans-serif;}
+        .s5-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;font-family:'Barlow',sans-serif;margin:0;}
+        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+        .s5-wrap::-webkit-scrollbar{display:none;}
+        .s5-wrap:active{cursor:grabbing;}
+        .s5-track{display:flex;gap:40px;padding:20px 80px 48px;width:max-content;align-items:flex-end;}
+        .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;}
+        .s5-card.active{transform:scale(1);opacity:1;}
+        .s5-img-wrap{width:260px;height:320px;position:relative;display:flex;align-items:center;justify-content:center;}
+        .s5-img-wrap img{max-width:100%;max-height:100%;object-fit:contain;object-position:center bottom;display:block;transition:transform 0.6s ease,filter 0.5s ease;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));}
+        .s5-card.active .s5-img-wrap img{transform:scale(1.06) translateY(-6px);filter:drop-shadow(0 30px 50px rgba(0,0,0,0.7)) drop-shadow(0 0 30px rgba(58,143,232,0.2));}
+        .s5-img-wrap::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:60%;height:20px;border-radius:50%;background:radial-gradient(ellipse,rgba(58,143,232,0.18) 0%,transparent 70%);opacity:0;transition:opacity 0.5s ease;}
+        .s5-card.active .s5-img-wrap::after{opacity:1;}
+        .s5-name{margin-top:20px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-align:center;transition:color 0.4s ease;}
+        .s5-card.active .s5-name{color:#FFFFFF;}
+        .s5-industry{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:transparent;margin-top:6px;text-align:center;transition:color 0.4s ease;font-family:'Barlow',sans-serif;}
+        .s5-card.active .s5-industry{color:#3A8FE8;}
+        .s5-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.12);margin-top:12px;transition:background 0.4s ease,transform 0.4s ease;}
+        .s5-card.active .s5-dot{background:#3A8FE8;transform:scale(1.6);}
+        .s5-dots{display:flex;justify-content:center;gap:8px;margin-top:40px;position:relative;z-index:2;}
+        .s5-navdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s ease;cursor:pointer;}
+        .s5-navdot.active{background:#3A8FE8;width:24px;border-radius:3px;}
+        @media(max-width:768px){.s5-card{width:200px;}.s5-img-wrap{width:180px;height:240px;}.s5-track{gap:24px;padding:20px 32px 48px;}}
+        @media(max-width:400px){.s5-card{width:170px;}.s5-img-wrap{width:155px;height:210px;}}
+        ` }} />
+        <section className="s5">
+          <div className="s5-header">
+            <div className="s5-eyebrow">
+              <div className="s5-eyebrow-line" />
+              <span className="s5-eyebrow-text">More From JUA</span>
+              <div className="s5-eyebrow-line" />
+            </div>
+            <p className="s5-sub">Swipe to explore · Every product engineered to impress</p>
+          </div>
+
+          <div className="s5-wrap" id="s5wrap">
+            <div className="s5-track" id="s5track">
+              {[
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "RC Car Frame", industry: "Toys & Collectibles" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Articulated Dragon", industry: "Toys & Collectibles" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Scale Building Model", industry: "Architecture & Interior" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Custom Trophy", industry: "Custom Gift & Business" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Desk Organiser", industry: "Advanced Desk & Work Setup" },
+              ].map((p, i) => (
+                <div className="s5-card" data-index={i} key={i}>
+                  <div className="s5-img-wrap">
+                    <img src={p.src} alt={p.name} loading="lazy" />
+                  </div>
+                  <div className="s5-name">{p.name}</div>
+                  <div className="s5-industry">{p.industry}</div>
+                  <div className="s5-dot" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="s5-dots" id="s5dots">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="s5-navdot" data-i={i} />
+            ))}
           </div>
         </section>
       </div>
