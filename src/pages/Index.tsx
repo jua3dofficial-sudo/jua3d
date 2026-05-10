@@ -1018,7 +1018,7 @@ const Index = () => {
 
         {/* SECTION 4 — PRODUCT ANIMATION SHOWCASE (ping-pong) */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s4{position:relative;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
+        .s4{position:relative;z-index:6;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
         .s4-fade-top{position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-left{position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(to right,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
