@@ -64,6 +64,8 @@ const Index = () => {
 
     return () => {
       vid.removeEventListener("timeupdate", onTimeUpdate);
+      vid.removeEventListener("loadedmetadata", onMeta);
+      vid.removeEventListener("ended", onEnded);
       cancelAnimationFrame(rafId);
       document.removeEventListener("click", resume);
     };
