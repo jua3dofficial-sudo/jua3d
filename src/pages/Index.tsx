@@ -11,7 +11,7 @@ const Index = () => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
     const SPEED = 0.4;
-    const END = 8;
+    let END = 7; // will be clamped once metadata loads
     let direction: "forward" | "reverse" = "forward";
     let rafId = 0;
     let lastT = 0;
