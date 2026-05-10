@@ -47,6 +47,16 @@ const Index = () => {
       }
     };
 
+    const onMeta = () => {
+      if (vid.duration && isFinite(vid.duration)) {
+        // Trigger reverse well before the natural end so it never stops/freezes
+        END = Math.max(0.5, Math.min(7, vid.duration - 0.25));
+      }
+    };
+    if (vid.readyState >= 1) onMeta();
+    vid.addEventListener("loadedmetadata", onMeta);
+    const onEnded = () => { if (direction === "forward") startReverse(); };
+    vid.addEventListener("ended", onEnded);
     vid.addEventListener("timeupdate", onTimeUpdate);
     startForward();
     const resume = () => { startForward(); document.removeEventListener("click", resume); };
