@@ -10,18 +10,52 @@ const Index = () => {
   useEffect(() => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
+    const SPEED = 0.4;
+    const END = 8;
+    let direction: "forward" | "reverse" = "forward";
+    let rafId = 0;
+    let lastT = 0;
+
+    const startForward = () => {
+      direction = "forward";
+      vid.playbackRate = SPEED;
+      vid.play().catch(() => {});
+    };
+
+    const reverseStep = (t: number) => {
+      if (direction !== "reverse") return;
+      const dt = (t - lastT) / 1000;
+      lastT = t;
+      vid.currentTime = Math.max(0, vid.currentTime - SPEED * dt);
+      if (vid.currentTime <= 0.01) {
+        startForward();
+        return;
+      }
+      rafId = requestAnimationFrame(reverseStep);
+    };
+
+    const startReverse = () => {
+      direction = "reverse";
+      vid.pause();
+      lastT = performance.now();
+      rafId = requestAnimationFrame(reverseStep);
+    };
+
     const onTimeUpdate = () => {
-      if (vid.currentTime >= 8) {
-        vid.currentTime = 0;
+      if (direction === "forward" && vid.currentTime >= END) {
+        startReverse();
       }
     };
+
     vid.addEventListener("timeupdate", onTimeUpdate);
-    vid.play().catch(() => {
-      const resume = () => { vid.play(); document.removeEventListener("click", resume); };
-      document.addEventListener("click", resume, { once: true });
-    });
+    startForward();
+    const resume = () => { startForward(); document.removeEventListener("click", resume); };
+    document.addEventListener("click", resume, { once: true });
+
     return () => {
       vid.removeEventListener("timeupdate", onTimeUpdate);
+      cancelAnimationFrame(rafId);
+      document.removeEventListener("click", resume);
     };
   }, []);
 
