@@ -1216,11 +1216,11 @@ const Index = () => {
           <div className="s5-wrap" id="s5wrap">
             <div className="s5-track" id="s5track">
               {[
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "RC Car Frame", industry: "Toys & Collectibles" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Articulated Dragon", industry: "Toys & Collectibles" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Scale Building Model", industry: "Architecture & Interior" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Custom Trophy", industry: "Custom Gift & Business" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Desk Organiser", industry: "Advanced Desk & Work Setup" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "Modular Desk Organiser", industry: "Advanced Desk & Work Setup" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Headset Display Stand", industry: "Gaming & Tech" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Articulated Octopus Toy", industry: "Toys & Collectibles" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
               ].map((p, i) => (
                 <div className="s5-card" data-index={i} key={i}>
                   <div className="s5-img-wrap">
