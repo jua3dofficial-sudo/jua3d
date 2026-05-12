@@ -703,24 +703,24 @@ const Index = () => {
           }
           .s2-logo {
             position: absolute;
-            top: 48px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            width: 320px;
-            height: 320px;
+            width: 280px;
+            height: 280px;
             margin: 0;
             z-index: 5;
             filter: brightness(0) invert(1) drop-shadow(0 0 22px rgba(58,143,232,0.8));
           }
           .s2-right {
             align-items: flex-start;
-            padding-top: 380px;
+            padding-top: 320px;
             padding-bottom: 80px;
           }
           .s2-video-frame {
             max-width: 340px;
             aspect-ratio: auto;
-            height: 490px;
+            height: 640px;
           }
         }
         .s2-headline {
