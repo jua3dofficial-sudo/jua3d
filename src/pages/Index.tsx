@@ -1186,9 +1186,11 @@ const Index = () => {
         .s5-track{display:flex;gap:40px;padding:20px 80px 48px;width:max-content;align-items:flex-end;}
         .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;}
         .s5-card[data-index="0"]{width:336px;}
+        .s5-card[data-index="2"]{width:350px;}
         .s5-card.active{transform:scale(1);opacity:1;}
         .s5-img-wrap{width:260px;height:320px;position:relative;display:flex;align-items:center;justify-content:center;}
         .s5-card[data-index="0"] .s5-img-wrap{width:312px;height:384px;}
+        .s5-card[data-index="2"] .s5-img-wrap{width:325px;height:400px;}
         .s5-img-wrap img{max-width:100%;max-height:100%;object-fit:contain;object-position:center bottom;display:block;transition:transform 0.6s ease,filter 0.5s ease;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));}
         .s5-card.active .s5-img-wrap img{transform:scale(1.06) translateY(-6px);filter:drop-shadow(0 30px 50px rgba(0,0,0,0.7)) drop-shadow(0 0 30px rgba(58,143,232,0.2));}
         .s5-img-wrap::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:60%;height:20px;border-radius:50%;background:radial-gradient(ellipse,rgba(58,143,232,0.18) 0%,transparent 70%);opacity:0;transition:opacity 0.5s ease;}
@@ -1202,8 +1204,8 @@ const Index = () => {
         .s5-dots{display:flex;justify-content:center;gap:8px;margin-top:40px;position:relative;z-index:2;}
         .s5-navdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s ease;cursor:pointer;}
         .s5-navdot.active{background:#3A8FE8;width:24px;border-radius:3px;}
-        @media(max-width:768px){.s5-card{width:200px;}.s5-card[data-index="0"]{width:240px;}.s5-img-wrap{width:180px;height:240px;}.s5-card[data-index="0"] .s5-img-wrap{width:216px;height:288px;}.s5-track{gap:24px;padding:20px 32px 48px;}}
-        @media(max-width:400px){.s5-card{width:170px;}.s5-card[data-index="0"]{width:204px;}.s5-img-wrap{width:155px;height:210px;}.s5-card[data-index="0"] .s5-img-wrap{width:186px;height:252px;}}
+        @media(max-width:768px){.s5-card{width:200px;}.s5-card[data-index="0"]{width:240px;}.s5-card[data-index="2"]{width:250px;}.s5-img-wrap{width:180px;height:240px;}.s5-card[data-index="0"] .s5-img-wrap{width:216px;height:288px;}.s5-card[data-index="2"] .s5-img-wrap{width:225px;height:300px;}.s5-track{gap:24px;padding:20px 32px 48px;}}
+        @media(max-width:400px){.s5-card{width:170px;}.s5-card[data-index="0"]{width:204px;}.s5-card[data-index="2"]{width:212px;}.s5-img-wrap{width:155px;height:210px;}.s5-card[data-index="0"] .s5-img-wrap{width:186px;height:252px;}.s5-card[data-index="2"] .s5-img-wrap{width:194px;height:262px;}}
         ` }} />
         <section className="s5">
           <div className="s5-header">
