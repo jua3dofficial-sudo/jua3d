@@ -714,7 +714,7 @@ const Index = () => {
           }
           .s2-right {
             align-items: flex-start;
-            padding-top: 320px;
+            padding-top: 360px;
             padding-bottom: 80px;
           }
           .s2-video-frame {
