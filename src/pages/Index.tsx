@@ -1125,7 +1125,7 @@ const Index = () => {
               </div>
             </div>
             <div className="s2-right">
-              <div className="s2-video-frame">
+              <div className="s2-video-frame px-0 mx-0 border border-none">
                 <div className="s2-corner s2-corner-tl" />
                 <div className="s2-corner s2-corner-tr" />
                 <div className="s2-corner s2-corner-bl" />
