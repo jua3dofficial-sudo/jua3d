@@ -1167,24 +1167,26 @@ const Index = () => {
           </div>
         </section>
 
-        {/* SECTION 4 — PRODUCT ANIMATION SHOWCASE (ping-pong) */}
+        {/* SECTION 4 — 3D ARCHITECTURE MODEL HOUSE SHOWCASE */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s4{position:relative;z-index:6;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
+        .s4{position:relative;z-index:6;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:60px 0 80px;}
         .s4-fade-top{position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
-        .s4-fade-left{position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(to right,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
-        .s4-fade-right{position:absolute;top:0;right:0;bottom:0;width:120px;background:linear-gradient(to left,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
-        .s4-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(18,62,120,0.7) 0%,rgba(10,42,87,0.4) 40%,transparent 70%);filter:blur(60px);z-index:1;animation:s4glow 4s ease-in-out infinite;}
+        .s4-fade-left{position:absolute;top:0;left:0;bottom:0;width:140px;background:linear-gradient(to right,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
+        .s4-fade-right{position:absolute;top:0;right:0;bottom:0;width:140px;background:linear-gradient(to left,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
+        .s4-glow{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(18,62,120,0.7) 0%,rgba(10,42,87,0.4) 40%,transparent 70%);filter:blur(70px);z-index:1;animation:s4glow 4s ease-in-out infinite;}
         @keyframes s4glow{0%,100%{opacity:0.7;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
-        .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:600px;margin:0 auto;}
-        .s4-video-wrap video{width:100%;display:block;filter:brightness(1.0);}
-        .s4-watermark-cover{position:absolute;bottom:14%;right:4%;z-index:4;background:linear-gradient(135deg,#0A2A57,#123E78);padding:6px 14px;border-radius:4px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(0,0,0,0.5);}
-        .s4-watermark-cover-logo{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.9);line-height:1;}
-        .s4-watermark-cover-dot{width:5px;height:5px;border-radius:50%;background:#3A8FE8;flex-shrink:0;}
         .s4-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.03) 1px,transparent 1px);background-size:60px 60px;z-index:2;pointer-events:none;mix-blend-mode:overlay;}
         .s4-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.2),transparent);z-index:4;animation:s4scan 5s linear infinite;pointer-events:none;}
         @keyframes s4scan{from{top:0%;}to{top:100%;}}
-        @media(max-width:600px){.s4-fade-left,.s4-fade-right{width:60px;}.s4-fade-top{height:100px;}.s4-fade-bottom{height:120px;}}
+        .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:720px;margin:0 auto;}
+        .s4-video-wrap video{width:100%;display:block;background:transparent;mix-blend-mode:screen;filter:brightness(1.05) contrast(1.05);}
+        .s4-label{position:relative;z-index:5;margin-top:24px;text-align:center;font-family:'Bebas Neue','Barlow Condensed',sans-serif;font-size:22px;letter-spacing:6px;color:rgba(255,255,255,0.92);text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:14px;}
+        .s4-label::before,.s4-label::after{content:'';width:36px;height:1px;background:#3A8FE8;display:inline-block;}
+        .s4-label-dot{width:6px;height:6px;border-radius:50%;background:#3A8FE8;display:inline-block;}
+        @media(max-width:1024px){.s4-video-wrap{max-width:560px;}.s4-label{font-size:18px;letter-spacing:5px;}}
+        @media(max-width:768px){.s4-video-wrap{max-width:92%;}.s4-label{font-size:15px;letter-spacing:3.5px;gap:10px;}.s4-label::before,.s4-label::after{width:22px;}.s4-fade-left,.s4-fade-right{width:60px;}.s4-fade-top{height:100px;}.s4-fade-bottom{height:120px;}.s4{padding:40px 0 56px;}}
+        @media(max-width:400px){.s4-label{font-size:13px;letter-spacing:2.5px;}}
         ` }} />
         <section className="s4">
           <div className="s4-glow" />
@@ -1197,17 +1199,21 @@ const Index = () => {
           <div className="s4-video-wrap">
             <video
               id="s4vid"
-              src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778324562/Astronaut_moon_sculpture_rotatin__202605081235_szg61l.mp4"
+              src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
               autoPlay
+              loop
               muted
               playsInline
               preload="auto"
-              style={{ width: "100%", display: "block", filter: "brightness(1.0)" }}
+              disablePictureInPicture
+              disableRemotePlayback
+              onEnded={(e) => { const v = e.currentTarget; v.currentTime = 0; v.play().catch(() => {}); }}
+              onPause={(e) => { const v = e.currentTarget; if (!v.ended) return; v.play().catch(() => {}); }}
             />
-            <div className="s4-watermark-cover">
-              <div className="s4-watermark-cover-dot" />
-              <div className="s4-watermark-cover-logo">JUA 3D</div>
-            </div>
+          </div>
+          <div className="s4-label">
+            <span className="s4-label-dot" />
+            3D Architecture Model House
           </div>
         </section>
 
