@@ -932,7 +932,7 @@ const Index = () => {
             id="vid-intro"
             ref={introRef}
             className="hero-video"
-            src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
             autoPlay
             muted
             playsInline
@@ -942,7 +942,7 @@ const Index = () => {
             id="vid-loop"
             ref={loopRef}
             className="hero-video"
-            src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1777990749/HEEERO_vddvpy.mp4"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1777990749/HEEERO_vddvpy.mp4"
             muted
             loop
             playsInline
@@ -1095,7 +1095,7 @@ const Index = () => {
                 <div className="s2-corner s2-corner-bl" />
                 <div className="s2-corner s2-corner-br" />
                 <video
-                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
                   autoPlay
                   muted
                   loop
@@ -1140,17 +1140,17 @@ const Index = () => {
           <div className="s3-track-wrap" ref={trackWrapRef}>
             <div className="s3-track">
               {[
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_28_57_AM_1_arlblw.webp", name: "Anatomical Brain", cat: "Medical & Healthcare" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_26_44_AM_1_d9suyk.webp", name: "Collectible Rabbit", cat: "Toys & Collectibles" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_30_27_AM_1_u3ddmp.webp", name: "Dental Gum Model", cat: "Medical & Healthcare" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040440/ChatGPT_Image_May_6_2026_09_33_48_AM_wz2kjj.webp", name: "Designer Tissue Box", cat: "Smart Home Utility" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778040601/ChatGPT_Image_May_6_2026_09_39_12_AM_ursh6k.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_28_57_AM_1_arlblw.webp", name: "Anatomical Brain", cat: "Medical & Healthcare" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_26_44_AM_1_d9suyk.webp", name: "Collectible Rabbit", cat: "Toys & Collectibles" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_30_27_AM_1_u3ddmp.webp", name: "Dental Gum Model", cat: "Medical & Healthcare" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_33_48_AM_wz2kjj.webp", name: "Designer Tissue Box", cat: "Smart Home Utility" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040601/ChatGPT_Image_May_6_2026_09_39_12_AM_ursh6k.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
               ].map((p, i) => (
                 <div className="prod-card" key={i} data-index={i}>
                   <div className="prod-img-wrap">
-                    <img src={p.src} alt={p.name} loading="lazy" />
+                    <img src={p.src} alt={p.name} loading="eager" decoding="async" fetchPriority="high" />
                   </div>
                   <div className="prod-name">{p.name}</div>
                   <div className="prod-cat">{p.cat}</div>
@@ -1199,7 +1199,7 @@ const Index = () => {
           <div className="s4-video-wrap">
             <video
               id="s4vid"
-              src="https://res.cloudinary.com/dc2qifrvh/video/upload/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
+              src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
               autoPlay
               loop
               muted
@@ -1280,15 +1280,15 @@ const Index = () => {
           <div className="s5-wrap" id="s5wrap">
             <div className="s5-track" id="s5track">
               {[
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "Modular Desk Organiser", industry: "Advanced Desk & Work Setup" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Headset Display Stand", industry: "Gaming & Tech" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Articulated Octopus Toy", industry: "Toys & Collectibles" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "Modular Desk Organiser", industry: "Advanced Desk & Work Setup" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Headset Display Stand", industry: "Gaming & Tech" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Articulated Octopus Toy", industry: "Toys & Collectibles" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
+                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
               ].map((p, i) => (
                 <div className="s5-card" data-index={i} key={i}>
                   <div className="s5-img-wrap">
-                    <img src={p.src} alt={p.name} loading="lazy" />
+                    <img src={p.src} alt={p.name} loading="eager" decoding="async" fetchPriority="high" />
                   </div>
                   <div className="s5-name">{p.name}</div>
                   <div className="s5-industry">{p.industry}</div>
