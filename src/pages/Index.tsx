@@ -669,21 +669,21 @@ const Index = () => {
           top: -100px; left: -100px; pointer-events: none; z-index: 0;
         }
         .s2-left {
-          position: relative; z-index: 2; flex: 1;
+          position: relative; z-index: 2; flex: 0 1 620px;
           display: flex; flex-direction: column; justify-content: center;
-          padding: 80px 56px 80px 64px; max-width: 52%;
+          padding: 80px 32px 80px 72px; max-width: 620px; margin-left: auto;
         }
-        .s2-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-        .s2-eyebrow-line { width: 32px; height: 1px; background: #3A8FE8; }
+        .s2-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+        .s2-eyebrow-line { width: 40px; height: 1px; background: #3A8FE8; }
         .s2-eyebrow-text {
-          font-size: 11px; font-weight: 600; letter-spacing: 4px;
+          font-size: 13px; font-weight: 600; letter-spacing: 4px;
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 192px;
-          height: 192px;
+          width: 240px;
+          height: 240px;
           object-fit: contain;
-          margin-bottom: 16px;
+          margin-bottom: 20px;
           display: block;
           margin-left: auto;
           margin-right: auto;
@@ -691,50 +691,50 @@ const Index = () => {
           filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
         }
         @media (min-width: 768px) {
-          .s2-logo { width: 224px; height: 224px; margin-bottom: 20px; filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(58,143,232,0.7)); }
-          .s2-eyebrow { margin-bottom: 18px; }
+          .s2-logo { width: 300px; height: 300px; margin-bottom: 24px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
+          .s2-eyebrow { margin-bottom: 22px; }
         }
         .s2-headline {
           font-family: 'Barlow Condensed', sans-serif;
-          font-size: clamp(34px, 3.8vw, 52px); font-weight: 800;
-          color: #FFFFFF; line-height: 1.05; letter-spacing: 0.5px; margin-bottom: 24px;
+          font-size: clamp(40px, 4.8vw, 68px); font-weight: 800;
+          color: #FFFFFF; line-height: 1.05; letter-spacing: 0.5px; margin-bottom: 28px;
         }
         .s2-headline em { font-style: normal; color: #3A8FE8; }
-        .s2-divider { width: 48px; height: 2px; background: linear-gradient(to right, #3A8FE8, transparent); margin-bottom: 24px; }
+        .s2-divider { width: 56px; height: 2px; background: linear-gradient(to right, #3A8FE8, transparent); margin-bottom: 28px; }
         .s2-body {
-          font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.62);
-          line-height: 1.85; max-width: 440px; margin-bottom: 40px;
+          font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.7);
+          line-height: 1.8; max-width: 540px; margin-bottom: 44px;
         }
-        .s2-body strong { color: rgba(255,255,255,0.9); font-weight: 500; }
-        .s2-cta-row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .s2-body strong { color: rgba(255,255,255,0.95); font-weight: 500; }
+        .s2-cta-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
         .s2-cta-btn {
           font-family: 'Barlow Condensed', sans-serif;
-          font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+          font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
           color: #FFFFFF; background: linear-gradient(135deg, #123E78, #3A8FE8);
-          padding: 14px 32px; text-decoration: none; border-radius: 2px;
+          padding: 16px 38px; text-decoration: none; border-radius: 2px;
           transition: all 0.3s; box-shadow: 0 4px 24px rgba(58,143,232,0.25);
         }
         .s2-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 32px rgba(58,143,232,0.4); }
         .s2-cta-link {
-          font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-          color: rgba(255,255,255,0.4); text-decoration: none;
+          font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(255,255,255,0.45); text-decoration: none;
           display: flex; align-items: center; gap: 8px; transition: color 0.3s;
         }
         .s2-cta-link:hover { color: #FFFFFF; }
-        .s2-cta-link::after { content: '→'; font-size: 14px; }
+        .s2-cta-link::after { content: '→'; font-size: 15px; }
         .s2-stats-row {
-          display: flex; gap: 40px; margin-top: 52px; padding-top: 32px;
+          display: flex; gap: 48px; margin-top: 56px; padding-top: 36px;
           border-top: 1px solid rgba(255,255,255,0.08);
         }
-        .s2-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #FFFFFF; letter-spacing: 1px; line-height: 1; }
+        .s2-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: #FFFFFF; letter-spacing: 1px; line-height: 1; }
         .s2-stat-num span { color: #3A8FE8; }
-        .s2-stat-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 4px; }
+        .s2-stat-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 6px; }
         .s2-right {
-          position: relative; z-index: 2; flex: 1; max-width: 48%;
-          display: flex; align-items: center; justify-content: center; padding: 48px 48px 48px 0;
+          position: relative; z-index: 2; flex: 0 1 620px; max-width: 620px;
+          display: flex; align-items: center; justify-content: flex-start; padding: 48px 64px 48px 32px; margin-right: auto;
         }
         .s2-video-frame {
-          position: relative; width: 100%; max-width: 480px; aspect-ratio: 9/16;
+          position: relative; width: 100%; max-width: 520px; aspect-ratio: 9/16;
           border-radius: 20px; overflow: hidden;
           box-shadow: 0 0 0 1px rgba(58,143,232,0.15), 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(58,143,232,0.08);
         }
