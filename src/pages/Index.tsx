@@ -698,7 +698,7 @@ const Index = () => {
           .s2 { position: relative; align-items: stretch; }
           .s2-left {
             transform: translateX(-10%);
-            padding-top: 380px;
+            padding-top: 320px;
             padding-bottom: 80px;
           }
           .s2-logo {
