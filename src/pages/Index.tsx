@@ -690,9 +690,25 @@ const Index = () => {
           image-rendering: -webkit-optimize-contrast;
           filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
         }
-        @media (min-width: 768px) {
+        @media (min-width: 768px) and (max-width: 1023px) {
           .s2-logo { width: 300px; height: 300px; margin-bottom: 24px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
           .s2-eyebrow { margin-bottom: 22px; }
+        }
+        @media (min-width: 1024px) {
+          .s2 { position: relative; }
+          .s2-left { transform: translateX(-10%); }
+          .s2-logo {
+            position: absolute;
+            top: 56px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 390px;
+            height: 390px;
+            margin: 0;
+            z-index: 5;
+            filter: brightness(0) invert(1) drop-shadow(0 0 22px rgba(58,143,232,0.8));
+          }
+          .s2-video-frame { max-width: 360px; }
         }
         .s2-headline {
           font-family: 'Barlow Condensed', sans-serif;
