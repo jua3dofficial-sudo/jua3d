@@ -714,13 +714,13 @@ const Index = () => {
           }
           .s2-right {
             align-items: flex-start;
-            padding-top: 360px;
+            padding-top: 440px;
             padding-bottom: 80px;
           }
           .s2-video-frame {
             max-width: 340px;
             aspect-ratio: auto;
-            height: 640px;
+            height: 660px;
           }
         }
         .s2-headline {
