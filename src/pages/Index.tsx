@@ -1136,6 +1136,7 @@ const Index = () => {
                   muted
                   loop
                   playsInline
+                  style={{ textAlign: undefined }}
                 />
               </div>
             </div>
