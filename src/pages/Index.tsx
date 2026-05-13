@@ -721,8 +721,25 @@ const Index = () => {
         .cap-text { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
         @keyframes s2ScrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @media (max-width: 768px) {
-          .s2 { flex-direction: column; min-height: auto; }
-          .s2-left { max-width: 100%; padding: 60px 24px 40px; align-items: center; text-align: center; margin: 0 auto; }
+          .s2 {
+            flex-direction: row;
+            min-height: auto;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
+            scrollbar-width: none;
+          }
+          .s2::-webkit-scrollbar { display: none; }
+          .s2-left, .s2-right {
+            flex: 0 0 100vw;
+            width: 100vw;
+            max-width: 100vw;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+          }
+          .s2-left { padding: 60px 24px 40px; align-items: center; text-align: center; margin: 0; }
           .s2-left .s2-eyebrow { justify-content: center; }
           .s2-left .s2-headline { text-align: center; }
           .s2-left .s2-divider { margin-left: auto; margin-right: auto; }
@@ -730,7 +747,12 @@ const Index = () => {
           .s2-left .s2-cta-row { justify-content: center; }
           .s2-left .s2-stats-row { justify-content: center; width: 100%; }
           .s2-left .s2-stat-item { text-align: center; }
-          .s2-right { max-width: 100%; padding: 0 24px 60px; justify-content: center; }
+          .s2-right {
+            padding: 60px 24px;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+          }
           .s2-video-frame { max-width: 280px; }
           .s2-stats-row { gap: 24px; }
         }
