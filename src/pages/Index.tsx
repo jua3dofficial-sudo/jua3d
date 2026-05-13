@@ -197,22 +197,20 @@ const Index = () => {
     const dots = Array.from(document.querySelectorAll<HTMLDivElement>(".s3-dot"));
 
     let activeIndex = -1;
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragScrollL = 0;
     let autoTimer: ReturnType<typeof setInterval> | null = null;
-    let ticking = false;
-    let tweenRAF: number | null = null;
     let userInteractTO: ReturnType<typeof setTimeout> | null = null;
+    let scrollEndTO: ReturnType<typeof setTimeout> | null = null;
 
+    // Pure-math closest detection — no layout reads, no reflow.
     const getClosest = () => {
-      const centre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
+      const centre = wrap.scrollLeft + wrap.offsetWidth / 2;
       let best = 0, bestDist = Infinity;
-      cards.forEach((c, i) => {
-        const r = c.getBoundingClientRect();
-        const d = Math.abs(r.left + r.width / 2 - centre);
+      for (let i = 0; i < cards.length; i++) {
+        const c = cards[i];
+        const cardCentre = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(cardCentre - centre);
         if (d < bestDist) { bestDist = d; best = i; }
-      });
+      }
       return best;
     };
 
@@ -223,108 +221,48 @@ const Index = () => {
       dots.forEach((d, i) => d.classList.toggle("active", i === idx));
     };
 
-    const scheduleUpdate = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        applyActive(getClosest());
-        ticking = false;
-      });
-    };
+    const updateActive = () => applyActive(getClosest());
 
-    const cancelTween = () => {
-      if (tweenRAF !== null) { cancelAnimationFrame(tweenRAF); tweenRAF = null; }
-    };
-
-    const tweenScrollTo = (target: number, duration = 700) => {
-      cancelTween();
-      const start = wrap.scrollLeft;
-      const change = target - start;
-      if (Math.abs(change) < 0.5) return;
-      const startTime = performance.now();
-      // easeInOutCubic – smooth, no overshoot
-      const ease = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      const step = (now: number) => {
-        const t = Math.min(1, (now - startTime) / duration);
-        wrap.scrollLeft = start + change * ease(t);
-        scheduleUpdate();
-        if (t < 1) tweenRAF = requestAnimationFrame(step);
-        else tweenRAF = null;
-      };
-      tweenRAF = requestAnimationFrame(step);
-    };
-
-    const snapTo = (idx: number) => {
-      const card = cards[idx];
-      if (!card) return;
-      const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
-      tweenScrollTo(target, 750);
-      setTimeout(() => applyActive(getClosest()), 420);
+    // scrollend if available, debounced fallback otherwise.
+    const supportsScrollEnd = "onscrollend" in window;
+    const onScrollEnd = () => updateActive();
+    const onScrollDebounced = () => {
+      if (scrollEndTO) clearTimeout(scrollEndTO);
+      scrollEndTO = setTimeout(updateActive, 80);
     };
 
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
+    const goTo = (idx: number) => {
+      const card = cards[idx];
+      if (!card) return;
+      const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
+      wrap.scrollTo({ left: target, behavior: "smooth" });
+    };
     const startAuto = () => {
       stopAuto();
       autoTimer = setInterval(() => {
         const next = (activeIndex + 1) % cards.length;
-        snapTo(next);
+        goTo(next);
       }, 3200);
     };
-
     const pauseAutoTemporarily = () => {
       stopAuto();
       if (userInteractTO) clearTimeout(userInteractTO);
       userInteractTO = setTimeout(() => startAuto(), 4500);
     };
 
-    const onScroll = () => scheduleUpdate();
+    if (supportsScrollEnd) {
+      wrap.addEventListener("scrollend", onScrollEnd, { passive: true });
+    }
+    // Always attach debounced fallback (cheap; covers browsers without scrollend).
+    wrap.addEventListener("scroll", onScrollDebounced, { passive: true });
 
-    const onMouseDown = (e: MouseEvent) => {
-      isDragging = true;
-      dragStartX = e.clientX;
-      dragScrollL = wrap.scrollLeft;
-      wrap.style.cursor = "grabbing";
-      cancelTween();
-      stopAuto();
-    };
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.0;
-      scheduleUpdate();
-    };
-    const onMouseUp = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      wrap.style.cursor = "grab";
-      snapTo(getClosest());
-      pauseAutoTemporarily();
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      dragStartX = e.touches[0].clientX;
-      dragScrollL = wrap.scrollLeft;
-      cancelTween();
-      stopAuto();
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      wrap.scrollLeft = dragScrollL - (e.touches[0].clientX - dragStartX) * 1.0;
-      scheduleUpdate();
-    };
-    const onTouchEnd = () => { snapTo(getClosest()); pauseAutoTemporarily(); };
-
-    const onWheel = () => { cancelTween(); pauseAutoTemporarily(); };
-
-    wrap.addEventListener("scroll", onScroll, { passive: true });
-    wrap.addEventListener("wheel", onWheel, { passive: true });
-    wrap.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
-    wrap.addEventListener("touchmove", onTouchMove, { passive: true });
-    wrap.addEventListener("touchend", onTouchEnd);
+    const onUserInteract = () => pauseAutoTemporarily();
+    wrap.addEventListener("pointerdown", onUserInteract, { passive: true });
+    wrap.addEventListener("wheel", onUserInteract, { passive: true });
 
     const dotHandlers: Array<() => void> = dots.map((dot, i) => {
-      const h = () => { pauseAutoTemporarily(); snapTo(i); };
+      const h = () => { pauseAutoTemporarily(); goTo(i); };
       dot.addEventListener("click", h);
       return h;
     });
@@ -334,22 +272,18 @@ const Index = () => {
       if (card) {
         wrap.scrollLeft = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
       }
-      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
+      setTimeout(() => { updateActive(); startAuto(); }, 200);
     };
     const initTimeout = setTimeout(init, 600);
 
     return () => {
       clearTimeout(initTimeout);
       if (userInteractTO) clearTimeout(userInteractTO);
-      cancelTween();
-      wrap.removeEventListener("scroll", onScroll);
-      wrap.removeEventListener("wheel", onWheel);
-      wrap.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-      wrap.removeEventListener("touchstart", onTouchStart);
-      wrap.removeEventListener("touchmove", onTouchMove);
-      wrap.removeEventListener("touchend", onTouchEnd);
+      if (scrollEndTO) clearTimeout(scrollEndTO);
+      if (supportsScrollEnd) wrap.removeEventListener("scrollend", onScrollEnd);
+      wrap.removeEventListener("scroll", onScrollDebounced);
+      wrap.removeEventListener("pointerdown", onUserInteract);
+      wrap.removeEventListener("wheel", onUserInteract);
       dots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
       stopAuto();
     };
