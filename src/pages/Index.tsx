@@ -777,6 +777,8 @@ const Index = () => {
           cursor:grab; user-select:none; scrollbar-width:none;
           -webkit-overflow-scrolling:touch;
           scroll-behavior:auto;
+          scroll-snap-type: x mandatory;
+          touch-action: pan-x;
           will-change: scroll-position;
           transform: translateZ(0);
         }
@@ -792,7 +794,8 @@ const Index = () => {
           display:flex; flex-direction:column; align-items:center;
           transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
           transform:scale(0.84); opacity:0.55; cursor:pointer;
-          will-change: transform, opacity;
+          will-change: transform;
+          scroll-snap-align: center;
         }
         .prod-card[data-index="1"] { width:525px; }
         .prod-card[data-index="2"] { width:483px; }
