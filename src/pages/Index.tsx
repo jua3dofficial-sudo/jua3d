@@ -378,6 +378,25 @@ const Index = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLDivElement>(".s6-card"));
+    if (!cards.length) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const delay = Number((e.target as HTMLElement).dataset.delay || 0);
+          setTimeout(() => e.target.classList.add("visible"), delay);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    cards.forEach((card, i) => {
+      card.dataset.delay = String(i * 80);
+      obs.observe(card);
+    });
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <>
       <style>{`
