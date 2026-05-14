@@ -622,7 +622,7 @@ const Index = () => {
             position: absolute;
             top: 24px;
             left: 100%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-20%);
             width: 462px;
             height: 462px;
             margin: 0;
