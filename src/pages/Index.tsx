@@ -621,7 +621,7 @@ const Index = () => {
           .s2-logo {
             position: absolute;
             top: 24px;
-            left: 50%;
+            left: 100%;
             transform: translateX(-50%);
             width: 462px;
             height: 462px;
