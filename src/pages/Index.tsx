@@ -597,8 +597,8 @@ const Index = () => {
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 240px;
-          height: 240px;
+          width: 324px;
+          height: 324px;
           object-fit: contain;
           margin-bottom: 20px;
           display: block;
@@ -608,7 +608,7 @@ const Index = () => {
           filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
         }
         @media (min-width: 768px) and (max-width: 1023px) {
-          .s2-logo { width: 300px; height: 300px; margin-bottom: 24px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
+          .s2-logo { width: 495px; height: 495px; margin-bottom: 24px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
           .s2-eyebrow { margin-bottom: 22px; }
         }
         @media (min-width: 1024px) {
@@ -623,8 +623,8 @@ const Index = () => {
             top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            width: 280px;
-            height: 280px;
+            width: 462px;
+            height: 462px;
             margin: 0;
             z-index: 5;
             filter: brightness(0) invert(1) drop-shadow(0 0 22px rgba(58,143,232,0.8));
