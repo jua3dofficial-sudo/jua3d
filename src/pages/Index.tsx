@@ -1186,20 +1186,6 @@ const Index = () => {
               preload="auto"
               disablePictureInPicture
               disableRemotePlayback
-              ref={(el) => {
-                if (!el || (el as any)._s4bound) return;
-                (el as any)._s4bound = true;
-                const restart = () => {
-                  setTimeout(() => {
-                    try { el.currentTime = 0; el.play().catch(() => {}); } catch {}
-                  }, 1000);
-                };
-                el.addEventListener("ended", restart);
-                el.addEventListener("pause", () => { if (el.ended) restart(); });
-                setInterval(() => {
-                  if (el.paused && !document.hidden) { el.play().catch(() => {}); }
-                }, 2000);
-              }}
             />
           </div>
           <div className="s4-label">
