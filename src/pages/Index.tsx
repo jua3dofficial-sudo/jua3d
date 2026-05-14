@@ -10,64 +10,28 @@ const Index = () => {
   useEffect(() => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
-    const SPEED = 0.4;
-    let END = 7; // will be clamped once metadata loads
-    let direction: "forward" | "reverse" = "forward";
-    let rafId = 0;
-    let lastT = 0;
-
-    const startForward = () => {
-      direction = "forward";
-      vid.playbackRate = SPEED;
-      vid.play().catch(() => {});
-    };
-
-    const reverseStep = (t: number) => {
-      if (direction !== "reverse") return;
-      const dt = (t - lastT) / 1000;
-      lastT = t;
-      vid.currentTime = Math.max(0, vid.currentTime - SPEED * dt);
-      if (vid.currentTime <= 0.01) {
-        startForward();
-        return;
-      }
-      rafId = requestAnimationFrame(reverseStep);
-    };
-
-    const startReverse = () => {
-      direction = "reverse";
-      vid.pause();
-      lastT = performance.now();
-      rafId = requestAnimationFrame(reverseStep);
-    };
-
-    const onTimeUpdate = () => {
-      if (direction === "forward" && vid.currentTime >= END) {
-        startReverse();
-      }
-    };
-
-    const onMeta = () => {
-      if (vid.duration && isFinite(vid.duration)) {
-        // Trigger reverse well before the natural end so it never stops/freezes
-        END = Math.max(0.5, Math.min(7, vid.duration - 0.25));
-      }
-    };
-    if (vid.readyState >= 1) onMeta();
-    vid.addEventListener("loadedmetadata", onMeta);
-    const onEnded = () => { if (direction === "forward") startReverse(); };
+    vid.loop = true;
+    vid.muted = true;
+    vid.playbackRate = 0.6;
+    const kick = () => { vid.play().catch(() => {}); };
+    kick();
+    const onPause = () => { if (!document.hidden) kick(); };
+    const onEnded = () => { try { vid.currentTime = 0; } catch {} kick(); };
+    const onVis = () => { if (!document.hidden) kick(); };
+    const watchdog = setInterval(() => { if (vid.paused && !document.hidden) kick(); }, 1000);
+    const resume = () => kick();
+    vid.addEventListener("pause", onPause);
     vid.addEventListener("ended", onEnded);
-    vid.addEventListener("timeupdate", onTimeUpdate);
-    startForward();
-    const resume = () => { startForward(); document.removeEventListener("click", resume); };
-    document.addEventListener("click", resume, { once: true });
-
+    document.addEventListener("visibilitychange", onVis);
+    document.addEventListener("click", resume);
+    document.addEventListener("touchstart", resume, { passive: true });
     return () => {
-      vid.removeEventListener("timeupdate", onTimeUpdate);
-      vid.removeEventListener("loadedmetadata", onMeta);
+      clearInterval(watchdog);
+      vid.removeEventListener("pause", onPause);
       vid.removeEventListener("ended", onEnded);
-      cancelAnimationFrame(rafId);
+      document.removeEventListener("visibilitychange", onVis);
       document.removeEventListener("click", resume);
+      document.removeEventListener("touchstart", resume);
     };
   }, []);
 
@@ -1222,20 +1186,6 @@ const Index = () => {
               preload="auto"
               disablePictureInPicture
               disableRemotePlayback
-              ref={(el) => {
-                if (!el || (el as any)._s4bound) return;
-                (el as any)._s4bound = true;
-                const restart = () => {
-                  setTimeout(() => {
-                    try { el.currentTime = 0; el.play().catch(() => {}); } catch {}
-                  }, 1000);
-                };
-                el.addEventListener("ended", restart);
-                el.addEventListener("pause", () => { if (el.ended) restart(); });
-                setInterval(() => {
-                  if (el.paused && !document.hidden) { el.play().catch(() => {}); }
-                }, 2000);
-              }}
             />
           </div>
           <div className="s4-label">
