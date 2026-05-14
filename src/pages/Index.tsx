@@ -1319,6 +1319,116 @@ const Index = () => {
             ))}
           </div>
         </section>
+
+        <style dangerouslySetInnerHTML={{ __html: `
+          .s6{width:100%;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 40%,#060E1C 100%);padding:100px 0 120px;position:relative;overflow:hidden;}
+          .s6::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0;}
+          .s6-orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+          .s6-orb-1{width:500px;height:500px;background:rgba(18,62,120,0.4);top:-100px;right:-100px;}
+          .s6-orb-2{width:400px;height:400px;background:rgba(58,143,232,0.07);bottom:-80px;left:-80px;}
+          .s6-header{text-align:center;padding:0 24px 72px;position:relative;z-index:2;}
+          .s6-eyebrow{display:inline-flex;align-items:center;gap:14px;margin-bottom:18px;}
+          .s6-eyebrow-line{width:32px;height:1px;background:#3A8FE8;}
+          .s6-eyebrow-text{font-size:11px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#3A8FE8;font-family:'Barlow',sans-serif;}
+          .s6-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:800;color:#FFFFFF;letter-spacing:2px;line-height:1;margin-bottom:16px;}
+          .s6-title span{color:#3A8FE8;}
+          .s6-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,0.45);max-width:480px;margin:0 auto;line-height:1.7;font-family:'Barlow',sans-serif;}
+          .s6-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:1200px;margin:0 auto;padding:0 40px;position:relative;z-index:2;}
+          .s6-card{position:relative;padding:36px 28px 32px;background:rgba(10,42,87,0.25);border:1px solid rgba(58,143,232,0.08);cursor:pointer;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease,background 0.4s ease,border-color 0.4s ease;}
+          .s6-card.visible{opacity:1;transform:translateY(0);}
+          .s6-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(58,143,232,0.06) 0%,transparent 60%);opacity:0;transition:opacity 0.4s ease;}
+          .s6-card:hover{background:rgba(18,62,120,0.5);border-color:rgba(58,143,232,0.3);transform:translateY(-2px) !important;z-index:3;}
+          .s6-card:hover::before{opacity:1;}
+          .s6-card-corner{position:absolute;width:14px;height:14px;opacity:0;transition:opacity 0.3s ease;}
+          .s6-card-corner-tl{top:8px;left:8px;border-top:1.5px solid #3A8FE8;border-left:1.5px solid #3A8FE8;}
+          .s6-card-corner-br{bottom:8px;right:8px;border-bottom:1.5px solid #3A8FE8;border-right:1.5px solid #3A8FE8;}
+          .s6-card:hover .s6-card-corner{opacity:1;}
+          .s6-icon-wrap{position:relative;width:52px;height:52px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;}
+          .s6-icon{font-size:28px;position:relative;z-index:2;transition:transform 0.4s ease;line-height:1;}
+          .s6-card:hover .s6-icon{transform:scale(1.15);}
+          .s6-icon-ring{position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(58,143,232,0);transition:border-color 0.4s ease,box-shadow 0.4s ease;}
+          .s6-card:hover .s6-icon-ring{border-color:rgba(58,143,232,0.3);box-shadow:0 0 20px rgba(58,143,232,0.15);}
+          .s6-blink{position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:#3A8FE8;box-shadow:0 0 6px #3A8FE8,0 0 12px #3A8FE8;z-index:3;}
+          .s6-card:nth-child(1) .s6-blink{animation:s6blink 2.1s ease-in-out infinite;}
+          .s6-card:nth-child(2) .s6-blink{animation:s6blink 3.4s ease-in-out infinite 0.5s;}
+          .s6-card:nth-child(3) .s6-blink{animation:s6blink 2.8s ease-in-out infinite 1.1s;}
+          .s6-card:nth-child(4) .s6-blink{animation:s6blink 3.9s ease-in-out infinite 0.3s;}
+          .s6-card:nth-child(5) .s6-blink{animation:s6blink 2.5s ease-in-out infinite 0.8s;}
+          .s6-card:nth-child(6) .s6-blink{animation:s6blink 3.1s ease-in-out infinite 1.5s;}
+          .s6-card:nth-child(7) .s6-blink{animation:s6blink 2.3s ease-in-out infinite 0.2s;}
+          .s6-card:nth-child(8) .s6-blink{animation:s6blink 3.6s ease-in-out infinite 0.9s;}
+          @keyframes s6blink{0%,100%{opacity:1;box-shadow:0 0 6px #3A8FE8,0 0 12px #3A8FE8;}40%{opacity:1;box-shadow:0 0 10px #3A8FE8,0 0 24px #3A8FE8,0 0 40px rgba(58,143,232,0.4);}55%,75%{opacity:0;box-shadow:none;}80%{opacity:1;box-shadow:0 0 6px #3A8FE8,0 0 12px #3A8FE8;}}
+          .s6-industry-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(15px,1.6vw,19px);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#FFFFFF;line-height:1.1;margin-bottom:8px;}
+          .s6-product-count{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(58,143,232,0.6);margin-bottom:16px;font-family:'Barlow',sans-serif;}
+          .s6-products{display:flex;flex-wrap:wrap;gap:6px;max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;}
+          .s6-card:hover .s6-products{max-height:200px;opacity:1;}
+          .s6-tag{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);background:rgba(58,143,232,0.08);border:1px solid rgba(58,143,232,0.15);padding:4px 10px;border-radius:2px;transition:all 0.3s ease;white-space:nowrap;font-family:'Barlow',sans-serif;}
+          .s6-tag:hover{background:rgba(58,143,232,0.2);color:#FFFFFF;border-color:rgba(58,143,232,0.4);}
+          .s6-arrow{position:absolute;bottom:16px;right:20px;font-size:14px;color:rgba(58,143,232,0.4);transition:color 0.3s ease,transform 0.3s ease;}
+          .s6-card:hover .s6-arrow{color:#3A8FE8;transform:translate(2px,-2px);}
+          .s6-cta{text-align:center;margin-top:72px;position:relative;z-index:2;padding:0 24px;}
+          .s6-cta-label{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;font-family:'Barlow',sans-serif;}
+          .s6-cta-btn{display:inline-flex;align-items:center;gap:14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#FFFFFF;background:linear-gradient(135deg,#0A2A57,#123E78);border:1px solid rgba(58,143,232,0.3);padding:18px 40px;border-radius:2px;text-decoration:none;cursor:pointer;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+          .s6-cta-btn:hover{background:linear-gradient(135deg,#123E78,#1a5299);border-color:rgba(58,143,232,0.6);box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 24px rgba(58,143,232,0.15);transform:translateY(-2px);}
+          .s6-cta-btn-icon{font-size:18px;animation:s6float 3s ease-in-out infinite;}
+          @keyframes s6float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+          .s6-cta-sub{font-size:11px;font-weight:300;color:rgba(255,255,255,0.25);margin-top:14px;letter-spacing:2px;font-family:'Barlow',sans-serif;}
+          @media(max-width:1024px){.s6-grid{grid-template-columns:repeat(2,1fr);max-width:700px;padding:0 24px;}}
+          @media(max-width:600px){.s6-grid{grid-template-columns:1fr;max-width:420px;padding:0 16px;gap:2px;}.s6-card{padding:28px 22px 24px;}.s6-products{max-height:none!important;opacity:1!important;}}
+        `}} />
+
+        <section className="s6">
+          <div className="s6-orb s6-orb-1" />
+          <div className="s6-orb s6-orb-2" />
+
+          <div className="s6-header">
+            <div className="s6-eyebrow">
+              <div className="s6-eyebrow-line" />
+              <span className="s6-eyebrow-text">Industries We Serve</span>
+              <div className="s6-eyebrow-line" />
+            </div>
+            <h2 className="s6-title">WE PRINT FOR<br /><span>EVERY INDUSTRY</span></h2>
+            <p className="s6-sub">From operating theatres to living rooms — JUA delivers precision-printed products across the industries that shape the world.</p>
+          </div>
+
+          <div className="s6-grid">
+            {[
+              { icon: "🫀", name: ["Medical &", "Healthcare"], count: "3 Products", tags: ["Anatomical Brain", "Dental Models", "Surgical Training Kits"] },
+              { icon: "🏛", name: ["Architecture &", "Interior Design"], count: "3 Products", tags: ["Scale Building Models", "Interior Miniatures", "Custom Villa Models"] },
+              { icon: "🎮", name: ["Gaming", "& Tech"], count: "3 Products", tags: ["Headset Display Stands", "Controller Stands", "Stream Deck Mounts"] },
+              { icon: "🏮", name: ["Home Décor", "& Lifestyle"], count: "3 Products", tags: ["Geometric Vases", "Articulated Wall Art", "Lithophane Night Lights"] },
+              { icon: "💡", name: ["Smart Home", "Utility"], count: "3 Products", tags: ["Designer Lamp Shades", "Toothbrush Holders", "Tissue Box Covers"] },
+              { icon: "🏆", name: ["Custom Gift", "& Business"], count: "3 Products", tags: ["Logo Keychains", "Custom Trophies", "QR Code Stands"] },
+              { icon: "🚗", name: ["Automotive", "& Travel"], count: "3 Products", tags: ["Headrest Hooks", "Travel Cutlery Cases", "Wheel Cap Emblems"] },
+              { icon: "🐉", name: ["Toys", "& Collectibles"], count: "4 Products", tags: ["Articulated Dragons", "Fidget Slugs", "Scale Figures", "RC Car Frames"] },
+            ].map((c, i) => (
+              <div className="s6-card" key={i}>
+                <div className="s6-card-corner s6-card-corner-tl" />
+                <div className="s6-card-corner s6-card-corner-br" />
+                <div className="s6-icon-wrap">
+                  <div className="s6-icon-ring" />
+                  <div className="s6-icon">{c.icon}</div>
+                  <div className="s6-blink" />
+                </div>
+                <div className="s6-industry-name">{c.name[0]}<br />{c.name[1]}</div>
+                <div className="s6-product-count">{c.count}</div>
+                <div className="s6-products">
+                  {c.tags.map((t, j) => <span className="s6-tag" key={j}>{t}</span>)}
+                </div>
+                <div className="s6-arrow">↗</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="s6-cta">
+            <div className="s6-cta-label">Full Product Catalogue</div>
+            <a href="#" className="s6-cta-btn">
+              <span className="s6-cta-btn-icon">⬇</span>
+              Download Product Catalogue
+            </a>
+            <div className="s6-cta-sub">PDF · All Industries · Updated 2026</div>
+          </div>
+        </section>
       </div>
     </>
   );
