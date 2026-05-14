@@ -638,7 +638,7 @@ const Index = () => {
             max-width: 340px;
             aspect-ratio: auto;
             height: 660px;
-            transform: translateY(10%);
+            transform: translateY(15%);
           }
         }
         .s2-headline {
