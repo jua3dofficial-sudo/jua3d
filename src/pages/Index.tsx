@@ -1429,6 +1429,85 @@ const Index = () => {
             <div className="s6-cta-sub">PDF · All Industries · Updated 2026</div>
           </div>
         </section>
+
+        {/* ============ SECTION 7 — CALL TO ACTION ============ */}
+        <style>{`
+          .s7{position:relative;width:100%;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:100px 24px 120px;background:#060E1C;z-index:6;}
+          .s7-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(18,62,120,0.6) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(58,143,232,0.07) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(58,143,232,0.05) 0%,transparent 60%),#060E1C;z-index:0;}
+          .s7-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(58,143,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px,transparent 1px);background-size:72px 72px;}
+          .s7-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.15),transparent);z-index:2;pointer-events:none;animation:s7scan 8s linear infinite;}
+          @keyframes s7scan{from{top:0%;}to{top:100%;}}
+          .s7-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;border-radius:50%;background:radial-gradient(ellipse,rgba(18,62,120,0.5) 0%,transparent 70%);filter:blur(80px);z-index:1;animation:s7orb 6s ease-in-out infinite;}
+          @keyframes s7orb{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.7;}50%{transform:translate(-50%,-50%) scale(1.1);opacity:1;}}
+          .s7-content{position:relative;z-index:5;text-align:center;max-width:800px;margin:0 auto;}
+          .s7-eyebrow{display:inline-flex;align-items:center;gap:12px;margin-bottom:28px;}
+          .s7-eyebrow-line{width:28px;height:1px;background:#3A8FE8;}
+          .s7-eyebrow-text{font-size:11px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#3A8FE8;font-family:'Barlow',sans-serif;}
+          .s7-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,10vw,120px);letter-spacing:4px;line-height:0.95;color:#FFFFFF;margin-bottom:12px;}
+          .s7-headline em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px #3A8FE8;}
+          .s7-sub1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2.5vw,22px);font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:10px;}
+          .s7-sub1 span{color:#3A8FE8;}
+          .s7-bulk{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:56px;margin-top:4px;font-family:'Barlow',sans-serif;}
+          .s7-bulk-dot{width:4px;height:4px;border-radius:50%;background:#3A8FE8;opacity:0.6;flex-shrink:0;}
+          .s7-btn-wrap{position:relative;display:inline-block;}
+          .s7-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:20px 56px;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#FFFFFF;text-decoration:none;cursor:pointer;border:none;outline:none;overflow:hidden;transition:transform 0.3s ease,box-shadow 0.3s ease;background:linear-gradient(135deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.06) 40%,rgba(255,255,255,0.02) 60%,rgba(255,255,255,0.10) 100%);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.35),inset 0 -1px 0 rgba(255,255,255,0.08),inset 1px 0 0 rgba(255,255,255,0.12),inset -1px 0 0 rgba(255,255,255,0.12),0 8px 32px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.12);}
+          .s7-btn::before{content:'';position:absolute;top:0;left:10%;right:10%;height:45%;border-radius:100px 100px 60% 60%;background:linear-gradient(to bottom,rgba(255,255,255,0.35) 0%,rgba(255,255,255,0.08) 60%,transparent 100%);pointer-events:none;}
+          .s7-btn::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:25%;border-radius:0 0 100px 100px;background:linear-gradient(to top,rgba(255,255,255,0.12) 0%,transparent 100%);pointer-events:none;}
+          .s7-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:inset 0 1px 0 rgba(255,255,255,0.45),inset 0 -1px 0 rgba(255,255,255,0.1),inset 1px 0 0 rgba(255,255,255,0.15),inset -1px 0 0 rgba(255,255,255,0.15),0 16px 48px rgba(0,0,0,0.5),0 4px 16px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.18),0 0 40px rgba(58,143,232,0.1);}
+          .s7-btn:active{transform:translateY(-1px) scale(1.01);}
+          .s7-btn-text{position:relative;z-index:2;}
+          .s7-btn-arrow{position:relative;z-index:2;font-size:18px;transition:transform 0.3s ease;}
+          .s7-btn:hover .s7-btn-arrow{transform:translateX(4px);}
+          .s7-btn-glow{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:60%;height:20px;border-radius:50%;background:radial-gradient(ellipse,rgba(58,143,232,0.2) 0%,transparent 70%);filter:blur(8px);pointer-events:none;}
+          .s7-note{margin-top:32px;font-size:11px;font-weight:300;letter-spacing:2px;color:rgba(255,255,255,0.2);font-family:'Barlow',sans-serif;}
+          .s7-note span{color:rgba(58,143,232,0.5);}
+          .s7-deco{position:absolute;z-index:2;pointer-events:none;}
+          .s7-deco-left{left:0;top:50%;transform:translateY(-50%);width:120px;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.2));}
+          .s7-deco-right{right:0;top:50%;transform:translateY(-50%);width:120px;height:1px;background:linear-gradient(to left,transparent,rgba(58,143,232,0.2));}
+          @media(max-width:600px){
+            .s7-btn{padding:18px 36px;font-size:12px;letter-spacing:3px;}
+            .s7-deco-left,.s7-deco-right{display:none;}
+            .s7-bulk{font-size:10px;flex-direction:column;gap:6px;}
+          }
+        `}</style>
+        <section className="s7">
+          <div className="s7-bg"></div>
+          <div className="s7-grid"></div>
+          <div className="s7-scan"></div>
+          <div className="s7-orb"></div>
+          <div className="s7-deco s7-deco-left"></div>
+          <div className="s7-deco s7-deco-right"></div>
+          <div className="s7-content">
+            <div className="s7-eyebrow">
+              <div className="s7-eyebrow-line"></div>
+              <span className="s7-eyebrow-text">Ready to Build Something Real</span>
+              <div className="s7-eyebrow-line"></div>
+            </div>
+            <h2 className="s7-headline">
+              YOUR IDEA.<br/>
+              <em>PRINTED.</em><br/>
+              DELIVERED.
+            </h2>
+            <p className="s7-sub1">
+              Custom orders · <span>Bulk supply</span> · Any industry
+            </p>
+            <div className="s7-bulk">
+              <div className="s7-bulk-dot"></div>
+              We manufacture at scale — from single prototypes to full bulk production runs
+              <div className="s7-bulk-dot"></div>
+            </div>
+            <div className="s7-btn-wrap">
+              <a href="#contact" className="s7-btn">
+                <span className="s7-btn-text">Get In Touch</span>
+                <span className="s7-btn-arrow">→</span>
+              </a>
+              <div className="s7-btn-glow"></div>
+            </div>
+            <p className="s7-note">
+              Fast turnaround · <span>Precision guaranteed</span> · Kerala, India
+            </p>
+          </div>
+        </section>
       </div>
     </>
   );
