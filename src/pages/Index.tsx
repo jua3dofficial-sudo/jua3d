@@ -615,12 +615,12 @@ const Index = () => {
           .s2 { position: relative; align-items: stretch; }
           .s2-left {
             transform: translateX(-10%);
-            padding-top: 320px;
+            padding-top: 600px;
             padding-bottom: 80px;
           }
           .s2-logo {
             position: absolute;
-            top: 24px;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
             width: 462px;
@@ -631,7 +631,7 @@ const Index = () => {
           }
           .s2-right {
             align-items: flex-start;
-            padding-top: 520px;
+            padding-top: 600px;
             padding-bottom: 80px;
           }
           .s2-video-frame {
