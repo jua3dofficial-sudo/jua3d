@@ -1295,9 +1295,10 @@ const Index = () => {
               disableRemotePlayback
             />
           </div>
-          <div className="s4-label">
+          <div className="s4-label" style={{ flexDirection: 'column', textAlign: 'center', gap: '6px' }}>
             <span className="s4-label-dot" />
-            3D Architecture Model House
+            <span>3D House Product</span>
+            <span>Architecture Model</span>
           </div>
         </section>
 
