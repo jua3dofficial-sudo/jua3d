@@ -343,8 +343,10 @@ const Index = () => {
     return () => {
       intro.removeEventListener("timeupdate", onTime);
       intro.removeEventListener("ended", onEnded);
+      intro.removeEventListener("playing", startLoopPrime);
       loop.removeEventListener("canplaythrough", markReady);
       loop.removeEventListener("loadeddata", markReady);
+      window.clearTimeout(primeFallback);
     };
   }, []);
 
