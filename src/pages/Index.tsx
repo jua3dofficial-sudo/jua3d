@@ -597,8 +597,8 @@ const Index = () => {
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 428px;
-          height: 428px;
+          width: 599px;
+          height: 599px;
           object-fit: contain;
           margin-bottom: 8px;
           display: block;
