@@ -635,8 +635,8 @@ const Index = () => {
           .s2-left > .s2-stats-row { order: 8; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
-          .s2-logo { width: 495px; height: 495px; margin-top: 0; margin-bottom: 12px; transform: none; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
-          .s2-left > .s2-mobile-video { max-width: 420px; }
+          .s2-logo { width: 460px; height: 460px; margin-top: -90px; margin-bottom: -110px; transform: scale(1.55); transform-origin: center center; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
+          .s2-left > .s2-mobile-video { max-width: 420px; margin-top: 0; }
         }
         @media (min-width: 1024px) {
           .s2 { position: relative; align-items: stretch; }
@@ -752,7 +752,7 @@ const Index = () => {
         @media (min-width: 768px) and (max-width: 1023px) {
           .s2-left {
             flex: 1 1 auto; width: 100%; max-width: 720px;
-            padding: 80px 32px 60px; align-items: center; text-align: center; margin: 0 auto;
+            padding: 24px 32px 60px; align-items: center; text-align: center; margin: 0 auto;
           }
           .s2-left .s2-eyebrow { justify-content: center; }
           .s2-left .s2-headline { text-align: center; }
