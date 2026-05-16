@@ -464,6 +464,7 @@ const Index = () => {
 
         .jua-hero .hero-bottom {
           position:relative; z-index:10;
+          margin-top: auto;
           padding: 0 26px 28px;
           display:flex; flex-direction:column; gap:18px;
           opacity:0; animation: juaFadeUp .9s ease 5.5s forwards;
