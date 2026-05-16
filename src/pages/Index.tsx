@@ -752,7 +752,7 @@ const Index = () => {
         @media (min-width: 768px) and (max-width: 1023px) {
           .s2-left {
             flex: 1 1 auto; width: 100%; max-width: 720px;
-            padding: 80px 32px 60px; align-items: center; text-align: center; margin: 0 auto;
+            padding: 24px 32px 60px; align-items: center; text-align: center; margin: 0 auto;
           }
           .s2-left .s2-eyebrow { justify-content: center; }
           .s2-left .s2-headline { text-align: center; }
