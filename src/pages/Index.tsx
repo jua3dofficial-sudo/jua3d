@@ -276,25 +276,27 @@ const Index = () => {
     const loop = loopRef.current;
     if (!intro || !loop) return;
 
-    // Pre-buffer the loop video and pre-roll its first frame so it's
-    // already decoded and visually identical when we swap.
-    loop.load();
+    // Defer buffering of the loop video until the intro has started playing,
+    // so cold-start bandwidth is dedicated to the visible intro (huge mobile win).
     let loopReady = false;
     const markReady = () => { loopReady = true; };
     loop.addEventListener("canplaythrough", markReady, { once: true });
     loop.addEventListener("loadeddata", markReady, { once: true });
 
-    // Start the loop muted & invisible immediately, then pause at frame 0
-    // so the GPU already has the first frame textured.
     const primeLoop = async () => {
       try {
+        loop.preload = "auto";
+        loop.load();
         loop.currentTime = 0;
         await loop.play();
         loop.pause();
         loop.currentTime = 0;
       } catch {}
     };
-    primeLoop();
+    // Kick off loop preload once intro can play (or after a short fallback delay).
+    const startLoopPrime = () => primeLoop();
+    intro.addEventListener("playing", startLoopPrime, { once: true });
+    const primeFallback = window.setTimeout(startLoopPrime, 2500);
 
     let swapped = false;
     const swap = () => {
@@ -341,8 +343,10 @@ const Index = () => {
     return () => {
       intro.removeEventListener("timeupdate", onTime);
       intro.removeEventListener("ended", onEnded);
+      intro.removeEventListener("playing", startLoopPrime);
       loop.removeEventListener("canplaythrough", markReady);
       loop.removeEventListener("loadeddata", markReady);
+      window.clearTimeout(primeFallback);
     };
   }, []);
 
@@ -890,8 +894,8 @@ const Index = () => {
           cursor:grab; user-select:none; scrollbar-width:none;
           -webkit-overflow-scrolling:touch;
           scroll-behavior:auto;
-          scroll-snap-type: x mandatory;
-          touch-action: pan-x;
+          scroll-snap-type: x proximity;
+          touch-action: pan-x pan-y;
           will-change: scroll-position;
           transform: translateZ(0);
         }
@@ -1020,7 +1024,8 @@ const Index = () => {
             id="vid-intro"
             ref={introRef}
             className="hero-video"
-            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto:good,w_1280/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
+            poster="https://res.cloudinary.com/dc2qifrvh/video/upload/so_0,f_jpg,q_auto,w_1280/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.jpg"
             autoPlay
             muted
             playsInline
@@ -1030,11 +1035,12 @@ const Index = () => {
             id="vid-loop"
             ref={loopRef}
             className="hero-video"
-            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1777990749/HEEERO_vddvpy.mp4"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto:good,w_1280/v1777990749/HEEERO_vddvpy.mp4"
+            poster="https://res.cloudinary.com/dc2qifrvh/video/upload/so_0,f_jpg,q_auto,w_1280/v1777990749/HEEERO_vddvpy.jpg"
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
           />
 
           <div className="ov ov-top" />
@@ -1237,7 +1243,7 @@ const Index = () => {
               ].map((p, i) => (
                 <div className="prod-card" key={i} data-index={i}>
                   <div className="prod-img-wrap">
-                    <img src={p.src} alt={p.name} loading="eager" decoding="async" fetchPriority="high" />
+                    <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                   </div>
                   <div className="prod-name">{p.name}</div>
                   <div className="prod-cat">{p.cat}</div>
@@ -1362,7 +1368,7 @@ const Index = () => {
               ].map((p, i) => (
                 <div className="s5-card" data-index={i} key={i}>
                   <div className="s5-img-wrap">
-                    <img src={p.src} alt={p.name} loading="eager" decoding="async" fetchPriority="high" />
+                    <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                   </div>
                   <div className="s5-name">{p.name}</div>
                   <div className="s5-industry">{p.industry}</div>
