@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroDesktop from "@/assets/hero-desktop.png";
 import jua3dLabLogo from "@/assets/jua-3d-lab-logo-new.webp";
+import juaEmblem from "@/assets/jua-emblem.png";
 
 const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
