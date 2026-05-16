@@ -585,30 +585,71 @@ const Index = () => {
             text-transform:uppercase; font-weight:500; z-index:3;
           }
           .jua-desktop-hero .topbar {
-            position:absolute; top:0; left:0; right:0;
-            display:flex; align-items:flex-start; justify-content:space-between;
-            padding: clamp(20px,2vw,32px) clamp(28px,3vw,48px); z-index:4;
+            position: fixed; top:0; left:0; right:0; z-index:50;
+            display:grid; grid-template-columns: 1fr auto 1fr; align-items:center;
+            padding: 18px clamp(28px,3vw,48px);
+            background: rgba(10,20,40,0.32);
+            backdrop-filter: blur(20px) saturate(170%);
+            -webkit-backdrop-filter: blur(20px) saturate(170%);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+          }
+          .jua-desktop-hero .topbar .nav-brand {
+            grid-column:2; display:flex; flex-direction:column; align-items:center; gap:8px;
+          }
+          .jua-desktop-hero .topbar .nav-emblem {
+            width: clamp(44px, 4vw, 64px); height: clamp(44px, 4vw, 64px);
+            object-fit:contain;
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(58,143,232,0.65));
           }
           .jua-desktop-hero .topbar .logo {
             font-family:'Bebas Neue',sans-serif;
-            font-size: clamp(20px,1.8vw,28px);
-            letter-spacing:3px; line-height:1.15; color:#fff;
+            font-size: clamp(20px, 1.9vw, 30px);
+            letter-spacing:4px; line-height:1; color:#fff; white-space:nowrap;
           }
           .jua-desktop-hero .topbar .logo span { color:#3A8FE8; }
-          .jua-desktop-hero .topbar .cta {
-            font-family:'Barlow Condensed',sans-serif;
-            font-size: clamp(11px,1vw,13px); font-weight:700;
-            letter-spacing:2px; text-transform:uppercase; color:#fff;
-            text-decoration:none; border:1.5px solid rgba(255,255,255,.5);
-            padding:10px 18px; line-height:1.3; text-align:center;
-            background: rgba(10,42,87,.25); backdrop-filter: blur(8px); transition: all .3s;
+          .jua-desktop-hero .topbar .nav-burger {
+            grid-column:3; justify-self:end;
+            width: clamp(48px,3.6vw,56px); height: clamp(48px,3.6vw,56px);
+            display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+            background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2);
+            border-radius:12px; cursor:pointer; padding:0;
+            backdrop-filter: blur(8px); transition: all .3s;
           }
-          .jua-desktop-hero .topbar .cta:hover { background: rgba(58,143,232,.2); border-color:#3A8FE8; }
+          .jua-desktop-hero .topbar .nav-burger:hover { background: rgba(58,143,232,0.18); border-color:#3A8FE8; }
+          .jua-desktop-hero .topbar .nav-burger span {
+            display:block; width: 22px; height:2px; background:#fff; border-radius:2px;
+            transition: transform .3s, opacity .3s;
+          }
+          .jua-desktop-hero .topbar .nav-burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+          .jua-desktop-hero .topbar .nav-burger.open span:nth-child(2) { opacity:0; }
+          .jua-desktop-hero .topbar .nav-burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+          .jua-desktop-hero .nav-menu {
+            position: fixed; inset:0; z-index:49;
+            background: rgba(6,14,28,0.78);
+            backdrop-filter: blur(26px) saturate(180%);
+            -webkit-backdrop-filter: blur(26px) saturate(180%);
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            gap: clamp(18px,2vw,28px); padding: 120px 40px 60px;
+            opacity:0; pointer-events:none; transition: opacity .35s ease;
+          }
+          .jua-desktop-hero .nav-menu.open { opacity:1; pointer-events:auto; }
+          .jua-desktop-hero .nav-menu a {
+            font-family:'Barlow Condensed',sans-serif;
+            font-size: clamp(26px, 2.6vw, 40px); font-weight:700;
+            letter-spacing:4px; text-transform:uppercase; color:#fff; text-decoration:none;
+            padding: 14px 24px; border-bottom:1px solid rgba(255,255,255,0.08);
+            width:100%; max-width: 520px; text-align:center;
+            transition: color .2s, border-color .2s;
+          }
+          .jua-desktop-hero .nav-menu a:hover { color:#3A8FE8; border-color:#3A8FE8; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
-          .jua-desktop-hero .grid { padding: 80px 48px; gap: 24px; }
-          .jua-desktop-hero .h-printlab { font-size: clamp(56px,8vw,96px); }
-          .jua-desktop-hero .h-sub { font-size: clamp(28px,3.6vw,44px); }
+          .jua-desktop-hero .topbar { padding: 14px 28px; }
+          .jua-desktop-hero .topbar .nav-emblem { width:40px; height:40px; }
+          .jua-desktop-hero .topbar .logo { font-size: 20px; letter-spacing:3px; }
+          .jua-desktop-hero .topbar .nav-burger { width:46px; height:46px; }
+          .jua-desktop-hero .nav-menu a { font-size: 24px; letter-spacing:3px; max-width: 400px; }
         }
 
         /* ============ SECTION 2 — TRUST & EXPERTISE ============ */
