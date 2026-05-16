@@ -1243,7 +1243,7 @@ const Index = () => {
               ].map((p, i) => (
                 <div className="prod-card" key={i} data-index={i}>
                   <div className="prod-img-wrap">
-                    <img src={p.src} alt={p.name} loading="eager" decoding="async" fetchPriority="high" />
+                    <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                   </div>
                   <div className="prod-name">{p.name}</div>
                   <div className="prod-cat">{p.cat}</div>
@@ -1368,7 +1368,7 @@ const Index = () => {
               ].map((p, i) => (
                 <div className="s5-card" data-index={i} key={i}>
                   <div className="s5-img-wrap">
-                    <img src={p.src} alt={p.name} loading="eager" decoding="async" fetchPriority="high" />
+                    <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                   </div>
                   <div className="s5-name">{p.name}</div>
                   <div className="s5-industry">{p.industry}</div>
