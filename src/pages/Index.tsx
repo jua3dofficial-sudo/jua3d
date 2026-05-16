@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import heroDesktop from "@/assets/hero-desktop.png";
 import jua3dLabLogo from "@/assets/jua-3d-lab-logo-new.webp";
 import juaEmblem from "@/assets/jua-emblem.png";
@@ -8,7 +8,6 @@ const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
