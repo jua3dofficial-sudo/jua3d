@@ -276,25 +276,27 @@ const Index = () => {
     const loop = loopRef.current;
     if (!intro || !loop) return;
 
-    // Pre-buffer the loop video and pre-roll its first frame so it's
-    // already decoded and visually identical when we swap.
-    loop.load();
+    // Defer buffering of the loop video until the intro has started playing,
+    // so cold-start bandwidth is dedicated to the visible intro (huge mobile win).
     let loopReady = false;
     const markReady = () => { loopReady = true; };
     loop.addEventListener("canplaythrough", markReady, { once: true });
     loop.addEventListener("loadeddata", markReady, { once: true });
 
-    // Start the loop muted & invisible immediately, then pause at frame 0
-    // so the GPU already has the first frame textured.
     const primeLoop = async () => {
       try {
+        loop.preload = "auto";
+        loop.load();
         loop.currentTime = 0;
         await loop.play();
         loop.pause();
         loop.currentTime = 0;
       } catch {}
     };
-    primeLoop();
+    // Kick off loop preload once intro can play (or after a short fallback delay).
+    const startLoopPrime = () => primeLoop();
+    intro.addEventListener("playing", startLoopPrime, { once: true });
+    const primeFallback = window.setTimeout(startLoopPrime, 2500);
 
     let swapped = false;
     const swap = () => {
