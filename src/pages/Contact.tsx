@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import SiteNav from "@/components/SiteNav";
+import Footer from "@/components/Footer";
 
 type FormState = {
   name: string; business: string; email: string; phone: string;
@@ -579,6 +580,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
