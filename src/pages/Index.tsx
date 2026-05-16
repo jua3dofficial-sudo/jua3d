@@ -1086,8 +1086,26 @@ const Index = () => {
           <div className="bg" />
 
           <div className="topbar">
-            <div className="logo">JUA <span>3D</span> PRINT<br />LAB</div>
-            <a href="#contact" className="cta">GET A<br />QUOTE</a>
+            <div className="nav-brand">
+              <img src={juaEmblem} alt="" className="nav-emblem" />
+              <div className="logo">JUA <span>3D</span> PRINT LAB</div>
+            </div>
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              className={`nav-burger${menuOpen ? " open" : ""}`}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <span /><span /><span />
+            </button>
+          </div>
+          <div className={`nav-menu${menuOpen ? " open" : ""}`} role="dialog" aria-hidden={!menuOpen}>
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+            <a href="#products" onClick={() => setMenuOpen(false)}>Products</a>
+            <a href="#process" onClick={() => setMenuOpen(false)}>Process</a>
+            <a href="#industries" onClick={() => setMenuOpen(false)}>Industries</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Get a Quote</a>
           </div>
 
           <div className="grid">
