@@ -597,10 +597,13 @@ const Index = () => {
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 599px;
-          height: 599px;
+          width: 360px;
+          height: 360px;
           object-fit: contain;
-          margin-bottom: 8px;
+          margin-top: -80px;
+          margin-bottom: -80px;
+          transform: scale(1.55);
+          transform-origin: center center;
           display: block;
           margin-left: auto;
           margin-right: auto;
@@ -617,7 +620,7 @@ const Index = () => {
           .s2-left > .s2-stats-row { order: 7; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
-          .s2-logo { width: 495px; height: 495px; margin-bottom: 12px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
+          .s2-logo { width: 495px; height: 495px; margin-top: 0; margin-bottom: 12px; transform: none; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
         }
         @media (min-width: 1024px) {
           .s2 { position: relative; align-items: stretch; }
