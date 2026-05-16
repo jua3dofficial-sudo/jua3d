@@ -3,6 +3,7 @@ import heroDesktop from "@/assets/hero-desktop.png";
 import jua3dLabLogo from "@/assets/jua-3d-lab-logo-new.webp";
 import juaEmblem from "@/assets/jua-emblem.png";
 import SiteNav from "@/components/SiteNav";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
