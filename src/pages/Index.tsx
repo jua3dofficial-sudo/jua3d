@@ -731,26 +731,15 @@ const Index = () => {
         .cap-icon { font-size: 18px; opacity: 0.8; }
         .cap-text { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
         @keyframes s2ScrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @media (max-width: 1023px) {
+          .s2 { flex-direction: column; min-height: auto; overflow: hidden; }
+          .s2-right { display: none; }
+        }
         @media (max-width: 768px) {
-          .s2 {
-            flex-direction: row;
-            min-height: auto;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x;
-            scrollbar-width: none;
+          .s2-left {
+            flex: 1 1 auto; width: 100%; max-width: 100%;
+            padding: 60px 24px 40px; align-items: center; text-align: center; margin: 0;
           }
-          .s2::-webkit-scrollbar { display: none; }
-          .s2-left, .s2-right {
-            flex: 0 0 100vw;
-            width: 100vw;
-            max-width: 100vw;
-            scroll-snap-align: center;
-            scroll-snap-stop: always;
-          }
-          .s2-left { padding: 60px 24px 40px; align-items: center; text-align: center; margin: 0; }
           .s2-left .s2-eyebrow { justify-content: center; }
           .s2-left .s2-headline { text-align: center; }
           .s2-left .s2-divider { margin-left: auto; margin-right: auto; }
@@ -758,14 +747,20 @@ const Index = () => {
           .s2-left .s2-cta-row { justify-content: center; }
           .s2-left .s2-stats-row { justify-content: center; width: 100%; }
           .s2-left .s2-stat-item { text-align: center; }
-          .s2-right {
-            padding: 60px 24px;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-          }
-          .s2-video-frame { max-width: 280px; }
           .s2-stats-row { gap: 24px; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .s2-left {
+            flex: 1 1 auto; width: 100%; max-width: 720px;
+            padding: 80px 32px 60px; align-items: center; text-align: center; margin: 0 auto;
+          }
+          .s2-left .s2-eyebrow { justify-content: center; }
+          .s2-left .s2-headline { text-align: center; }
+          .s2-left .s2-divider { margin-left: auto; margin-right: auto; }
+          .s2-left .s2-body { margin-left: auto; margin-right: auto; text-align: center; }
+          .s2-left .s2-cta-row { justify-content: center; }
+          .s2-left .s2-stats-row { justify-content: center; width: 100%; }
+          .s2-left .s2-stat-item { text-align: center; }
         }
 
         /* ============ SECTION 3 — PRODUCTS SCROLL ============ */
