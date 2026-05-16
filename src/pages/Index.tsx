@@ -650,6 +650,9 @@ const Index = () => {
           .jua-desktop-hero .topbar .logo { font-size: 20px; letter-spacing:3px; }
           .jua-desktop-hero .topbar .nav-burger { width:46px; height:46px; }
           .jua-desktop-hero .nav-menu a { font-size: 24px; letter-spacing:3px; max-width: 400px; }
+          .jua-desktop-hero .grid { padding: 80px 48px; gap: 24px; }
+          .jua-desktop-hero .h-printlab { font-size: clamp(56px,8vw,96px); }
+          .jua-desktop-hero .h-sub { font-size: clamp(28px,3.6vw,44px); }
         }
 
         /* ============ SECTION 2 — TRUST & EXPERTISE ============ */
