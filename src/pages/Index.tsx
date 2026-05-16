@@ -1,11 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroDesktop from "@/assets/hero-desktop.png";
 import jua3dLabLogo from "@/assets/jua-3d-lab-logo-new.webp";
+import juaEmblem from "@/assets/jua-emblem.png";
 
 const Index = () => {
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
@@ -401,28 +403,64 @@ const Index = () => {
         }
 
         .jua-hero nav {
-          position:relative; z-index:10;
-          display:flex; align-items:flex-start; justify-content:space-between;
-          padding: 22px 26px 0;
+          position: fixed; top:0; left:0; right:0; z-index:50;
+          display:grid; grid-template-columns: 1fr auto 1fr; align-items:center;
+          padding: 12px 18px;
+          background: rgba(10, 20, 40, 0.35);
+          backdrop-filter: blur(18px) saturate(160%);
+          -webkit-backdrop-filter: blur(18px) saturate(160%);
+          border-bottom: 1px solid rgba(255,255,255,0.08);
           animation: juaFadeDown .7s ease .2s both;
+        }
+        .jua-hero .nav-brand {
+          grid-column: 2; display:flex; flex-direction:column; align-items:center; gap:4px;
+        }
+        .jua-hero .nav-emblem {
+          width: 32px; height: 32px; object-fit: contain;
+          filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(58,143,232,0.6));
         }
         .jua-hero .logo {
           font-family:'Bebas Neue',sans-serif;
-          font-size: clamp(18px,4.5vw,26px);
-          letter-spacing:3px; color:var(--white); line-height:1.15;
+          font-size: 16px; letter-spacing:3px; color:var(--white);
+          line-height:1; white-space:nowrap;
         }
         .jua-hero .logo span { color: var(--accent); }
-        .jua-hero .nav-cta {
-          font-family:'Barlow Condensed',sans-serif;
-          font-size: clamp(10px,2.2vw,13px);
-          font-weight:700; letter-spacing:2px; text-transform:uppercase;
-          color:var(--white);
-          border:1.5px solid rgba(255,255,255,.5);
-          padding:10px 18px; text-decoration:none;
-          background: rgba(10,42,87,.25); backdrop-filter: blur(8px);
-          line-height:1.3; text-align:center; transition: all .3s; display:inline-block;
+        .jua-hero .nav-burger {
+          grid-column: 3; justify-self:end;
+          width:42px; height:42px; display:flex; flex-direction:column;
+          align-items:center; justify-content:center; gap:5px;
+          background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18);
+          border-radius:10px; cursor:pointer; padding:0;
+          backdrop-filter: blur(8px); transition: all .3s;
         }
-        .jua-hero .nav-cta:hover { background: rgba(58,143,232,.2); border-color: var(--accent); }
+        .jua-hero .nav-burger:hover { background: rgba(58,143,232,0.18); border-color: var(--accent); }
+        .jua-hero .nav-burger span {
+          display:block; width:18px; height:2px; background:#fff; border-radius:2px;
+          transition: transform .3s, opacity .3s;
+        }
+        .jua-hero .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .jua-hero .nav-burger.open span:nth-child(2) { opacity: 0; }
+        .jua-hero .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .jua-hero .nav-menu {
+          position: fixed; top:0; left:0; right:0; bottom:0; z-index:49;
+          background: rgba(6,14,28,0.72);
+          backdrop-filter: blur(24px) saturate(180%);
+          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+          gap: 22px; padding: 90px 28px 40px;
+          opacity:0; pointer-events:none; transition: opacity .35s ease;
+        }
+        .jua-hero .nav-menu.open { opacity:1; pointer-events:auto; }
+        .jua-hero .nav-menu a {
+          font-family:'Barlow Condensed',sans-serif;
+          font-size: 22px; font-weight:700; letter-spacing:3px;
+          text-transform:uppercase; color:#fff; text-decoration:none;
+          padding: 10px 18px; border-bottom:1px solid rgba(255,255,255,0.08);
+          width: 100%; max-width: 320px; text-align:center;
+          transition: color .2s, border-color .2s;
+        }
+        .jua-hero .nav-menu a:hover { color: var(--accent); border-color: var(--accent); }
 
         .jua-hero .hero-bottom {
           position:relative; z-index:10;
@@ -955,13 +993,27 @@ const Index = () => {
           <div className="ov ov-sides" />
 
           <nav>
-            <div className="logo">
-              JUA <span>3D</span> PRINT<br />LAB
+            <div className="nav-brand">
+              <img src={juaEmblem} alt="" className="nav-emblem" />
+              <div className="logo">JUA <span>3D</span> PRINT LAB</div>
             </div>
-            <a href="#contact" className="nav-cta">
-              GET A<br />QUOTE
-            </a>
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              className={`nav-burger${menuOpen ? " open" : ""}`}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <span /><span /><span />
+            </button>
           </nav>
+          <div className={`nav-menu${menuOpen ? " open" : ""}`} role="dialog" aria-hidden={!menuOpen}>
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+            <a href="#products" onClick={() => setMenuOpen(false)}>Products</a>
+            <a href="#process" onClick={() => setMenuOpen(false)}>Process</a>
+            <a href="#industries" onClick={() => setMenuOpen(false)}>Industries</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Get a Quote</a>
+          </div>
 
           <div className="hero-bottom">
             <div className="scroll-wrap">
@@ -1046,7 +1098,7 @@ const Index = () => {
 
         {/* SECTION 2 — TRUST & EXPERTISE */}
         <div className="jua-s2-wrap">
-          <section className="s2">
+          <section className="s2" id="about">
             <div className="glow-orb" />
             <div className="s2-left">
               <div className="s2-eyebrow">
@@ -1199,7 +1251,7 @@ const Index = () => {
         @media(max-width:768px){.s4-video-wrap{max-width:92%;}.s4-label{font-size:15px;letter-spacing:3.5px;gap:10px;}.s4-label::before,.s4-label::after{width:22px;}.s4-fade-left,.s4-fade-right{width:60px;}.s4-fade-top{height:100px;}.s4-fade-bottom{height:120px;}.s4{padding:40px 0 56px;}}
         @media(max-width:400px){.s4-label{font-size:13px;letter-spacing:2.5px;}}
         ` }} />
-        <section className="s4">
+        <section className="s4" id="process">
           <div className="s4-glow" />
           <div className="s4-grid" />
           <div className="s4-scan" />
@@ -1359,7 +1411,7 @@ const Index = () => {
           @media(max-width:600px){.s6-grid{grid-template-columns:1fr;max-width:420px;padding:0 16px;gap:2px;}.s6-card{padding:28px 22px 24px;}.s6-products{max-height:none!important;opacity:1!important;}}
         `}} />
 
-        <section className="s6">
+        <section className="s6" id="industries">
           <div className="s6-orb s6-orb-1" />
           <div className="s6-orb s6-orb-2" />
 
@@ -1452,7 +1504,7 @@ const Index = () => {
             .s7-bulk{font-size:10px;flex-direction:column;gap:6px;}
           }
         `}</style>
-        <section className="s7">
+        <section className="s7" id="contact">
           <div className="s7-bg"></div>
           <div className="s7-grid"></div>
           <div className="s7-scan"></div>
