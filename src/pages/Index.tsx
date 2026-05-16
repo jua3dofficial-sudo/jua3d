@@ -597,10 +597,10 @@ const Index = () => {
           text-transform: uppercase; color: #3A8FE8;
         }
         .s2-logo {
-          width: 324px;
-          height: 324px;
+          width: 389px;
+          height: 389px;
           object-fit: contain;
-          margin-bottom: 20px;
+          margin-bottom: -40px;
           display: block;
           margin-left: auto;
           margin-right: auto;
@@ -608,7 +608,7 @@ const Index = () => {
           filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
         }
         @media (min-width: 768px) and (max-width: 1023px) {
-          .s2-logo { width: 495px; height: 495px; margin-bottom: 24px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
+          .s2-logo { width: 495px; height: 495px; margin-bottom: -56px; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
           .s2-eyebrow { margin-bottom: 22px; }
         }
         @media (min-width: 1024px) {
