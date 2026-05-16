@@ -623,8 +623,8 @@ const Index = () => {
             top: 24px;
             left: 100%;
             transform: translateX(-50%) translateY(-20%);
-            width: 462px;
-            height: 462px;
+            width: 647px;
+            height: 647px;
             margin: 0;
             z-index: 5;
             filter: brightness(0) invert(1) drop-shadow(0 0 22px rgba(58,143,232,0.8));
