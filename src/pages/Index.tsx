@@ -1098,7 +1098,7 @@ const Index = () => {
 
         {/* SECTION 2 — TRUST & EXPERTISE */}
         <div className="jua-s2-wrap">
-          <section className="s2">
+          <section className="s2" id="about">
             <div className="glow-orb" />
             <div className="s2-left">
               <div className="s2-eyebrow">
@@ -1251,7 +1251,7 @@ const Index = () => {
         @media(max-width:768px){.s4-video-wrap{max-width:92%;}.s4-label{font-size:15px;letter-spacing:3.5px;gap:10px;}.s4-label::before,.s4-label::after{width:22px;}.s4-fade-left,.s4-fade-right{width:60px;}.s4-fade-top{height:100px;}.s4-fade-bottom{height:120px;}.s4{padding:40px 0 56px;}}
         @media(max-width:400px){.s4-label{font-size:13px;letter-spacing:2.5px;}}
         ` }} />
-        <section className="s4">
+        <section className="s4" id="process">
           <div className="s4-glow" />
           <div className="s4-grid" />
           <div className="s4-scan" />
@@ -1411,7 +1411,7 @@ const Index = () => {
           @media(max-width:600px){.s6-grid{grid-template-columns:1fr;max-width:420px;padding:0 16px;gap:2px;}.s6-card{padding:28px 22px 24px;}.s6-products{max-height:none!important;opacity:1!important;}}
         `}} />
 
-        <section className="s6">
+        <section className="s6" id="industries">
           <div className="s6-orb s6-orb-1" />
           <div className="s6-orb s6-orb-2" />
 
@@ -1504,7 +1504,7 @@ const Index = () => {
             .s7-bulk{font-size:10px;flex-direction:column;gap:6px;}
           }
         `}</style>
-        <section className="s7">
+        <section className="s7" id="contact">
           <div className="s7-bg"></div>
           <div className="s7-grid"></div>
           <div className="s7-scan"></div>
