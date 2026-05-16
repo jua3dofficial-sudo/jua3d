@@ -1556,10 +1556,10 @@ const Index = () => {
               <div className="s7-bulk-dot"></div>
             </div>
             <div className="s7-btn-wrap">
-              <a href="#contact" className="s7-btn">
+              <Link to="/contact" className="s7-btn">
                 <span className="s7-btn-text">Get In Touch</span>
                 <span className="s7-btn-arrow">→</span>
-              </a>
+              </Link>
               <div className="s7-btn-glow"></div>
             </div>
             <p className="s7-note">
