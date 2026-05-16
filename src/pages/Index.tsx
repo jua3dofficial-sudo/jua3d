@@ -890,8 +890,8 @@ const Index = () => {
           cursor:grab; user-select:none; scrollbar-width:none;
           -webkit-overflow-scrolling:touch;
           scroll-behavior:auto;
-          scroll-snap-type: x mandatory;
-          touch-action: pan-x;
+          scroll-snap-type: x proximity;
+          touch-action: pan-x pan-y;
           will-change: scroll-position;
           transform: translateZ(0);
         }
