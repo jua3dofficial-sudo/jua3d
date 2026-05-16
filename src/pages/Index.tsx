@@ -610,17 +610,33 @@ const Index = () => {
           image-rendering: -webkit-optimize-contrast;
           filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(58,143,232,0.65));
         }
+        .s2-mobile-video { display: none; }
         @media (max-width: 1023px) {
           .s2-left > .s2-logo { order: 1; }
-          .s2-left > .s2-eyebrow { order: 2; margin-top: 8px; margin-bottom: 14px; }
-          .s2-left > .s2-headline { order: 3; }
-          .s2-left > .s2-divider { order: 4; }
-          .s2-left > .s2-body { order: 5; }
-          .s2-left > .s2-cta-row { order: 6; }
-          .s2-left > .s2-stats-row { order: 7; }
+          .s2-left > .s2-mobile-video {
+            order: 2;
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            margin: 20px auto 28px;
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(58,143,232,0.18), 0 24px 60px rgba(0,0,0,0.55), 0 0 50px rgba(58,143,232,0.1);
+          }
+          .s2-left > .s2-mobile-video video {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+          }
+          .s2-left > .s2-eyebrow { order: 3; margin-top: 8px; margin-bottom: 14px; }
+          .s2-left > .s2-headline { order: 4; }
+          .s2-left > .s2-divider { order: 5; }
+          .s2-left > .s2-body { order: 6; }
+          .s2-left > .s2-cta-row { order: 7; }
+          .s2-left > .s2-stats-row { order: 8; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
           .s2-logo { width: 495px; height: 495px; margin-top: 0; margin-bottom: 12px; transform: none; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
+          .s2-left > .s2-mobile-video { max-width: 420px; }
         }
         @media (min-width: 1024px) {
           .s2 { position: relative; align-items: stretch; }
@@ -715,26 +731,15 @@ const Index = () => {
         .cap-icon { font-size: 18px; opacity: 0.8; }
         .cap-text { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
         @keyframes s2ScrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @media (max-width: 1023px) {
+          .s2 { flex-direction: column; min-height: auto; overflow: hidden; }
+          .s2-right { display: none; }
+        }
         @media (max-width: 768px) {
-          .s2 {
-            flex-direction: row;
-            min-height: auto;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x;
-            scrollbar-width: none;
+          .s2-left {
+            flex: 1 1 auto; width: 100%; max-width: 100%;
+            padding: 60px 24px 40px; align-items: center; text-align: center; margin: 0;
           }
-          .s2::-webkit-scrollbar { display: none; }
-          .s2-left, .s2-right {
-            flex: 0 0 100vw;
-            width: 100vw;
-            max-width: 100vw;
-            scroll-snap-align: center;
-            scroll-snap-stop: always;
-          }
-          .s2-left { padding: 60px 24px 40px; align-items: center; text-align: center; margin: 0; }
           .s2-left .s2-eyebrow { justify-content: center; }
           .s2-left .s2-headline { text-align: center; }
           .s2-left .s2-divider { margin-left: auto; margin-right: auto; }
@@ -742,14 +747,20 @@ const Index = () => {
           .s2-left .s2-cta-row { justify-content: center; }
           .s2-left .s2-stats-row { justify-content: center; width: 100%; }
           .s2-left .s2-stat-item { text-align: center; }
-          .s2-right {
-            padding: 60px 24px;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-          }
-          .s2-video-frame { max-width: 280px; }
           .s2-stats-row { gap: 24px; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .s2-left {
+            flex: 1 1 auto; width: 100%; max-width: 720px;
+            padding: 80px 32px 60px; align-items: center; text-align: center; margin: 0 auto;
+          }
+          .s2-left .s2-eyebrow { justify-content: center; }
+          .s2-left .s2-headline { text-align: center; }
+          .s2-left .s2-divider { margin-left: auto; margin-right: auto; }
+          .s2-left .s2-body { margin-left: auto; margin-right: auto; text-align: center; }
+          .s2-left .s2-cta-row { justify-content: center; }
+          .s2-left .s2-stats-row { justify-content: center; width: 100%; }
+          .s2-left .s2-stat-item { text-align: center; }
         }
 
         /* ============ SECTION 3 — PRODUCTS SCROLL ============ */
@@ -1041,6 +1052,15 @@ const Index = () => {
               <div className="s2-eyebrow">
                 <div className="s2-eyebrow-line" />
                 <span className="s2-eyebrow-text">The JUA Standard</span>
+              </div>
+              <div className="s2-mobile-video">
+                <video
+                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
               </div>
               <img
                 className="s2-logo"
