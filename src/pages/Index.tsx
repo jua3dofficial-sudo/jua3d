@@ -293,10 +293,22 @@ const Index = () => {
         loop.currentTime = 0;
       } catch {}
     };
-    // Kick off loop preload once intro can play (or after a short fallback delay).
-    const startLoopPrime = () => primeLoop();
-    intro.addEventListener("playing", startLoopPrime, { once: true });
-    const primeFallback = window.setTimeout(startLoopPrime, 2500);
+    // Only start loading the loop video once the intro is 3s in. This avoids
+    // the two videos competing for bandwidth on first paint (big mobile win).
+    let primeStarted = false;
+    const startLoopPrime = () => {
+      if (primeStarted) return;
+      primeStarted = true;
+      primeLoop();
+    };
+    const onIntroTime = () => {
+      if (intro.currentTime >= 3) {
+        intro.removeEventListener("timeupdate", onIntroTime);
+        startLoopPrime();
+      }
+    };
+    intro.addEventListener("timeupdate", onIntroTime);
+    const primeFallback = window.setTimeout(startLoopPrime, 4000);
 
     let swapped = false;
     const swap = () => {
