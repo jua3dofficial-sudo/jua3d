@@ -164,7 +164,7 @@ const Contact = () => {
         .form-group.half-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
         .form-label{
           display:block; font-size:10px; font-weight:600; letter-spacing:3px;
-          text-transform:uppercase; color:rgba(58,143,232,0.7); margin-bottom:10px;
+          text-transform:uppercase; color:#ffffff; margin-bottom:10px;
         }
         .form-input, .form-textarea, .form-select{
           width:100%;
