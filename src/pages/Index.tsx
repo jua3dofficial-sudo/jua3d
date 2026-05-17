@@ -1036,24 +1036,29 @@ const Index = () => {
             id="vid-intro"
             ref={introRef}
             className="hero-video"
-            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto:good,w_1280/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
-            poster="https://res.cloudinary.com/dc2qifrvh/video/upload/so_0,f_jpg,q_auto,w_1280/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.jpg"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto,vc_auto,w_1280/v1777987171/3D_animation_poster_design_202605051845_xvt0vx.mp4"
+            poster="https://res.cloudinary.com/dc2qifrvh/image/upload/v1777986627/HERO-JUA1_svofae.png"
             autoPlay
             muted
             playsInline
-            preload="auto"
+            // @ts-ignore - iOS Safari attribute
+            webkit-playsinline="true"
+            preload="metadata"
           />
           <video
             id="vid-loop"
             ref={loopRef}
             className="hero-video"
-            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto:good,w_1280/v1777990749/HEEERO_vddvpy.mp4"
-            poster="https://res.cloudinary.com/dc2qifrvh/video/upload/so_0,f_jpg,q_auto,w_1280/v1777990749/HEEERO_vddvpy.jpg"
+            src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto,vc_auto,w_1280/v1777990749/HEEERO_vddvpy.mp4"
+            poster="https://res.cloudinary.com/dc2qifrvh/image/upload/v1777986627/HERO-JUA1_svofae.png"
             muted
             loop
             playsInline
-            preload="metadata"
+            // @ts-ignore - iOS Safari attribute
+            webkit-playsinline="true"
+            preload="none"
           />
+
 
           <div className="ov ov-top" />
           <div className="ov ov-bottom" />
