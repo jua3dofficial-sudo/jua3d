@@ -355,7 +355,7 @@ const Index = () => {
     return () => {
       intro.removeEventListener("timeupdate", onTime);
       intro.removeEventListener("ended", onEnded);
-      intro.removeEventListener("playing", startLoopPrime);
+      intro.removeEventListener("timeupdate", onIntroTime);
       loop.removeEventListener("canplaythrough", markReady);
       loop.removeEventListener("loadeddata", markReady);
       window.clearTimeout(primeFallback);
