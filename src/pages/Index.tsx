@@ -553,8 +553,9 @@ const Index = () => {
             color:rgba(255,255,255,.75); text-transform:uppercase; font-weight:500;
           }
           .jua-desktop-hero .h-jua {
-            font-size: clamp(31px,3.38vw,47px); font-weight:800;
+            font-size: clamp(40px,4.39vw,61px); font-weight:800;
             letter-spacing:.02em; line-height:1; color:#fff;
+            margin-left: clamp(4px, 0.5vw, 10px);
           }
           .jua-desktop-hero .h-printlab {
             font-size: clamp(58px,9vw,135px); font-weight:900;
