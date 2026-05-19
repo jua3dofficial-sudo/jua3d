@@ -1019,7 +1019,8 @@ const Index = () => {
           .prod-card[data-index="3"] .prod-img-wrap { width:338px; height:403px; }
           .prod-card[data-index="5"] .prod-img-wrap { width:338px; height:403px; }
           .prod-card[data-index="6"] .prod-img-wrap { width:365px; height:435px; }
-          .s3-track { gap:16px; padding:36px 32px 52px; }
+          .s3-header { padding-bottom: 16px; }
+          .s3-track { gap:16px; padding:12px 32px 52px; }
         }
         @media (max-width:400px) {
           .prod-card { width:265px; }
