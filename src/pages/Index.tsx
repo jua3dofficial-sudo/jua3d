@@ -945,6 +945,7 @@ const Index = () => {
         .prod-card[data-index="3"] .prod-img-wrap { width:260px; height:298px; }
         .prod-card[data-index="5"] .prod-img-wrap { width:260px; height:298px; }
         .prod-card[data-index="6"] .prod-img-wrap { width:281px; height:321px; }
+        .prod-img-wrap img {
           width:100%; height:100%; object-fit:contain; object-position:center;
           transition: transform 0.6s ease; display:block;
           filter: drop-shadow(0 30px 40px rgba(0,0,0,0.55));
