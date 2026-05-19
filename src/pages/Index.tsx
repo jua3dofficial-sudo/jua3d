@@ -871,7 +871,7 @@ const Index = () => {
         /* ============ SECTION 3 — PRODUCTS SCROLL ============ */
         .s3 {
           width:100%;
-          padding:80px 0 100px;
+          padding:40px 0 48px;
           background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
           position:relative;
           z-index:6;
@@ -887,7 +887,7 @@ const Index = () => {
           pointer-events:none;
           z-index:0;
         }
-        .s3-header { text-align:center; padding:0 24px 56px; position:relative; z-index:2; }
+        .s3-header { text-align:center; padding:0 24px 28px; position:relative; z-index:2; }
         .s3-eyebrow { display:inline-flex; align-items:center; gap:12px; margin-bottom:16px; }
         .s3-eyebrow-line { width:28px; height:1px; background:#3A8FE8; }
         .s3-eyebrow-text {
@@ -896,7 +896,7 @@ const Index = () => {
         }
         .s3-title {
           font-family:'Barlow Condensed',sans-serif;
-          font-size:clamp(32px,5vw,56px); font-weight:800;
+          font-size:clamp(24px,4vw,40px); font-weight:800;
           color:#FFFFFF; letter-spacing:1px; line-height:1;
         }
         .s3-title span { color:#3A8FE8; }
@@ -910,8 +910,8 @@ const Index = () => {
           cursor:grab; user-select:none; scrollbar-width:none;
           -webkit-overflow-scrolling:touch;
           scroll-behavior:auto;
-          scroll-snap-type: x proximity;
-          touch-action: pan-x pan-y;
+          scroll-snap-type: x mandatory;
+          touch-action: pan-x;
           will-change: scroll-position;
           transform: translateZ(0);
         }
@@ -919,7 +919,7 @@ const Index = () => {
         .s3-track-wrap:active { cursor:grabbing; }
         .s3-track {
           display:flex; gap:24px;
-          padding:48px 60px 64px;
+          padding:20px calc(50% - 120px) 32px;
           width:max-content; align-items:center;
         }
         .prod-card {
