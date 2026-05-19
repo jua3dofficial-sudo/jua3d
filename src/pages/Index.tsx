@@ -157,7 +157,14 @@ const Index = () => {
     wrap.addEventListener("touchend", onTouchEnd);
 
     const initTO = setTimeout(() => {
-      snapTo(0);
+      // Start at the first original card (index ORIG), in the middle of the track.
+      const startCard = cards[ORIG];
+      if (startCard) {
+        const prev = (wrap.style as any).scrollBehavior;
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = startCard.offsetLeft - wrap.offsetWidth / 2 + startCard.offsetWidth / 2;
+        (wrap.style as any).scrollBehavior = prev || "";
+      }
       setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     }, 700);
 
