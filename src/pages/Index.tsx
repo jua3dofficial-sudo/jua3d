@@ -132,8 +132,8 @@ const Index = () => {
     wrap.addEventListener("touchend", onTouchEnd);
 
     const initTO = setTimeout(() => {
-      snapTo(1);
-      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 300);
+      snapTo(0);
+      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     }, 700);
 
     return () => {
@@ -1349,7 +1349,7 @@ const Index = () => {
         .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
         .s5-wrap::-webkit-scrollbar{display:none;}
         .s5-wrap:active{cursor:grabbing;}
-        .s5-track{display:flex;gap:40px;padding:20px 80px 48px;width:max-content;align-items:flex-end;}
+        .s5-track{display:flex;gap:40px;padding:20px calc(50% - 130px) 48px;width:max-content;align-items:flex-end;}
         .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;}
         .s5-card[data-index="0"]{width:336px;}
         .s5-card[data-index="2"]{width:350px;}
@@ -1372,7 +1372,7 @@ const Index = () => {
         .s5-dots{display:flex;justify-content:center;gap:8px;margin-top:40px;position:relative;z-index:2;}
         .s5-navdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s ease;cursor:pointer;}
         .s5-navdot.active{background:#3A8FE8;width:24px;border-radius:3px;}
-        @media(max-width:768px){.s5-card{width:200px;}.s5-card[data-index="0"]{width:240px;}.s5-card[data-index="2"]{width:250px;}.s5-card[data-index="4"]{width:270px;}.s5-img-wrap{width:180px;height:240px;}.s5-card[data-index="0"] .s5-img-wrap{width:216px;height:288px;}.s5-card[data-index="2"] .s5-img-wrap{width:225px;height:300px;}.s5-card[data-index="4"] .s5-img-wrap{width:243px;height:324px;}.s5-track{gap:24px;padding:20px 32px 48px;}}
+        @media(max-width:768px){.s5-card{width:200px;}.s5-card[data-index="0"]{width:240px;}.s5-card[data-index="2"]{width:250px;}.s5-card[data-index="4"]{width:270px;}.s5-img-wrap{width:180px;height:240px;}.s5-card[data-index="0"] .s5-img-wrap{width:216px;height:288px;}.s5-card[data-index="2"] .s5-img-wrap{width:225px;height:300px;}.s5-card[data-index="4"] .s5-img-wrap{width:243px;height:324px;}.s5-track{gap:24px;padding:20px calc(50% - 100px) 48px;}}
         @media(max-width:400px){.s5-card{width:170px;}.s5-card[data-index="0"]{width:204px;}.s5-card[data-index="2"]{width:212px;}.s5-card[data-index="4"]{width:230px;}.s5-img-wrap{width:155px;height:210px;}.s5-card[data-index="0"] .s5-img-wrap{width:186px;height:252px;}.s5-card[data-index="2"] .s5-img-wrap{width:194px;height:262px;}.s5-card[data-index="4"] .s5-img-wrap{width:209px;height:284px;}}
         ` }} />
         <section className="s5">
