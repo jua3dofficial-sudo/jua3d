@@ -211,7 +211,7 @@ const Index = () => {
       autoTimer = setInterval(() => {
         const next = (activeIndex + 1) % cards.length;
         goTo(next);
-      }, 3200);
+      }, 2000);
     };
     const pauseAutoTemporarily = () => {
       stopAuto();
