@@ -981,6 +981,16 @@ const Index = () => {
           transition: all 0.3s ease; cursor:pointer;
         }
         .s3-dot.active { background:#3A8FE8; width:24px; border-radius:3px; }
+
+        /* Desktop + tablet spacing & edge-padding fixes (do not touch mobile) */
+        @media (min-width: 769px) {
+          .s3 { padding: 48px 0 56px; }
+          .s3-header { padding: 0 24px 32px; }
+          .s3-track {
+            padding: 24px calc(50vw - 150px) 36px;
+          }
+          .s3-dots { margin-top: 20px; }
+        }
         @media(min-width:769px) and (max-width:1024px) {
           .prod-card { width:360px; }
           .prod-card[data-index="1"] { width:450px; }
