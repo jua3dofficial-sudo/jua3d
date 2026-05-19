@@ -283,7 +283,14 @@ const Index = () => {
     });
 
     const init = () => {
-      // Ensure first card gets active on load without requiring a scroll event.
+      // Start in the middle of the track at the first original card.
+      const startCard = cards[ORIG];
+      if (startCard) {
+        const prevBehavior = (wrap.style as any).scrollBehavior;
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = startCard.offsetLeft - wrap.offsetWidth / 2 + startCard.offsetWidth / 2;
+        (wrap.style as any).scrollBehavior = prevBehavior || "";
+      }
       setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     };
     const initTimeout = setTimeout(init, 600);
