@@ -1310,8 +1310,8 @@ const Index = () => {
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
                 ];
-                return [...products, ...products].map((p, i) => (
-                  <div className="prod-card" key={i} data-index={i} aria-hidden={i >= 7 ? "true" : undefined}>
+                return [...products, ...products, ...products, ...products].map((p, i) => (
+                  <div className="prod-card" key={i} data-index={i % 7} aria-hidden={i >= 7 && i < 14 ? undefined : "true"}>
                     <div className="prod-img-wrap">
                       <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                     </div>
