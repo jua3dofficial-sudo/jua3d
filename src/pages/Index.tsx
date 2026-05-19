@@ -533,9 +533,10 @@ const Index = () => {
             color:#fff; overflow:hidden;
           }
           .jua-desktop-hero .bg {
-            position:absolute; inset:0;
+            position:absolute; left:0; right:0; bottom:0;
+            top: clamp(88px, 8vw, 120px);
             background-image:url(${heroDesktop});
-            background-size:cover; background-position:center 25%; background-repeat:no-repeat;
+            background-size:cover; background-position:center center; background-repeat:no-repeat;
           }
           .jua-desktop-hero .grid {
             position:relative; z-index:2;
