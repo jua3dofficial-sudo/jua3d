@@ -69,7 +69,7 @@ const Index = () => {
     const maybeRecenter = () => {
       const w3 = cardWidth(3);
       const w5 = cardWidth(5);
-      const w12 = cardWidth(12);
+      const w15 = cardWidth(15);
       if (w5 <= 0) return;
       const prev = (wrap.style as any).scrollBehavior;
       if (wrap.scrollLeft < w3) {
@@ -77,7 +77,7 @@ const Index = () => {
         wrap.scrollLeft = wrap.scrollLeft + w5;
         (wrap.style as any).scrollBehavior = prev || "";
         activeIndex = -1;
-      } else if (wrap.scrollLeft > w12) {
+      } else if (wrap.scrollLeft > w15) {
         (wrap.style as any).scrollBehavior = "auto";
         wrap.scrollLeft = wrap.scrollLeft - w5;
         (wrap.style as any).scrollBehavior = prev || "";
@@ -1467,7 +1467,7 @@ const Index = () => {
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
                 ];
-                return [...products, ...products, ...products, ...products].map((p, i) => (
+                return [...products, ...products, ...products, ...products, ...products].map((p, i) => (
                   <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 && i < 10 ? undefined : "true"}>
                     <div className="s5-img-wrap">
                       <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
