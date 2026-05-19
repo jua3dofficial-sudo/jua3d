@@ -236,13 +236,14 @@ const Index = () => {
     });
 
     const init = () => {
-      const card = cards[1];
+      const card = cards[0];
       if (card) {
         wrap.scrollLeft = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
       }
+      updateActive();
       setTimeout(() => { updateActive(); startAuto(); }, 200);
     };
-    const initTimeout = setTimeout(init, 600);
+    const initTimeout = setTimeout(init, 100);
 
     return () => {
       clearTimeout(initTimeout);
