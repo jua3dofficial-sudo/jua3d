@@ -69,7 +69,7 @@ const Index = () => {
     const maybeRecenter = () => {
       const w3 = cardWidth(3);
       const w5 = cardWidth(5);
-      const w12 = cardWidth(12);
+      const w15 = cardWidth(15);
       if (w5 <= 0) return;
       const prev = (wrap.style as any).scrollBehavior;
       if (wrap.scrollLeft < w3) {
@@ -77,7 +77,7 @@ const Index = () => {
         wrap.scrollLeft = wrap.scrollLeft + w5;
         (wrap.style as any).scrollBehavior = prev || "";
         activeIndex = -1;
-      } else if (wrap.scrollLeft > w12) {
+      } else if (wrap.scrollLeft > w15) {
         (wrap.style as any).scrollBehavior = "auto";
         wrap.scrollLeft = wrap.scrollLeft - w5;
         (wrap.style as any).scrollBehavior = prev || "";
