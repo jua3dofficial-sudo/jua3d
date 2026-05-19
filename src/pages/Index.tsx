@@ -236,11 +236,8 @@ const Index = () => {
     });
 
     const init = () => {
-      const card = cards[1];
-      if (card) {
-        wrap.scrollLeft = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
-      }
-      setTimeout(() => { updateActive(); startAuto(); }, 200);
+      // Ensure first card gets active on load without requiring a scroll event.
+      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     };
     const initTimeout = setTimeout(init, 600);
 
