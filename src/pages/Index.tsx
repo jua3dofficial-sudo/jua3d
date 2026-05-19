@@ -1467,7 +1467,7 @@ const Index = () => {
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
                 ];
-                return [...products, ...products, ...products, ...products].map((p, i) => (
+                return [...products, ...products, ...products, ...products, ...products].map((p, i) => (
                   <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 && i < 10 ? undefined : "true"}>
                     <div className="s5-img-wrap">
                       <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
