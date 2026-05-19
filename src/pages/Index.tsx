@@ -196,7 +196,7 @@ const Index = () => {
     const onScrollEnd = () => updateActive();
     const onScrollDebounced = () => {
       if (scrollEndTO) clearTimeout(scrollEndTO);
-      scrollEndTO = setTimeout(updateActive, 80);
+      scrollEndTO = setTimeout(updateActive, 60);
     };
 
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
@@ -211,7 +211,7 @@ const Index = () => {
       autoTimer = setInterval(() => {
         const next = (activeIndex + 1) % cards.length;
         goTo(next);
-      }, 3200);
+      }, 2000);
     };
     const pauseAutoTemporarily = () => {
       stopAuto();
@@ -906,8 +906,8 @@ const Index = () => {
           cursor:grab; user-select:none; scrollbar-width:none;
           -webkit-overflow-scrolling:touch;
           scroll-behavior:auto;
-          scroll-snap-type: x proximity;
-          touch-action: pan-x pan-y;
+          scroll-snap-type: x mandatory;
+          touch-action: pan-x;
           will-change: scroll-position;
           transform: translateZ(0);
         }
