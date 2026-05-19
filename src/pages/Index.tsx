@@ -1413,22 +1413,25 @@ const Index = () => {
 
           <div className="s5-wrap" id="s5wrap">
             <div className="s5-track" id="s5track">
-              {[
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "Modular Desk Organiser", industry: "Advanced Desk & Work Setup" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Headset Display Stand", industry: "Gaming & Tech" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Articulated Octopus Toy", industry: "Toys & Collectibles" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
-              ].map((p, i) => (
-                <div className="s5-card" data-index={i} key={i}>
-                  <div className="s5-img-wrap">
-                    <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+              {(() => {
+                const products = [
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420230/ChatGPT_Image_May_10_2026_06_55_09_PM_rplstl.webp", name: "Modular Desk Organiser", industry: "Advanced Desk & Work Setup" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_9_2026_04_48_10_PM_lxgpbj.webp", name: "Headset Display Stand", industry: "Gaming & Tech" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420228/ChatGPT_Image_May_10_2026_07_06_26_PM_wkapvv.webp", name: "Articulated Octopus Toy", industry: "Toys & Collectibles" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
+                ];
+                return [...products, ...products].map((p, i) => (
+                  <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 ? "true" : undefined}>
+                    <div className="s5-img-wrap">
+                      <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+                    </div>
+                    <div className="s5-name">{p.name}</div>
+                    <div className="s5-industry">{p.industry}</div>
+                    <div className="s5-dot" />
                   </div>
-                  <div className="s5-name">{p.name}</div>
-                  <div className="s5-industry">{p.industry}</div>
-                  <div className="s5-dot" />
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
 
