@@ -62,16 +62,24 @@ const Index = () => {
       return best;
     };
     const ORIG = 5;
-    const halfWidth = () => {
-      if (cards.length < ORIG + 1) return 0;
-      return cards[ORIG].offsetLeft - cards[0].offsetLeft;
+    const cardWidth = (n: number) => {
+      if (cards.length < n + 1) return 0;
+      return cards[n].offsetLeft - cards[0].offsetLeft;
     };
     const maybeRecenter = () => {
-      const hw = halfWidth();
-      if (hw > 0 && wrap.scrollLeft >= cards[ORIG].offsetLeft + cards[ORIG].offsetWidth / 2 - wrap.offsetWidth / 2 - 4) {
-        const prev = (wrap.style as any).scrollBehavior;
+      const w3 = cardWidth(3);
+      const w5 = cardWidth(5);
+      const w12 = cardWidth(12);
+      if (w5 <= 0) return;
+      const prev = (wrap.style as any).scrollBehavior;
+      if (wrap.scrollLeft < w3) {
         (wrap.style as any).scrollBehavior = "auto";
-        wrap.scrollLeft = wrap.scrollLeft - hw;
+        wrap.scrollLeft = wrap.scrollLeft + w5;
+        (wrap.style as any).scrollBehavior = prev || "";
+        activeIndex = -1;
+      } else if (wrap.scrollLeft > w12) {
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = wrap.scrollLeft - w5;
         (wrap.style as any).scrollBehavior = prev || "";
         activeIndex = -1;
       }
@@ -149,7 +157,14 @@ const Index = () => {
     wrap.addEventListener("touchend", onTouchEnd);
 
     const initTO = setTimeout(() => {
-      snapTo(0);
+      // Start at the first original card (index ORIG), in the middle of the track.
+      const startCard = cards[ORIG];
+      if (startCard) {
+        const prev = (wrap.style as any).scrollBehavior;
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = startCard.offsetLeft - wrap.offsetWidth / 2 + startCard.offsetWidth / 2;
+        (wrap.style as any).scrollBehavior = prev || "";
+      }
       setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     }, 700);
 
@@ -200,9 +215,9 @@ const Index = () => {
     };
 
     const ORIG = 7;
-    const halfWidth = () => {
-      if (cards.length < ORIG + 1) return 0;
-      return cards[ORIG].offsetLeft - cards[0].offsetLeft;
+    const cardWidth = (n: number) => {
+      if (cards.length < n + 1) return 0;
+      return cards[n].offsetLeft - cards[0].offsetLeft;
     };
 
     const applyActive = (idx: number) => {
@@ -214,14 +229,21 @@ const Index = () => {
     };
 
     const maybeRecenter = () => {
-      const hw = halfWidth();
-      if (hw > 0 && wrap.scrollLeft >= cards[ORIG].offsetLeft + cards[ORIG].offsetWidth / 2 - wrap.offsetWidth / 2 - 4) {
-        // Silently jump back by exactly half the total track width.
-        const prevBehavior = (wrap.style as any).scrollBehavior;
+      const w3 = cardWidth(3);
+      const w7 = cardWidth(7);
+      const w17 = cardWidth(17);
+      if (w7 <= 0) return;
+      const prevBehavior = (wrap.style as any).scrollBehavior;
+      if (wrap.scrollLeft < w3) {
         (wrap.style as any).scrollBehavior = "auto";
-        wrap.scrollLeft = wrap.scrollLeft - hw;
+        wrap.scrollLeft = wrap.scrollLeft + w7;
         (wrap.style as any).scrollBehavior = prevBehavior || "";
-        activeIndex = -1; // force re-apply
+        activeIndex = -1;
+      } else if (wrap.scrollLeft > w17) {
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = wrap.scrollLeft - w7;
+        (wrap.style as any).scrollBehavior = prevBehavior || "";
+        activeIndex = -1;
       }
     };
 
@@ -249,7 +271,7 @@ const Index = () => {
       stopAuto();
       autoTimer = setInterval(() => {
         let next = activeIndex + 1;
-        if (next >= cards.length) next = ORIG; // safety wrap
+        if (next >= cards.length) next = ORIG;
         goTo(next);
       }, 2000);
     };
@@ -276,7 +298,14 @@ const Index = () => {
     });
 
     const init = () => {
-      // Ensure first card gets active on load without requiring a scroll event.
+      // Start in the middle of the track at the first original card.
+      const startCard = cards[ORIG];
+      if (startCard) {
+        const prevBehavior = (wrap.style as any).scrollBehavior;
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = startCard.offsetLeft - wrap.offsetWidth / 2 + startCard.offsetWidth / 2;
+        (wrap.style as any).scrollBehavior = prevBehavior || "";
+      }
       setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     };
     const initTimeout = setTimeout(init, 600);
@@ -1310,8 +1339,8 @@ const Index = () => {
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
                 ];
-                return [...products, ...products].map((p, i) => (
-                  <div className="prod-card" key={i} data-index={i} aria-hidden={i >= 7 ? "true" : undefined}>
+                return [...products, ...products, ...products, ...products].map((p, i) => (
+                  <div className="prod-card" key={i} data-index={i % 7} aria-hidden={i >= 7 && i < 14 ? undefined : "true"}>
                     <div className="prod-img-wrap">
                       <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                     </div>
@@ -1438,8 +1467,8 @@ const Index = () => {
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420231/ChatGPT_Image_May_10_2026_06_52_10_PM_hrj3ir.webp", name: "Designer Brush Holder", industry: "Home Décor & Lifestyle" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778420309/ChatGPT_Image_May_8_2026_10_25_39_AM_lwqqwa.png", name: "Laptop & iPad Stand", industry: "Advanced Desk & Work Setup" },
                 ];
-                return [...products, ...products].map((p, i) => (
-                  <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 ? "true" : undefined}>
+                return [...products, ...products, ...products, ...products].map((p, i) => (
+                  <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 && i < 10 ? undefined : "true"}>
                     <div className="s5-img-wrap">
                       <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
                     </div>
