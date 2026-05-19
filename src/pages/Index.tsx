@@ -923,30 +923,28 @@ const Index = () => {
           width:max-content; align-items:center;
         }
         .prod-card {
-          position:relative; flex-shrink:0; width:420px;
+          position:relative; flex-shrink:0; width:240px;
           display:flex; flex-direction:column; align-items:center;
           transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
           transform:scale(0.84); opacity:0.55; cursor:pointer;
           will-change: transform;
           scroll-snap-align: center;
         }
-        .prod-card[data-index="1"] { width:525px; }
-        .prod-card[data-index="2"] { width:483px; }
-        .prod-card[data-index="3"] { width:525px; }
-        .prod-card[data-index="5"] { width:525px; }
-        .prod-card[data-index="6"] { width:567px; }
+        .prod-card[data-index="1"] { width:300px; }
+        .prod-card[data-index="2"] { width:276px; }
+        .prod-card[data-index="3"] { width:300px; }
+        .prod-card[data-index="5"] { width:300px; }
+        .prod-card[data-index="6"] { width:324px; }
         .prod-card.active { transform:scale(1); opacity:1; }
         .prod-img-wrap {
-          position:relative; width:380px; height:435px;
+          position:relative; width:200px; height:220px;
           background: transparent;
-          display:flex; align-items:center; justify-content:center;
         }
-        .prod-card[data-index="1"] .prod-img-wrap { width:475px; height:544px; }
-        .prod-card[data-index="2"] .prod-img-wrap { width:437px; height:500px; }
-        .prod-card[data-index="3"] .prod-img-wrap { width:475px; height:544px; }
-        .prod-card[data-index="5"] .prod-img-wrap { width:475px; height:544px; }
-        .prod-card[data-index="6"] .prod-img-wrap { width:513px; height:587px; }
-        .prod-img-wrap img {
+        .prod-card[data-index="1"] .prod-img-wrap { width:260px; height:298px; }
+        .prod-card[data-index="2"] .prod-img-wrap { width:240px; height:274px; }
+        .prod-card[data-index="3"] .prod-img-wrap { width:260px; height:298px; }
+        .prod-card[data-index="5"] .prod-img-wrap { width:260px; height:298px; }
+        .prod-card[data-index="6"] .prod-img-wrap { width:281px; height:321px; }
           width:100%; height:100%; object-fit:contain; object-position:center;
           transition: transform 0.6s ease; display:block;
           filter: drop-shadow(0 30px 40px rgba(0,0,0,0.55));
