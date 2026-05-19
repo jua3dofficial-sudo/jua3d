@@ -1260,24 +1260,27 @@ const Index = () => {
 
           <div className="s3-track-wrap" ref={trackWrapRef}>
             <div className="s3-track">
-              {[
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_28_57_AM_1_arlblw.webp", name: "Anatomical Brain", cat: "Medical & Healthcare" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_26_44_AM_1_d9suyk.webp", name: "Collectible Rabbit", cat: "Toys & Collectibles" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_30_27_AM_1_u3ddmp.webp", name: "Dental Gum Model", cat: "Medical & Healthcare" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_33_48_AM_wz2kjj.webp", name: "Designer Tissue Box", cat: "Smart Home Utility" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040601/ChatGPT_Image_May_6_2026_09_39_12_AM_ursh6k.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
-                { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
-              ].map((p, i) => (
-                <div className="prod-card" key={i} data-index={i}>
-                  <div className="prod-img-wrap">
-                    <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+              {(() => {
+                const products = [
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_28_57_AM_1_arlblw.webp", name: "Anatomical Brain", cat: "Medical & Healthcare" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_26_44_AM_1_d9suyk.webp", name: "Collectible Rabbit", cat: "Toys & Collectibles" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_30_27_AM_1_u3ddmp.webp", name: "Dental Gum Model", cat: "Medical & Healthcare" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_33_48_AM_wz2kjj.webp", name: "Designer Tissue Box", cat: "Smart Home Utility" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040601/ChatGPT_Image_May_6_2026_09_39_12_AM_ursh6k.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
+                ];
+                return [...products, ...products].map((p, i) => (
+                  <div className="prod-card" key={i} data-index={i} aria-hidden={i >= 7 ? "true" : undefined}>
+                    <div className="prod-img-wrap">
+                      <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+                    </div>
+                    <div className="prod-name">{p.name}</div>
+                    <div className="prod-cat">{p.cat}</div>
+                    <div className="prod-dot" />
                   </div>
-                  <div className="prod-name">{p.name}</div>
-                  <div className="prod-cat">{p.cat}</div>
-                  <div className="prod-dot" />
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
 
