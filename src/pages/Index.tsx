@@ -196,7 +196,7 @@ const Index = () => {
     const onScrollEnd = () => updateActive();
     const onScrollDebounced = () => {
       if (scrollEndTO) clearTimeout(scrollEndTO);
-      scrollEndTO = setTimeout(updateActive, 80);
+      scrollEndTO = setTimeout(updateActive, 60);
     };
 
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
