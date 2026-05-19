@@ -62,16 +62,24 @@ const Index = () => {
       return best;
     };
     const ORIG = 5;
-    const halfWidth = () => {
-      if (cards.length < ORIG + 1) return 0;
-      return cards[ORIG].offsetLeft - cards[0].offsetLeft;
+    const cardWidth = (n: number) => {
+      if (cards.length < n + 1) return 0;
+      return cards[n].offsetLeft - cards[0].offsetLeft;
     };
     const maybeRecenter = () => {
-      const hw = halfWidth();
-      if (hw > 0 && wrap.scrollLeft >= cards[ORIG].offsetLeft + cards[ORIG].offsetWidth / 2 - wrap.offsetWidth / 2 - 4) {
-        const prev = (wrap.style as any).scrollBehavior;
+      const w3 = cardWidth(3);
+      const w5 = cardWidth(5);
+      const w12 = cardWidth(12);
+      if (w5 <= 0) return;
+      const prev = (wrap.style as any).scrollBehavior;
+      if (wrap.scrollLeft < w3) {
         (wrap.style as any).scrollBehavior = "auto";
-        wrap.scrollLeft = wrap.scrollLeft - hw;
+        wrap.scrollLeft = wrap.scrollLeft + w5;
+        (wrap.style as any).scrollBehavior = prev || "";
+        activeIndex = -1;
+      } else if (wrap.scrollLeft > w12) {
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = wrap.scrollLeft - w5;
         (wrap.style as any).scrollBehavior = prev || "";
         activeIndex = -1;
       }
