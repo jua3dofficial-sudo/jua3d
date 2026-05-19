@@ -1372,7 +1372,7 @@ const Index = () => {
         .s5-dots{display:flex;justify-content:center;gap:8px;margin-top:40px;position:relative;z-index:2;}
         .s5-navdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s ease;cursor:pointer;}
         .s5-navdot.active{background:#3A8FE8;width:24px;border-radius:3px;}
-        @media(max-width:768px){.s5-card{width:200px;}.s5-card[data-index="0"]{width:240px;}.s5-card[data-index="2"]{width:250px;}.s5-card[data-index="4"]{width:270px;}.s5-img-wrap{width:180px;height:240px;}.s5-card[data-index="0"] .s5-img-wrap{width:216px;height:288px;}.s5-card[data-index="2"] .s5-img-wrap{width:225px;height:300px;}.s5-card[data-index="4"] .s5-img-wrap{width:243px;height:324px;}.s5-track{gap:24px;padding:20px 32px 48px;}}
+        @media(max-width:768px){.s5-card{width:200px;}.s5-card[data-index="0"]{width:240px;}.s5-card[data-index="2"]{width:250px;}.s5-card[data-index="4"]{width:270px;}.s5-img-wrap{width:180px;height:240px;}.s5-card[data-index="0"] .s5-img-wrap{width:216px;height:288px;}.s5-card[data-index="2"] .s5-img-wrap{width:225px;height:300px;}.s5-card[data-index="4"] .s5-img-wrap{width:243px;height:324px;}.s5-track{gap:24px;padding:20px calc(50% - 100px) 48px;}}
         @media(max-width:400px){.s5-card{width:170px;}.s5-card[data-index="0"]{width:204px;}.s5-card[data-index="2"]{width:212px;}.s5-card[data-index="4"]{width:230px;}.s5-img-wrap{width:155px;height:210px;}.s5-card[data-index="0"] .s5-img-wrap{width:186px;height:252px;}.s5-card[data-index="2"] .s5-img-wrap{width:194px;height:262px;}.s5-card[data-index="4"] .s5-img-wrap{width:209px;height:284px;}}
         ` }} />
         <section className="s5">
