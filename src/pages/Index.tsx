@@ -200,9 +200,9 @@ const Index = () => {
     };
 
     const ORIG = 7;
-    const halfWidth = () => {
-      if (cards.length < ORIG + 1) return 0;
-      return cards[ORIG].offsetLeft - cards[0].offsetLeft;
+    const cardWidth = (n: number) => {
+      if (cards.length < n + 1) return 0;
+      return cards[n].offsetLeft - cards[0].offsetLeft;
     };
 
     const applyActive = (idx: number) => {
@@ -214,14 +214,21 @@ const Index = () => {
     };
 
     const maybeRecenter = () => {
-      const hw = halfWidth();
-      if (hw > 0 && wrap.scrollLeft >= cards[ORIG].offsetLeft + cards[ORIG].offsetWidth / 2 - wrap.offsetWidth / 2 - 4) {
-        // Silently jump back by exactly half the total track width.
-        const prevBehavior = (wrap.style as any).scrollBehavior;
+      const w3 = cardWidth(3);
+      const w7 = cardWidth(7);
+      const w17 = cardWidth(17);
+      if (w7 <= 0) return;
+      const prevBehavior = (wrap.style as any).scrollBehavior;
+      if (wrap.scrollLeft < w3) {
         (wrap.style as any).scrollBehavior = "auto";
-        wrap.scrollLeft = wrap.scrollLeft - hw;
+        wrap.scrollLeft = wrap.scrollLeft + w7;
         (wrap.style as any).scrollBehavior = prevBehavior || "";
-        activeIndex = -1; // force re-apply
+        activeIndex = -1;
+      } else if (wrap.scrollLeft > w17) {
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = wrap.scrollLeft - w7;
+        (wrap.style as any).scrollBehavior = prevBehavior || "";
+        activeIndex = -1;
       }
     };
 
@@ -249,7 +256,7 @@ const Index = () => {
       stopAuto();
       autoTimer = setInterval(() => {
         let next = activeIndex + 1;
-        if (next >= cards.length) next = ORIG; // safety wrap
+        if (next >= cards.length) next = ORIG;
         goTo(next);
       }, 2000);
     };
