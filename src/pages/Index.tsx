@@ -182,14 +182,36 @@ const Index = () => {
       return best;
     };
 
+    const ORIG = 7;
+    const halfWidth = () => {
+      if (cards.length < ORIG + 1) return 0;
+      return cards[ORIG].offsetLeft - cards[0].offsetLeft;
+    };
+
     const applyActive = (idx: number) => {
       if (idx === activeIndex) return;
       activeIndex = idx;
       cards.forEach((c, i) => c.classList.toggle("active", i === idx));
-      dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+      const dotIdx = ((idx % ORIG) + ORIG) % ORIG;
+      dots.forEach((d, i) => d.classList.toggle("active", i === dotIdx));
     };
 
-    const updateActive = () => applyActive(getClosest());
+    const maybeRecenter = () => {
+      const hw = halfWidth();
+      if (hw > 0 && wrap.scrollLeft >= cards[ORIG].offsetLeft + cards[ORIG].offsetWidth / 2 - wrap.offsetWidth / 2 - 4) {
+        // Silently jump back by exactly half the total track width.
+        const prevBehavior = (wrap.style as any).scrollBehavior;
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = wrap.scrollLeft - hw;
+        (wrap.style as any).scrollBehavior = prevBehavior || "";
+        activeIndex = -1; // force re-apply
+      }
+    };
+
+    const updateActive = () => {
+      maybeRecenter();
+      applyActive(getClosest());
+    };
 
     // scrollend if available, debounced fallback otherwise.
     const supportsScrollEnd = "onscrollend" in window;
@@ -209,7 +231,8 @@ const Index = () => {
     const startAuto = () => {
       stopAuto();
       autoTimer = setInterval(() => {
-        const next = (activeIndex + 1) % cards.length;
+        let next = activeIndex + 1;
+        if (next >= cards.length) next = ORIG; // safety wrap
         goTo(next);
       }, 2000);
     };
