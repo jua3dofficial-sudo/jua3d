@@ -665,6 +665,7 @@ const Index = () => {
           .jua-desktop-hero .nav-menu a:hover { color:#3A8FE8; border-color:#3A8FE8; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
+          .jua-desktop-hero .bg { background-position: 72% center; }
           .jua-desktop-hero .topbar { padding: 14px 28px; }
           .jua-desktop-hero .topbar .nav-emblem { width:40px; height:40px; }
           .jua-desktop-hero .topbar .logo { font-size: 20px; letter-spacing:3px; }
