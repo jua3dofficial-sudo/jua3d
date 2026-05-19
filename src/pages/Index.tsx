@@ -132,8 +132,8 @@ const Index = () => {
     wrap.addEventListener("touchend", onTouchEnd);
 
     const initTO = setTimeout(() => {
-      snapTo(1);
-      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 300);
+      snapTo(0);
+      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     }, 700);
 
     return () => {
