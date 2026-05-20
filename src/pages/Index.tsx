@@ -940,9 +940,11 @@ const Index = () => {
         .s3 {
           width:100%;
           padding:80px 0 100px;
-          background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
+          background-color:#060E1C;
+          background-image:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
           position:relative;
-          z-index:6;
+          z-index:1;
+          isolation:isolate;
           overflow:hidden;
           font-family:'Barlow',sans-serif;
         }
