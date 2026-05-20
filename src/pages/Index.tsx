@@ -1494,7 +1494,7 @@ const Index = () => {
         </section>
 
         <style dangerouslySetInnerHTML={{ __html: `
-          .s6{width:100%;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 40%,#060E1C 100%);padding:100px 0 120px;position:relative;z-index:6;overflow:hidden;}
+          .s6{width:100%;background-color:#060E1C;background-image:linear-gradient(180deg,#060E1C 0%,#0A2A57 40%,#060E1C 100%);padding:100px 0 120px;position:relative;z-index:1;isolation:isolate;overflow:hidden;}
           .s6::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0;}
           .s6-orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
           .s6-orb-1{width:500px;height:500px;background:rgba(18,62,120,0.4);top:-100px;right:-100px;}
