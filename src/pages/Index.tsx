@@ -1416,7 +1416,7 @@ const Index = () => {
 
         {/* SECTION 5 — SECOND PRODUCT SCROLL */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s5{width:100%;padding:80px 0 100px;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 45%,#060E1C 100%);position:relative;overflow:hidden;z-index:6;}
+        .s5{width:100%;padding:80px 0 100px;background-color:#060E1C;background-image:linear-gradient(180deg,#060E1C 0%,#0A2A57 45%,#060E1C 100%);position:relative;overflow:hidden;z-index:1;isolation:isolate;}
         .s5::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
         .s5-header{text-align:center;padding:0 24px 56px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;}
         .s5-eyebrow{display:inline-flex;align-items:center;gap:12px;}
