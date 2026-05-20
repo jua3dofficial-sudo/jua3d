@@ -338,6 +338,10 @@ const Contact = () => {
           .option-cards{ grid-template-columns:1fr; }
           .form-progress{ display:none; }
         }
+        @media(min-width:901px){
+          .contact-left{ padding-top:220px; }
+          .contact-right{ padding-top:220px; }
+        }
       `}</style>
 
       <SiteNav />
