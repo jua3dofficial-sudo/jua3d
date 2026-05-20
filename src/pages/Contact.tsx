@@ -510,8 +510,8 @@ const Contact = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="industry">Industry / Category</label>
-                    <select className="form-select" id="industry"
+                    <label className="form-label" htmlFor="industry">Industry / Category *</label>
+                    <select className={`form-select${errors.industry ? " invalid" : ""}`} id="industry"
                       value={data.industry} onChange={(e) => set("industry", e.target.value)}>
                       <option value="" disabled>Select your industry</option>
                       <option>Medical & Healthcare</option>
@@ -529,14 +529,14 @@ const Contact = () => {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="products">What Products Are You Looking to Print? *</label>
-                    <textarea className="form-textarea" id="products" required
+                    <textarea className={`form-textarea${errors.products ? " invalid" : ""}`} id="products"
                       placeholder="Describe the products you need — e.g. Anatomical brain model for medical training, 1:100 scale building model for architecture presentation..."
                       value={data.products} onChange={(e) => set("products", e.target.value)} />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Do You Have a Design Ready?</label>
-                    <div className="option-cards">
+                    <label className="form-label">Do You Have a Design Ready? *</label>
+                    <div id="design_status_group" className={`option-cards${errors.design_status ? " invalid" : ""}`} tabIndex={-1}>
                       <label className={`option-card${data.design_status === "yes" ? " selected" : ""}`}>
                         <input type="radio" name="design_status" value="yes"
                           checked={data.design_status === "yes"}
