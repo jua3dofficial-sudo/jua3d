@@ -458,10 +458,11 @@ const Index = () => {
           font-family:'Barlow',sans-serif;
         }
         .jua-hero {
-          position: fixed; top:0; left:0;
+          position: relative; top:0; left:0;
           width:100vw; height:100vh; overflow:hidden;
           display:flex; flex-direction:column; justify-content:space-between;
           background: var(--deep);
+          z-index: 0;
         }
         .jua-hero .hero-video {
           position:absolute; top:0; left:0; width:100%; height:100%;
@@ -593,7 +594,7 @@ const Index = () => {
 
           .jua-desktop-hero {
             display:block;
-            position:fixed; inset:0; z-index:5;
+            position:relative; width:100%; height:100vh; z-index:0;
             background:#040A18;
             font-family: 'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
             color:#fff; overflow:hidden;
@@ -744,11 +745,13 @@ const Index = () => {
         }
 
         /* ============ SECTION 2 — TRUST & EXPERTISE ============ */
-        .jua-s2-wrap { position: relative; z-index: 6; margin-top: 100vh; font-family:'Barlow',sans-serif; }
+        .jua-s2-wrap { position: relative; z-index: 1; isolation: isolate; font-family:'Barlow',sans-serif; background:#060E1C; }
         .s2 {
           width: 100%; min-height: 100vh;
-          background: linear-gradient(160deg, #060E1C 0%, #0A2A57 50%, #060E1C 100%);
+          background-color: #060E1C;
+          background-image: linear-gradient(160deg, #060E1C 0%, #0A2A57 50%, #060E1C 100%);
           display: flex; align-items: stretch; position: relative; overflow: hidden;
+          z-index: 1; isolation: isolate;
         }
         .glow-orb {
           position: absolute; width: 500px; height: 500px; border-radius: 50%;
@@ -937,9 +940,11 @@ const Index = () => {
         .s3 {
           width:100%;
           padding:80px 0 100px;
-          background:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
+          background-color:#060E1C;
+          background-image:linear-gradient(180deg,#060E1C 0%,#0A2A57 50%,#060E1C 100%);
           position:relative;
-          z-index:6;
+          z-index:1;
+          isolation:isolate;
           overflow:hidden;
           font-family:'Barlow',sans-serif;
         }
@@ -1362,7 +1367,7 @@ const Index = () => {
 
         {/* SECTION 4 — 3D ARCHITECTURE MODEL HOUSE SHOWCASE */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s4{position:relative;z-index:6;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:60px 0 80px;}
+        .s4{position:relative;z-index:1;isolation:isolate;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:60px 0 80px;}
         .s4-fade-top{position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-left{position:absolute;top:0;left:0;bottom:0;width:140px;background:linear-gradient(to right,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
@@ -1411,7 +1416,7 @@ const Index = () => {
 
         {/* SECTION 5 — SECOND PRODUCT SCROLL */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s5{width:100%;padding:80px 0 100px;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 45%,#060E1C 100%);position:relative;overflow:hidden;z-index:6;}
+        .s5{width:100%;padding:80px 0 100px;background-color:#060E1C;background-image:linear-gradient(180deg,#060E1C 0%,#0A2A57 45%,#060E1C 100%);position:relative;overflow:hidden;z-index:1;isolation:isolate;}
         .s5::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
         .s5-header{text-align:center;padding:0 24px 56px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;}
         .s5-eyebrow{display:inline-flex;align-items:center;gap:12px;}
@@ -1489,7 +1494,7 @@ const Index = () => {
         </section>
 
         <style dangerouslySetInnerHTML={{ __html: `
-          .s6{width:100%;background:linear-gradient(180deg,#060E1C 0%,#0A2A57 40%,#060E1C 100%);padding:100px 0 120px;position:relative;z-index:6;overflow:hidden;}
+          .s6{width:100%;background-color:#060E1C;background-image:linear-gradient(180deg,#060E1C 0%,#0A2A57 40%,#060E1C 100%);padding:100px 0 120px;position:relative;z-index:1;isolation:isolate;overflow:hidden;}
           .s6::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0;}
           .s6-orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
           .s6-orb-1{width:500px;height:500px;background:rgba(18,62,120,0.4);top:-100px;right:-100px;}
@@ -1600,7 +1605,7 @@ const Index = () => {
 
         {/* ============ SECTION 7 — CALL TO ACTION ============ */}
         <style>{`
-          .s7{position:relative;width:100%;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:100px 24px 120px;background:#060E1C;z-index:6;}
+          .s7{position:relative;width:100%;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:100px 24px 120px;background:#060E1C;z-index:1;isolation:isolate;}
           .s7-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(18,62,120,0.6) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(58,143,232,0.07) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(58,143,232,0.05) 0%,transparent 60%),#060E1C;z-index:0;}
           .s7-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(58,143,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px,transparent 1px);background-size:72px 72px;}
           .s7-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.15),transparent);z-index:2;pointer-events:none;animation:s7scan 8s linear infinite;}
