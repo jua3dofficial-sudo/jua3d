@@ -578,8 +578,8 @@ const Contact = () => {
                     </div>
 
                     {data.order_type === "bulk" && (
-                      <div className="bulk-qty">
-                        <div className="bulk-qty-label">Approximate Quantity</div>
+                      <div id="bulk_qty_group" className={`bulk-qty${errors.bulk_qty ? " invalid" : ""}`} tabIndex={-1}>
+                        <div className="bulk-qty-label">Approximate Quantity *</div>
                         {[
                           ["20", "Up to 20 units"],
                           ["50", "Up to 50 units"],
@@ -596,8 +596,8 @@ const Contact = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="timeline">Timeline / Deadline</label>
-                    <select className="form-select" id="timeline"
+                    <label className="form-label" htmlFor="timeline">Timeline / Deadline *</label>
+                    <select className={`form-select${errors.timeline ? " invalid" : ""}`} id="timeline"
                       value={data.timeline} onChange={(e) => set("timeline", e.target.value)}>
                       <option value="" disabled>When do you need it?</option>
                       <option>ASAP — Urgent</option>
@@ -609,8 +609,8 @@ const Contact = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="notes">Any Additional Notes</label>
-                    <textarea className="form-textarea" id="notes" style={{ minHeight: 90 }}
+                    <label className="form-label" htmlFor="notes">Any Additional Notes *</label>
+                    <textarea className={`form-textarea${errors.notes ? " invalid" : ""}`} id="notes" style={{ minHeight: 90 }}
                       placeholder="Special requirements, material preferences, color, finish, reference images to share later..."
                       value={data.notes} onChange={(e) => set("notes", e.target.value)} />
                   </div>
