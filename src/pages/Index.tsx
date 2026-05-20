@@ -458,10 +458,11 @@ const Index = () => {
           font-family:'Barlow',sans-serif;
         }
         .jua-hero {
-          position: fixed; top:0; left:0;
+          position: relative; top:0; left:0;
           width:100vw; height:100vh; overflow:hidden;
           display:flex; flex-direction:column; justify-content:space-between;
           background: var(--deep);
+          z-index: 0;
         }
         .jua-hero .hero-video {
           position:absolute; top:0; left:0; width:100%; height:100%;
