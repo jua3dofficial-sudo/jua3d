@@ -594,7 +594,7 @@ const Index = () => {
 
           .jua-desktop-hero {
             display:block;
-            position:fixed; inset:0; z-index:5;
+            position:relative; width:100%; height:100vh; z-index:0;
             background:#040A18;
             font-family: 'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
             color:#fff; overflow:hidden;
