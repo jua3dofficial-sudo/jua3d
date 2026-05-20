@@ -18,20 +18,60 @@ const Contact = () => {
   const [data, setData] = useState<FormState>(initial);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     document.title = "Contact — JUA 3D Print Lab";
   }, []);
 
-  const set = <K extends keyof FormState>(k: K, v: FormState[K]) =>
+  const set = <K extends keyof FormState>(k: K, v: FormState[K]) => {
     setData((d) => ({ ...d, [k]: v }));
+    setErrors((er) => {
+      if (!er[k as string]) return er;
+      const n = { ...er }; delete n[k as string]; return n;
+    });
+  };
 
   const step1Done = !!(data.name && data.email && data.phone);
   const step2Done = !!data.products;
 
+  const requiredOrder: Array<{ key: keyof FormState; id: string }> = [
+    { key: "name", id: "name" },
+    { key: "business", id: "business" },
+    { key: "email", id: "email" },
+    { key: "phone", id: "phone" },
+    { key: "industry", id: "industry" },
+    { key: "products", id: "products" },
+    { key: "design_status", id: "design_status_group" },
+    { key: "timeline", id: "timeline" },
+    { key: "notes", id: "notes" },
+  ];
+
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+
+    const fieldsToCheck = [...requiredOrder];
+    if (data.order_type === "bulk") fieldsToCheck.push({ key: "bulk_qty", id: "bulk_qty_group" });
+
+    const newErrors: Record<string, boolean> = {};
+    for (const f of fieldsToCheck) {
+      if (!String(data[f.key] ?? "").trim()) newErrors[f.key as string] = true;
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      const firstKey = fieldsToCheck.find((f) => newErrors[f.key as string]);
+      if (firstKey) {
+        const el = document.getElementById(firstKey.id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => { (el as HTMLElement).focus?.(); }, 450);
+        }
+      }
+      return;
+    }
+
     setSubmitting(true);
     const orderTypeLabel = data.order_type === "single" ? "Single / Prototype" : "Bulk Order";
     const designLabel =
@@ -60,6 +100,7 @@ const Contact = () => {
       });
     } catch { /* swallow */ }
     setDone(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const orderTypeLabel = data.order_type === "single" ? "Single / Prototype" : "Bulk Order";
