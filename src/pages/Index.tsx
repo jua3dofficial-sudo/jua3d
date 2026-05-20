@@ -586,6 +586,7 @@ const Index = () => {
         /* ============ DESKTOP & TABLET HERO (>= 768px) ============ */
         .jua-desktop-hero { display:none; }
         @media (min-width: 768px) {
+          .jua-hero { display:none !important; height:0 !important; }
           .jua-hero #vid-intro,
           .jua-hero #vid-loop,
           .jua-hero .ov,
