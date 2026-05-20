@@ -1605,7 +1605,7 @@ const Index = () => {
 
         {/* ============ SECTION 7 — CALL TO ACTION ============ */}
         <style>{`
-          .s7{position:relative;width:100%;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:100px 24px 120px;background:#060E1C;z-index:6;}
+          .s7{position:relative;width:100%;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:100px 24px 120px;background:#060E1C;z-index:1;isolation:isolate;}
           .s7-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(18,62,120,0.6) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(58,143,232,0.07) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(58,143,232,0.05) 0%,transparent 60%),#060E1C;z-index:0;}
           .s7-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(58,143,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.04) 1px,transparent 1px);background-size:72px 72px;}
           .s7-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.15),transparent);z-index:2;pointer-events:none;animation:s7scan 8s linear infinite;}
