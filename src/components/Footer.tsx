@@ -4,7 +4,7 @@ import juaEmblem from "@/assets/jua-emblem.png";
 const Footer = () => (
   <>
     <style>{`
-      .s8{ position:relative; width:100%; background:#040C18; border-top:1px solid rgba(58,143,232,0.1); overflow:hidden; font-family:'Barlow',sans-serif; }
+      .s8{ position:relative; z-index:1; isolation:isolate; width:100%; background:#060E1C; border-top:1px solid rgba(58,143,232,0.1); overflow:hidden; font-family:'Barlow',sans-serif; }
       .s8-accent{ width:100%; height:2px; background:linear-gradient(to right, transparent 0%, rgba(58,143,232,0.3) 20%, #3A8FE8 50%, rgba(58,143,232,0.3) 80%, transparent 100%); }
       .s8::before{ content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(58,143,232,0.025) 1px,transparent 1px), linear-gradient(90deg,rgba(58,143,232,0.025) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; z-index:0; }
       .s8-orb{ position:absolute; top:-80px; left:-80px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(18,62,120,0.3) 0%,transparent 70%); filter:blur(80px); pointer-events:none; z-index:0; }
