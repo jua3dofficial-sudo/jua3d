@@ -18,20 +18,60 @@ const Contact = () => {
   const [data, setData] = useState<FormState>(initial);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     document.title = "Contact — JUA 3D Print Lab";
   }, []);
 
-  const set = <K extends keyof FormState>(k: K, v: FormState[K]) =>
+  const set = <K extends keyof FormState>(k: K, v: FormState[K]) => {
     setData((d) => ({ ...d, [k]: v }));
+    setErrors((er) => {
+      if (!er[k as string]) return er;
+      const n = { ...er }; delete n[k as string]; return n;
+    });
+  };
 
   const step1Done = !!(data.name && data.email && data.phone);
   const step2Done = !!data.products;
 
+  const requiredOrder: Array<{ key: keyof FormState; id: string }> = [
+    { key: "name", id: "name" },
+    { key: "business", id: "business" },
+    { key: "email", id: "email" },
+    { key: "phone", id: "phone" },
+    { key: "industry", id: "industry" },
+    { key: "products", id: "products" },
+    { key: "design_status", id: "design_status_group" },
+    { key: "timeline", id: "timeline" },
+    { key: "notes", id: "notes" },
+  ];
+
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+
+    const fieldsToCheck = [...requiredOrder];
+    if (data.order_type === "bulk") fieldsToCheck.push({ key: "bulk_qty", id: "bulk_qty_group" });
+
+    const newErrors: Record<string, boolean> = {};
+    for (const f of fieldsToCheck) {
+      if (!String(data[f.key] ?? "").trim()) newErrors[f.key as string] = true;
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      const firstKey = fieldsToCheck.find((f) => newErrors[f.key as string]);
+      if (firstKey) {
+        const el = document.getElementById(firstKey.id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => { (el as HTMLElement).focus?.(); }, 450);
+        }
+      }
+      return;
+    }
+
     setSubmitting(true);
     const orderTypeLabel = data.order_type === "single" ? "Single / Prototype" : "Bulk Order";
     const designLabel =
@@ -60,6 +100,7 @@ const Contact = () => {
       });
     } catch { /* swallow */ }
     setDone(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const orderTypeLabel = data.order_type === "single" ? "Single / Prototype" : "Bulk Order";
@@ -338,6 +379,23 @@ const Contact = () => {
           .option-cards{ grid-template-columns:1fr; }
           .form-progress{ display:none; }
         }
+        .form-input.invalid, .form-textarea.invalid, .form-select.invalid{
+          border-color:#ff5577 !important;
+          box-shadow:0 0 0 3px rgba(255,85,119,0.12) !important;
+          background:rgba(120,20,40,0.18) !important;
+          animation: jcShake .45s ease;
+        }
+        .option-cards.invalid, .order-tabs.invalid, .bulk-qty.invalid{
+          outline:1px solid #ff5577;
+          outline-offset:4px;
+          border-radius:6px;
+          animation: jcShake .45s ease;
+        }
+        @keyframes jcShake{
+          0%,100%{transform:translateX(0);}
+          25%{transform:translateX(-4px);}
+          75%{transform:translateX(4px);}
+        }
         @media(min-width:901px){
           .contact-left{ padding-top:220px; }
           .contact-right{ padding-top:220px; }
@@ -422,12 +480,12 @@ const Contact = () => {
                   <div className="form-group half-row">
                     <div>
                       <label className="form-label" htmlFor="name">Full Name *</label>
-                      <input className="form-input" type="text" id="name" placeholder="Your name" required
+                      <input className={`form-input${errors.name ? " invalid" : ""}`} type="text" id="name" placeholder="Your name"
                         value={data.name} onChange={(e) => set("name", e.target.value)} />
                     </div>
                     <div>
-                      <label className="form-label" htmlFor="business">Business / Company</label>
-                      <input className="form-input" type="text" id="business" placeholder="Company name (optional)"
+                      <label className="form-label" htmlFor="business">Business / Company *</label>
+                      <input className={`form-input${errors.business ? " invalid" : ""}`} type="text" id="business" placeholder="Company name"
                         value={data.business} onChange={(e) => set("business", e.target.value)} />
                     </div>
                   </div>
@@ -435,12 +493,12 @@ const Contact = () => {
                   <div className="form-group half-row">
                     <div>
                       <label className="form-label" htmlFor="email">Email Address *</label>
-                      <input className="form-input" type="email" id="email" placeholder="your@email.com" required
+                      <input className={`form-input${errors.email ? " invalid" : ""}`} type="email" id="email" placeholder="your@email.com"
                         value={data.email} onChange={(e) => set("email", e.target.value)} />
                     </div>
                     <div>
                       <label className="form-label" htmlFor="phone">Phone Number *</label>
-                      <input className="form-input" type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required
+                      <input className={`form-input${errors.phone ? " invalid" : ""}`} type="tel" id="phone" placeholder="+91 XXXXX XXXXX"
                         value={data.phone} onChange={(e) => set("phone", e.target.value)} />
                     </div>
                   </div>
@@ -452,8 +510,8 @@ const Contact = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="industry">Industry / Category</label>
-                    <select className="form-select" id="industry"
+                    <label className="form-label" htmlFor="industry">Industry / Category *</label>
+                    <select className={`form-select${errors.industry ? " invalid" : ""}`} id="industry"
                       value={data.industry} onChange={(e) => set("industry", e.target.value)}>
                       <option value="" disabled>Select your industry</option>
                       <option>Medical & Healthcare</option>
@@ -471,14 +529,14 @@ const Contact = () => {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="products">What Products Are You Looking to Print? *</label>
-                    <textarea className="form-textarea" id="products" required
+                    <textarea className={`form-textarea${errors.products ? " invalid" : ""}`} id="products"
                       placeholder="Describe the products you need — e.g. Anatomical brain model for medical training, 1:100 scale building model for architecture presentation..."
                       value={data.products} onChange={(e) => set("products", e.target.value)} />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Do You Have a Design Ready?</label>
-                    <div className="option-cards">
+                    <label className="form-label">Do You Have a Design Ready? *</label>
+                    <div id="design_status_group" className={`option-cards${errors.design_status ? " invalid" : ""}`} tabIndex={-1}>
                       <label className={`option-card${data.design_status === "yes" ? " selected" : ""}`}>
                         <input type="radio" name="design_status" value="yes"
                           checked={data.design_status === "yes"}
@@ -520,8 +578,8 @@ const Contact = () => {
                     </div>
 
                     {data.order_type === "bulk" && (
-                      <div className="bulk-qty">
-                        <div className="bulk-qty-label">Approximate Quantity</div>
+                      <div id="bulk_qty_group" className={`bulk-qty${errors.bulk_qty ? " invalid" : ""}`} tabIndex={-1}>
+                        <div className="bulk-qty-label">Approximate Quantity *</div>
                         {[
                           ["20", "Up to 20 units"],
                           ["50", "Up to 50 units"],
@@ -538,8 +596,8 @@ const Contact = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="timeline">Timeline / Deadline</label>
-                    <select className="form-select" id="timeline"
+                    <label className="form-label" htmlFor="timeline">Timeline / Deadline *</label>
+                    <select className={`form-select${errors.timeline ? " invalid" : ""}`} id="timeline"
                       value={data.timeline} onChange={(e) => set("timeline", e.target.value)}>
                       <option value="" disabled>When do you need it?</option>
                       <option>ASAP — Urgent</option>
@@ -551,8 +609,8 @@ const Contact = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="notes">Any Additional Notes</label>
-                    <textarea className="form-textarea" id="notes" style={{ minHeight: 90 }}
+                    <label className="form-label" htmlFor="notes">Any Additional Notes *</label>
+                    <textarea className={`form-textarea${errors.notes ? " invalid" : ""}`} id="notes" style={{ minHeight: 90 }}
                       placeholder="Special requirements, material preferences, color, finish, reference images to share later..."
                       value={data.notes} onChange={(e) => set("notes", e.target.value)} />
                   </div>
