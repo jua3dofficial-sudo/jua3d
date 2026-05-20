@@ -379,6 +379,23 @@ const Contact = () => {
           .option-cards{ grid-template-columns:1fr; }
           .form-progress{ display:none; }
         }
+        .form-input.invalid, .form-textarea.invalid, .form-select.invalid{
+          border-color:#ff5577 !important;
+          box-shadow:0 0 0 3px rgba(255,85,119,0.12) !important;
+          background:rgba(120,20,40,0.18) !important;
+          animation: jcShake .45s ease;
+        }
+        .option-cards.invalid, .order-tabs.invalid, .bulk-qty.invalid{
+          outline:1px solid #ff5577;
+          outline-offset:4px;
+          border-radius:6px;
+          animation: jcShake .45s ease;
+        }
+        @keyframes jcShake{
+          0%,100%{transform:translateX(0);}
+          25%{transform:translateX(-4px);}
+          75%{transform:translateX(4px);}
+        }
         @media(min-width:901px){
           .contact-left{ padding-top:220px; }
           .contact-right{ padding-top:220px; }
