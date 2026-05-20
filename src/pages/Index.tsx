@@ -745,11 +745,13 @@ const Index = () => {
         }
 
         /* ============ SECTION 2 — TRUST & EXPERTISE ============ */
-        .jua-s2-wrap { position: relative; z-index: 6; margin-top: 100vh; font-family:'Barlow',sans-serif; }
+        .jua-s2-wrap { position: relative; z-index: 1; isolation: isolate; font-family:'Barlow',sans-serif; background:#060E1C; }
         .s2 {
           width: 100%; min-height: 100vh;
-          background: linear-gradient(160deg, #060E1C 0%, #0A2A57 50%, #060E1C 100%);
+          background-color: #060E1C;
+          background-image: linear-gradient(160deg, #060E1C 0%, #0A2A57 50%, #060E1C 100%);
           display: flex; align-items: stretch; position: relative; overflow: hidden;
+          z-index: 1; isolation: isolate;
         }
         .glow-orb {
           position: absolute; width: 500px; height: 500px; border-radius: 50%;
