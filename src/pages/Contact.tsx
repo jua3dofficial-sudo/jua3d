@@ -480,12 +480,12 @@ const Contact = () => {
                   <div className="form-group half-row">
                     <div>
                       <label className="form-label" htmlFor="name">Full Name *</label>
-                      <input className="form-input" type="text" id="name" placeholder="Your name" required
+                      <input className={`form-input${errors.name ? " invalid" : ""}`} type="text" id="name" placeholder="Your name"
                         value={data.name} onChange={(e) => set("name", e.target.value)} />
                     </div>
                     <div>
-                      <label className="form-label" htmlFor="business">Business / Company</label>
-                      <input className="form-input" type="text" id="business" placeholder="Company name (optional)"
+                      <label className="form-label" htmlFor="business">Business / Company *</label>
+                      <input className={`form-input${errors.business ? " invalid" : ""}`} type="text" id="business" placeholder="Company name"
                         value={data.business} onChange={(e) => set("business", e.target.value)} />
                     </div>
                   </div>
@@ -493,12 +493,12 @@ const Contact = () => {
                   <div className="form-group half-row">
                     <div>
                       <label className="form-label" htmlFor="email">Email Address *</label>
-                      <input className="form-input" type="email" id="email" placeholder="your@email.com" required
+                      <input className={`form-input${errors.email ? " invalid" : ""}`} type="email" id="email" placeholder="your@email.com"
                         value={data.email} onChange={(e) => set("email", e.target.value)} />
                     </div>
                     <div>
                       <label className="form-label" htmlFor="phone">Phone Number *</label>
-                      <input className="form-input" type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required
+                      <input className={`form-input${errors.phone ? " invalid" : ""}`} type="tel" id="phone" placeholder="+91 XXXXX XXXXX"
                         value={data.phone} onChange={(e) => set("phone", e.target.value)} />
                     </div>
                   </div>
