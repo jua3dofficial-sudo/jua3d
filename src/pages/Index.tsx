@@ -1559,7 +1559,7 @@ const Index = () => {
           .sp-eyebrow{display:inline-flex;align-items:center;gap:12px;margin-bottom:14px;}
           .sp-eyebrow-line{width:28px;height:1px;background:#0A2A57;opacity:0.3;}
           .sp-eyebrow-text{font-size:10px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#0A2A57;opacity:0.5;font-family:'Barlow',sans-serif;}
-          .sp-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:800;color:#0A2A57;letter-spacing:2px;line-height:1;margin-bottom:10px;}
+          .sp-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:800;color:#123E78;letter-spacing:2px;line-height:1;margin-bottom:10px;}
           .sp-title span{color:#3A8FE8;}
           .sp-sub{font-size:13px;font-weight:300;color:rgba(10,42,87,0.45);letter-spacing:1px;font-family:'Barlow',sans-serif;}
           .sp-marquee-outer{position:relative;width:100%;overflow:hidden;padding:8px 0;}
@@ -1570,9 +1570,10 @@ const Index = () => {
           .sp-marquee-track:hover{animation-play-state:paused;}
           @keyframes spScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
           .sp-logo-card{flex-shrink:0;width:180px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 32px;border-right:1px solid rgba(10,42,87,0.07);transition:all 0.3s ease;cursor:default;}
-          .sp-logo-card:hover .sp-logo-img{filter:none;opacity:1;transform:scale(1.06);}
+          .sp-logo-card:hover .sp-logo-img{transform:scale(1.06);}
           .sp-logo-card:hover .sp-logo-name{color:#0A2A57;}
-          .sp-logo-img{max-width:110px;max-height:52px;width:auto;height:auto;object-fit:contain;filter:grayscale(100%) opacity(0.45);transition:all 0.4s ease;display:block;}
+          .sp-logo-img{max-width:110px;max-height:52px;width:auto;height:auto;object-fit:contain;filter:none;transition:all 0.4s ease;display:block;}
+
           .sp-logo-name{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(10,42,87,0.3);text-align:center;transition:color 0.3s ease;white-space:nowrap;font-family:'Barlow',sans-serif;}
           .sp-stats{display:flex;align-items:center;justify-content:center;gap:0;margin-top:56px;border-top:1px solid rgba(10,42,87,0.08);border-bottom:1px solid rgba(10,42,87,0.08);padding:28px 0;}
           .sp-stat{flex:1;max-width:200px;text-align:center;padding:0 24px;border-right:1px solid rgba(10,42,87,0.08);}
