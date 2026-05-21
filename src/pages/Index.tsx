@@ -1572,7 +1572,7 @@ const Index = () => {
           .sp-logo-card{flex-shrink:0;width:180px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 32px;border-right:1px solid rgba(10,42,87,0.07);transition:all 0.3s ease;cursor:default;}
           .sp-logo-card:hover .sp-logo-img{transform:scale(1.06);}
           .sp-logo-card:hover .sp-logo-name{color:#0A2A57;}
-          .sp-logo-img{max-width:110px;max-height:52px;width:auto;height:auto;object-fit:contain;filter:none;transition:all 0.4s ease;display:block;}
+          .sp-logo-img{max-width:121px;max-height:57px;width:auto;height:auto;object-fit:contain;filter:none;transition:all 0.4s ease;display:block;}
 
           .sp-logo-name{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(10,42,87,0.3);text-align:center;transition:color 0.3s ease;white-space:nowrap;font-family:'Barlow',sans-serif;}
           .sp-stats{display:flex;align-items:center;justify-content:center;gap:0;margin-top:56px;border-top:1px solid rgba(10,42,87,0.08);border-bottom:1px solid rgba(10,42,87,0.08);padding:28px 0;}
