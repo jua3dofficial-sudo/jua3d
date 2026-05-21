@@ -1631,7 +1631,7 @@ const Index = () => {
               <div className="s6-eyebrow-line" />
             </div>
             <h2 className="s6-title">WE PRINT FOR<br /><span>EVERY INDUSTRY</span></h2>
-            <p className="s6-sub">From operating theatres to living rooms — JUA delivers precision-printed products across the industries that shape the world.</p>
+            <p className="s6-sub">From operation theatres to living rooms — JUA delivers precision-printed products across the industries that shape the world.</p>
           </div>
 
           <div className="s6-grid">
