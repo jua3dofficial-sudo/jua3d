@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import heroDesktop from "@/assets/hero-desktop.png";
 import jua3dLabLogo from "@/assets/jua-3d-lab-logo-new.webp";
@@ -1551,7 +1551,75 @@ const Index = () => {
           @media(max-width:600px){.s6-grid{grid-template-columns:1fr;max-width:420px;padding:0 16px;gap:2px;}.s6-card{padding:28px 22px 24px;}.s6-products{max-height:none!important;opacity:1!important;}}
         `}} />
 
+        <style dangerouslySetInnerHTML={{__html: `
+          .s-partners{width:100%;position:relative;overflow:hidden;background:#FFFFFF;padding:80px 0 72px;isolation:isolate;z-index:1;}
+          .s-partners::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,#0A2A57 30%,#3A8FE8 50%,#0A2A57 70%,transparent);z-index:2;}
+          .s-partners::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(10,42,87,0.15) 30%,rgba(10,42,87,0.3) 50%,rgba(10,42,87,0.15) 70%,transparent);z-index:2;}
+          .sp-header{text-align:center;padding:0 24px 56px;position:relative;z-index:2;}
+          .sp-eyebrow{display:inline-flex;align-items:center;gap:12px;margin-bottom:14px;}
+          .sp-eyebrow-line{width:28px;height:1px;background:#0A2A57;opacity:0.3;}
+          .sp-eyebrow-text{font-size:10px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#0A2A57;opacity:0.5;font-family:'Barlow',sans-serif;}
+          .sp-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:800;color:#0A2A57;letter-spacing:2px;line-height:1;margin-bottom:10px;}
+          .sp-title span{color:#3A8FE8;}
+          .sp-sub{font-size:13px;font-weight:300;color:rgba(10,42,87,0.45);letter-spacing:1px;font-family:'Barlow',sans-serif;}
+          .sp-marquee-outer{position:relative;width:100%;overflow:hidden;padding:8px 0;}
+          .sp-marquee-outer::before,.sp-marquee-outer::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:3;pointer-events:none;}
+          .sp-marquee-outer::before{left:0;background:linear-gradient(to right,#fff,transparent);}
+          .sp-marquee-outer::after{right:0;background:linear-gradient(to left,#fff,transparent);}
+          .sp-marquee-track{display:flex;width:max-content;animation:spScroll 22s linear infinite;}
+          .sp-marquee-track:hover{animation-play-state:paused;}
+          @keyframes spScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+          .sp-logo-card{flex-shrink:0;width:180px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 32px;border-right:1px solid rgba(10,42,87,0.07);transition:all 0.3s ease;cursor:default;}
+          .sp-logo-card:hover .sp-logo-img{filter:none;opacity:1;transform:scale(1.06);}
+          .sp-logo-card:hover .sp-logo-name{color:#0A2A57;}
+          .sp-logo-img{max-width:110px;max-height:52px;width:auto;height:auto;object-fit:contain;filter:grayscale(100%) opacity(0.45);transition:all 0.4s ease;display:block;}
+          .sp-logo-name{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(10,42,87,0.3);text-align:center;transition:color 0.3s ease;white-space:nowrap;font-family:'Barlow',sans-serif;}
+          .sp-stats{display:flex;align-items:center;justify-content:center;gap:0;margin-top:56px;border-top:1px solid rgba(10,42,87,0.08);border-bottom:1px solid rgba(10,42,87,0.08);padding:28px 0;}
+          .sp-stat{flex:1;max-width:200px;text-align:center;padding:0 24px;border-right:1px solid rgba(10,42,87,0.08);}
+          .sp-stat:last-child{border-right:none;}
+          .sp-stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,52px);color:#0A2A57;letter-spacing:2px;line-height:1;}
+          .sp-stat-num span{color:#3A8FE8;}
+          .sp-stat-label{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(10,42,87,0.4);margin-top:4px;font-family:'Barlow',sans-serif;}
+          @media(max-width:600px){.sp-logo-card{width:140px;padding:0 20px;}.sp-logo-img{max-width:90px;max-height:44px;}.sp-stats{flex-wrap:wrap;}.sp-stat{min-width:50%;border-right:none;border-bottom:1px solid rgba(10,42,87,0.08);padding:16px;}.sp-stat:last-child{border-bottom:none;}.sp-marquee-outer::before,.sp-marquee-outer::after{width:60px;}}
+        `}} />
+
+        <section className="s-partners">
+          <div className="sp-header">
+            <div className="sp-eyebrow">
+              <div className="sp-eyebrow-line" />
+              <span className="sp-eyebrow-text">Trusted By</span>
+              <div className="sp-eyebrow-line" />
+            </div>
+            <h2 className="sp-title">BRANDS THAT <span>TRUST JUA</span></h2>
+            <p className="sp-sub">Companies and institutions we've designed and printed for</p>
+          </div>
+
+          <div className="sp-marquee-outer">
+            <div className="sp-marquee-track">
+              {[0,1].map((set) => (
+                <React.Fragment key={set}>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779341347/HIQFY_thhyfd.webp" alt="HiiqiFY"/><span className="sp-logo-name">HiiqiFY</span></div>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779341346/ZONIFY_n8vgj6.webp" alt="Zonify Cart"/><span className="sp-logo-name">Zonify Cart</span></div>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779341346/D_HOMZ_bhr5np.webp" alt="D'Homz Villas"/><span className="sp-logo-name">D'Homz Villas</span></div>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779341347/69_zftvls.webp" alt="69 Rigs"/><span className="sp-logo-name">69 Rigs</span></div>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779341347/COLLECTORS_d1hdou.webp" alt="Collectors Cart"/><span className="sp-logo-name">Collectors Cart</span></div>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779341346/FTM_ag1tqo.webp" alt="Federal Bank"/><span className="sp-logo-name">Federal Bank</span></div>
+                  <div className="sp-logo-card"><img className="sp-logo-img" src="https://res.cloudinary.com/dc2qifrvh/image/upload/v1779342289/koraba_reon1n.webp" alt="Korambayil Hospital"/><span className="sp-logo-name">Korambayil Hospital</span></div>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          <div className="sp-stats">
+            <div className="sp-stat"><div className="sp-stat-num">7<span>+</span></div><div className="sp-stat-label">Brands Served</div></div>
+            <div className="sp-stat"><div className="sp-stat-num">10<span>+</span></div><div className="sp-stat-label">Industries</div></div>
+            <div className="sp-stat"><div className="sp-stat-num">100<span>%</span></div><div className="sp-stat-label">Satisfaction</div></div>
+            <div className="sp-stat"><div className="sp-stat-num">50<span>+</span></div><div className="sp-stat-label">Products Delivered</div></div>
+          </div>
+        </section>
+
         <section className="s6" id="industries">
+
           <div className="s6-orb s6-orb-1" />
           <div className="s6-orb s6-orb-2" />
 
