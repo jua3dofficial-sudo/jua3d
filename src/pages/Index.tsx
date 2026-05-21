@@ -1612,10 +1612,10 @@ const Index = () => {
           </div>
 
           <div className="sp-stats">
-            <div className="sp-stat"><div className="sp-stat-num">7<span>+</span></div><div className="sp-stat-label">Brands Served</div></div>
+            <div className="sp-stat"><div className="sp-stat-num">30<span>+</span></div><div className="sp-stat-label">Brands Served</div></div>
             <div className="sp-stat"><div className="sp-stat-num">10<span>+</span></div><div className="sp-stat-label">Industries</div></div>
             <div className="sp-stat"><div className="sp-stat-num">100<span>%</span></div><div className="sp-stat-label">Satisfaction</div></div>
-            <div className="sp-stat"><div className="sp-stat-num">50<span>+</span></div><div className="sp-stat-label">Products Delivered</div></div>
+            <div className="sp-stat"><div className="sp-stat-num">5000<span>+</span></div><div className="sp-stat-label">Products Delivered</div></div>
           </div>
         </section>
 
