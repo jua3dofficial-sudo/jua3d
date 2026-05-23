@@ -11,6 +11,49 @@ const Index = () => {
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
 
+  // Lazy-load non-hero videos when within 200px of viewport
+  useEffect(() => {
+    const vids = Array.from(document.querySelectorAll<HTMLVideoElement>("video.lazy-video"));
+    if (!vids.length || typeof IntersectionObserver === "undefined") {
+      vids.forEach(v => {
+        const ds = v.getAttribute("data-src");
+        if (ds && !v.src) { v.src = ds; v.preload = "auto"; v.load(); v.play().catch(() => {}); }
+      });
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const v = e.target as HTMLVideoElement;
+        const ds = v.getAttribute("data-src");
+        if (ds && !v.src) {
+          v.src = ds;
+          v.preload = "auto";
+          v.load();
+          v.play().catch(() => {});
+        }
+        io.unobserve(v);
+      });
+    }, { rootMargin: "200px 0px" });
+    vids.forEach(v => io.observe(v));
+    return () => io.disconnect();
+  }, []);
+
+  // Pause decorative CSS animations when their section is off-screen
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const targets = Array.from(document.querySelectorAll<HTMLElement>(".s4-glow, .s4-scan, .s6-orb, .s7-orb"));
+    targets.forEach(el => { el.style.animationPlayState = "paused"; });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        (e.target as HTMLElement).style.animationPlayState = e.isIntersecting ? "running" : "paused";
+      });
+    }, { rootMargin: "100px 0px" });
+    targets.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+
   useEffect(() => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
