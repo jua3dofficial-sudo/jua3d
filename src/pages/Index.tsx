@@ -854,6 +854,19 @@ const Index = () => {
           line-height: 1.8; max-width: 540px; margin-bottom: 44px;
         }
         .s2-body strong { color: rgba(255,255,255,0.95); font-weight: 500; }
+        .s2-intro { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.75); line-height: 1.8; max-width: 560px; margin-bottom: 28px; }
+        .s2-intro strong { color: #fff; font-weight: 500; }
+        .s2-services-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #3A8FE8; margin-bottom: 18px; }
+        .s2-services { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; max-width: 580px; margin: 0 0 32px; padding: 0; list-style: none; }
+        .s2-services li { position: relative; padding-left: 22px; font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.85); line-height: 1.5; }
+        .s2-services li::before { content: ''; position: absolute; left: 0; top: 9px; width: 10px; height: 2px; background: #3A8FE8; }
+        .s2-closer { font-size: 17px; font-weight: 500; color: #fff; line-height: 1.6; max-width: 560px; margin-bottom: 36px; }
+        .s2-closer span { color: #3A8FE8; }
+        @media (max-width: 640px) {
+          .s2-services { grid-template-columns: 1fr; max-width: 100%; }
+          .s2-left .s2-intro, .s2-left .s2-services, .s2-left .s2-closer { margin-left: auto; margin-right: auto; text-align: left; }
+          .s2-left .s2-services-title, .s2-left .s2-closer { text-align: center; }
+        }
         .s2-cta-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
         .s2-cta-btn {
           font-family: 'Barlow Condensed', sans-serif;
