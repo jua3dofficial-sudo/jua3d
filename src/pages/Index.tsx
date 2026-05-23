@@ -1452,11 +1452,11 @@ const Index = () => {
         .s5-eyebrow-line{width:28px;height:1px;background:#3A8FE8;}
         .s5-eyebrow-text{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;font-family:'Barlow',sans-serif;}
         .s5-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;font-family:'Barlow',sans-serif;margin:0;}
-        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;}
         .s5-wrap::-webkit-scrollbar{display:none;}
         .s5-wrap:active{cursor:grabbing;}
         .s5-track{display:flex;gap:40px;padding:20px calc(50% - 130px) 48px;width:max-content;align-items:flex-end;}
-        .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;}
+        .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;will-change:transform;}
         .s5-card[data-index="0"]{width:336px;}
         .s5-card[data-index="2"]{width:350px;}
         .s5-card[data-index="4"]{width:378px;}
