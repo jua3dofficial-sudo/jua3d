@@ -804,9 +804,13 @@ const Index = () => {
           .s2-left > .s2-eyebrow { order: 3; margin-top: 8px; margin-bottom: 14px; }
           .s2-left > .s2-headline { order: 4; }
           .s2-left > .s2-divider { order: 5; }
-          .s2-left > .s2-body { order: 6; }
-          .s2-left > .s2-cta-row { order: 7; }
-          .s2-left > .s2-stats-row { order: 8; }
+          .s2-left > .s2-body,
+          .s2-left > .s2-intro { order: 6; }
+          .s2-left > .s2-services-title { order: 7; }
+          .s2-left > .s2-services { order: 8; }
+          .s2-left > .s2-closer { order: 9; }
+          .s2-left > .s2-cta-row { order: 10; }
+          .s2-left > .s2-stats-row { order: 11; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
           .s2-logo { width: 460px; height: 460px; margin-top: -90px; margin-bottom: -110px; transform: scale(1.55); transform-origin: center center; filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(58,143,232,0.75)); }
