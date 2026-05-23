@@ -1430,12 +1430,13 @@ const Index = () => {
           <div className="s4-video-wrap">
             <video
               id="s4vid"
-              src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
+              className="lazy-video"
+              data-src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
               autoPlay
               loop
               muted
               playsInline
-              preload="auto"
+              preload="none"
               disablePictureInPicture
               disableRemotePlayback
             />
