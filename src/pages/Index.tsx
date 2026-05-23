@@ -1504,7 +1504,7 @@ const Index = () => {
                 return [...products, ...products, ...products, ...products, ...products].map((p, i) => (
                   <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 && i < 10 ? undefined : "true"}>
                     <div className="s5-img-wrap">
-                      <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+                      <img src={p.src} alt={p.name} loading="lazy" decoding="async" />
                     </div>
                     <div className="s5-name">{p.name}</div>
                     <div className="s5-industry">{p.industry}</div>
