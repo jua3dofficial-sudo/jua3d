@@ -439,7 +439,7 @@ const Contact = () => {
                 <div className="cii-icon">📍</div>
                 <div>
                   <div className="cii-label">Location</div>
-                  <div className="cii-value">Thiruvali, Wandoor<br />Kerala, India — 676123</div>
+                  <div className="cii-value">Kulakattiri, Thiruvali, Malappuram<br />Kerala, India — 676123</div>
                 </div>
               </div>
               <div className="contact-info-item">
