@@ -11,6 +11,49 @@ const Index = () => {
   const loopRef = useRef<HTMLVideoElement>(null);
   const trackWrapRef = useRef<HTMLDivElement>(null);
 
+  // Lazy-load non-hero videos when within 200px of viewport
+  useEffect(() => {
+    const vids = Array.from(document.querySelectorAll<HTMLVideoElement>("video.lazy-video"));
+    if (!vids.length || typeof IntersectionObserver === "undefined") {
+      vids.forEach(v => {
+        const ds = v.getAttribute("data-src");
+        if (ds && !v.src) { v.src = ds; v.preload = "auto"; v.load(); v.play().catch(() => {}); }
+      });
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const v = e.target as HTMLVideoElement;
+        const ds = v.getAttribute("data-src");
+        if (ds && !v.src) {
+          v.src = ds;
+          v.preload = "auto";
+          v.load();
+          v.play().catch(() => {});
+        }
+        io.unobserve(v);
+      });
+    }, { rootMargin: "200px 0px" });
+    vids.forEach(v => io.observe(v));
+    return () => io.disconnect();
+  }, []);
+
+  // Pause decorative CSS animations when their section is off-screen
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const targets = Array.from(document.querySelectorAll<HTMLElement>(".s4-glow, .s4-scan, .s6-orb, .s7-orb"));
+    targets.forEach(el => { el.style.animationPlayState = "paused"; });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        (e.target as HTMLElement).style.animationPlayState = e.isIntersecting ? "running" : "paused";
+      });
+    }, { rootMargin: "100px 0px" });
+    targets.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+
   useEffect(() => {
     const vid = document.getElementById("s4vid") as HTMLVideoElement | null;
     if (!vid) return;
@@ -1257,11 +1300,13 @@ const Index = () => {
               </div>
               <div className="s2-mobile-video">
                 <video
-                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  className="lazy-video"
+                  data-src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="none"
                 />
               </div>
               <img
@@ -1318,11 +1363,13 @@ const Index = () => {
                 <div className="s2-corner s2-corner-bl" />
                 <div className="s2-corner s2-corner-br" />
                 <video
-                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  className="lazy-video"
+                  data-src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="none"
                   style={{ textAlign: undefined }}
                 />
               </div>
@@ -1376,7 +1423,7 @@ const Index = () => {
                 return [...products, ...products, ...products, ...products].map((p, i) => (
                   <div className="prod-card" key={i} data-index={i % 7} aria-hidden={i >= 7 && i < 14 ? undefined : "true"}>
                     <div className="prod-img-wrap">
-                      <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+                      <img src={p.src} alt={p.name} loading="lazy" decoding="async" />
                     </div>
                     <div className="prod-name">{p.name}</div>
                     <div className="prod-cat">{p.cat}</div>
@@ -1426,12 +1473,13 @@ const Index = () => {
           <div className="s4-video-wrap">
             <video
               id="s4vid"
-              src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
+              className="lazy-video"
+              data-src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778466315/Firefly_Smooth_cinematic_3D_product_animation._The_product_slowly_rotates_360_degrees_to_the_left_in_1_i6mseb.mp4"
               autoPlay
               loop
               muted
               playsInline
-              preload="auto"
+              preload="none"
               disablePictureInPicture
               disableRemotePlayback
             />
@@ -1452,11 +1500,11 @@ const Index = () => {
         .s5-eyebrow-line{width:28px;height:1px;background:#3A8FE8;}
         .s5-eyebrow-text{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;font-family:'Barlow',sans-serif;}
         .s5-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;font-family:'Barlow',sans-serif;margin:0;}
-        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;}
         .s5-wrap::-webkit-scrollbar{display:none;}
         .s5-wrap:active{cursor:grabbing;}
         .s5-track{display:flex;gap:40px;padding:20px calc(50% - 130px) 48px;width:max-content;align-items:flex-end;}
-        .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;}
+        .s5-card{position:relative;flex-shrink:0;width:280px;display:flex;flex-direction:column;align-items:center;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.5s ease;transform:scale(0.8);opacity:0.38;cursor:pointer;will-change:transform;}
         .s5-card[data-index="0"]{width:336px;}
         .s5-card[data-index="2"]{width:350px;}
         .s5-card[data-index="4"]{width:378px;}
@@ -1504,7 +1552,7 @@ const Index = () => {
                 return [...products, ...products, ...products, ...products, ...products].map((p, i) => (
                   <div className="s5-card" data-index={i % 5} key={i} aria-hidden={i >= 5 && i < 10 ? undefined : "true"}>
                     <div className="s5-img-wrap">
-                      <img src={p.src} alt={p.name} loading="eager" decoding="async" {...({fetchpriority:"high"} as any)} />
+                      <img src={p.src} alt={p.name} loading="lazy" decoding="async" />
                     </div>
                     <div className="s5-name">{p.name}</div>
                     <div className="s5-industry">{p.industry}</div>
