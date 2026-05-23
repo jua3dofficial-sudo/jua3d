@@ -1257,11 +1257,13 @@ const Index = () => {
               </div>
               <div className="s2-mobile-video">
                 <video
-                  src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
+                  className="lazy-video"
+                  data-src="https://res.cloudinary.com/dc2qifrvh/video/upload/f_auto,q_auto/v1778036398/From_KlickPin_CF_Flower_Vase_-_3D_Printing___3d_printing_3dprinting_design_3d_printer_designs_-_Pin-1033505814469649993_n0uty7.mp4"
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="none"
                 />
               </div>
               <img
