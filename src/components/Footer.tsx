@@ -121,7 +121,7 @@ const Footer = () => (
               <div>
                 <div className="s8-contact-label">Address</div>
                 <span className="s8-contact-value">
-                  Thiruvali, Wandoor<br />
+                  Kulakattiri, Thiruvali, Malappuram<br />
                   Kerala, India — 676123
                 </span>
               </div>
