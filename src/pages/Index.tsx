@@ -854,6 +854,19 @@ const Index = () => {
           line-height: 1.8; max-width: 540px; margin-bottom: 44px;
         }
         .s2-body strong { color: rgba(255,255,255,0.95); font-weight: 500; }
+        .s2-intro { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.75); line-height: 1.8; max-width: 560px; margin-bottom: 28px; }
+        .s2-intro strong { color: #fff; font-weight: 500; }
+        .s2-services-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #3A8FE8; margin-bottom: 18px; }
+        .s2-services { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; max-width: 580px; margin: 0 0 32px; padding: 0; list-style: none; }
+        .s2-services li { position: relative; padding-left: 22px; font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.85); line-height: 1.5; }
+        .s2-services li::before { content: ''; position: absolute; left: 0; top: 9px; width: 10px; height: 2px; background: #3A8FE8; }
+        .s2-closer { font-size: 17px; font-weight: 500; color: #fff; line-height: 1.6; max-width: 560px; margin-bottom: 36px; }
+        .s2-closer span { color: #3A8FE8; }
+        @media (max-width: 640px) {
+          .s2-services { grid-template-columns: 1fr; max-width: 100%; }
+          .s2-left .s2-intro, .s2-left .s2-services, .s2-left .s2-closer { margin-left: auto; margin-right: auto; text-align: left; }
+          .s2-left .s2-services-title, .s2-left .s2-closer { text-align: center; }
+        }
         .s2-cta-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
         .s2-cta-btn {
           font-family: 'Barlow Condensed', sans-serif;
@@ -1253,16 +1266,27 @@ const Index = () => {
                 alt="JUA 3D Print Lab Logo"
               />
               <h2 className="s2-headline">
-                Precision You Can <em>Touch.</em><br />
-                Results You Can <em>Trust.</em>
+                Precision You Can<br />
+                <em>See. Feel. Trust.</em>
               </h2>
               <div className="s2-divider" />
-              <p className="s2-body">
-                At JUA 3D Print Lab, we've mastered the art of turning complex ideas into{" "}
-                <strong>tangible, high-quality products.</strong> Serving 10+ industries across
-                medical, architecture, automotive, and beyond — our team combines advanced 3D printing
-                technology with deep engineering expertise. When quality is non-negotiable,{" "}
-                <strong>professionals choose JUA.</strong>
+              <p className="s2-intro">
+                At <strong>JUA 3D Print Lab</strong>, we specialize in transforming innovative ideas into high-quality physical creations through advanced 3D printing, resin prototyping, and professional 3D modelling solutions. Combining creativity with engineering precision, we deliver products that meet the highest standards of detail, durability, and finish.
+              </p>
+              <div className="s2-services-title">Our Expertise</div>
+              <ul className="s2-services">
+                <li>High-Resolution Resin 3D Printing</li>
+                <li>FDM Industrial Printing</li>
+                <li>Custom 3D Modelling &amp; Designing</li>
+                <li>Rapid Product Prototyping</li>
+                <li>Architectural &amp; Engineering Models</li>
+                <li>Personalized Gifts &amp; Custom Creations</li>
+                <li>Product Visualization &amp; Mockups</li>
+                <li>Miniatures, Figurines &amp; Collectibles</li>
+                <li>Functional Parts &amp; Mechanical Components</li>
+              </ul>
+              <p className="s2-closer">
+                When quality matters, <span>professionals choose JUA 3D Print Lab.</span>
               </p>
               <div className="s2-cta-row">
                 <a href="#contact" className="s2-cta-btn">Work With Us</a>
