@@ -1266,16 +1266,27 @@ const Index = () => {
                 alt="JUA 3D Print Lab Logo"
               />
               <h2 className="s2-headline">
-                Precision You Can <em>Touch.</em><br />
-                Results You Can <em>Trust.</em>
+                Precision You Can<br />
+                <em>See. Feel. Trust.</em>
               </h2>
               <div className="s2-divider" />
-              <p className="s2-body">
-                At JUA 3D Print Lab, we've mastered the art of turning complex ideas into{" "}
-                <strong>tangible, high-quality products.</strong> Serving 10+ industries across
-                medical, architecture, automotive, and beyond — our team combines advanced 3D printing
-                technology with deep engineering expertise. When quality is non-negotiable,{" "}
-                <strong>professionals choose JUA.</strong>
+              <p className="s2-intro">
+                At <strong>JUA 3D Print Lab</strong>, we specialize in transforming innovative ideas into high-quality physical creations through advanced 3D printing, resin prototyping, and professional 3D modelling solutions. Combining creativity with engineering precision, we deliver products that meet the highest standards of detail, durability, and finish.
+              </p>
+              <div className="s2-services-title">Our Expertise</div>
+              <ul className="s2-services">
+                <li>High-Resolution Resin 3D Printing</li>
+                <li>FDM Industrial Printing</li>
+                <li>Custom 3D Modelling &amp; Designing</li>
+                <li>Rapid Product Prototyping</li>
+                <li>Architectural &amp; Engineering Models</li>
+                <li>Personalized Gifts &amp; Custom Creations</li>
+                <li>Product Visualization &amp; Mockups</li>
+                <li>Miniatures, Figurines &amp; Collectibles</li>
+                <li>Functional Parts &amp; Mechanical Components</li>
+              </ul>
+              <p className="s2-closer">
+                When quality matters, <span>professionals choose JUA 3D Print Lab.</span>
               </p>
               <div className="s2-cta-row">
                 <a href="#contact" className="s2-cta-btn">Work With Us</a>
