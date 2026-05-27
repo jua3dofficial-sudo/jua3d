@@ -1110,7 +1110,7 @@ const Index = () => {
           -webkit-overflow-scrolling:touch;
           scroll-behavior:auto;
           scroll-snap-type: x mandatory;
-          touch-action: pan-x;
+          touch-action: pan-y;
           will-change: scroll-position;
           transform: translateZ(0);
         }
@@ -1511,7 +1511,7 @@ const Index = () => {
 
         {/* SECTION 4 — 3D ARCHITECTURE MODEL HOUSE SHOWCASE */}
         <style dangerouslySetInnerHTML={{ __html: `
-        .s4{position:relative;z-index:1;isolation:isolate;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:60px 0 80px;}
+        .s4{position:relative;z-index:1;isolation:isolate;width:100%;background:#060E1C;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:60px 0 80px;touch-action:pan-y;}
         .s4-fade-top{position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
         .s4-fade-left{position:absolute;top:0;left:0;bottom:0;width:140px;background:linear-gradient(to right,#060E1C 0%,transparent 100%);z-index:3;pointer-events:none;}
@@ -1521,8 +1521,8 @@ const Index = () => {
         .s4-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(58,143,232,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,143,232,0.03) 1px,transparent 1px);background-size:60px 60px;z-index:2;pointer-events:none;mix-blend-mode:overlay;}
         .s4-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(58,143,232,0.2),transparent);z-index:4;animation:s4scan 5s linear infinite;pointer-events:none;}
         @keyframes s4scan{from{top:0%;}to{top:100%;}}
-        .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:720px;margin:0 auto;}
-        .s4-video-wrap video{width:100%;display:block;background:transparent;mix-blend-mode:screen;filter:brightness(1.05) contrast(1.05);}
+        .s4-video-wrap{position:relative;z-index:2;width:100%;max-width:720px;margin:0 auto;touch-action:pan-y;pointer-events:none;}
+        .s4-video-wrap video{width:100%;display:block;background:transparent;mix-blend-mode:screen;filter:brightness(1.05) contrast(1.05);pointer-events:none;touch-action:pan-y;}
         .s4-label{position:relative;z-index:5;margin-top:24px;text-align:center;font-family:'Bebas Neue','Barlow Condensed',sans-serif;font-size:22px;letter-spacing:6px;color:rgba(255,255,255,0.92);text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:14px;}
         .s4-label::before,.s4-label::after{content:'';width:36px;height:1px;background:#3A8FE8;display:inline-block;}
         .s4-label-dot{width:6px;height:6px;border-radius:50%;background:#3A8FE8;display:inline-block;}
@@ -1568,7 +1568,7 @@ const Index = () => {
         .s5-eyebrow-line{width:28px;height:1px;background:#3A8FE8;}
         .s5-eyebrow-text{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3A8FE8;font-family:'Barlow',sans-serif;}
         .s5-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;font-family:'Barlow',sans-serif;margin:0;}
-        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;}
+        .s5-wrap{position:relative;width:100%;overflow-x:scroll;overflow-y:visible;cursor:grab;user-select:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-y;}
         .s5-wrap::-webkit-scrollbar{display:none;}
         .s5-wrap:active{cursor:grabbing;}
         .s5-track{display:flex;gap:40px;padding:20px calc(50% - 130px) 48px;width:max-content;align-items:flex-end;}
