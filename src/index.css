@@ -108,5 +108,11 @@
   body {
     @apply bg-background text-foreground;
     touch-action: pan-y;
+    overflow-x: hidden;
+  }
+
+  html,
+  #root {
+    overflow-x: hidden;
   }
 }
