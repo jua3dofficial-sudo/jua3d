@@ -79,7 +79,7 @@ const Contact = () => {
       : data.design_status === "no" ? "No — needs JUA to design"
       : "Not specified";
     try {
-      await fetch("https://formspree.io/f/xpwzgvqb", {
+      await fetch("https://formspree.io/f/mdajpywn", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
