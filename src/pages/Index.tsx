@@ -90,7 +90,9 @@ const Index = () => {
     let activeIndex = -1;
     let isDragging = false;
     let dragStartX = 0;
+    let dragStartY = 0;
     let dragScrollL = 0;
+    let touchAxis: "x" | "y" | null = null;
     let autoTimer: ReturnType<typeof setInterval> | null = null;
     let ticking = false;
 
@@ -176,15 +178,34 @@ const Index = () => {
       snapTo(getClosest());
     };
     const onTouchStart = (e: TouchEvent) => {
-      dragStartX = e.touches[0].clientX;
+      const touch = e.touches[0];
+      if (!touch) return;
+      dragStartX = touch.clientX;
+      dragStartY = touch.clientY;
       dragScrollL = wrap.scrollLeft;
+      touchAxis = null;
       stopAuto();
     };
     const onTouchMove = (e: TouchEvent) => {
-      wrap.scrollLeft = dragScrollL - (e.touches[0].clientX - dragStartX) * 1.3;
+      const touch = e.touches[0];
+      if (!touch) return;
+      const deltaX = touch.clientX - dragStartX;
+      const deltaY = touch.clientY - dragStartY;
+      if (!touchAxis) {
+        if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
+        touchAxis = Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
+      }
+      if (touchAxis !== "x") return;
+      wrap.scrollLeft = dragScrollL - deltaX * 1.3;
       scheduleUpdate();
     };
-    const onTouchEnd = () => snapTo(getClosest());
+    const onTouchEnd = () => {
+      if (touchAxis === "x") snapTo(getClosest());
+      touchAxis = null;
+    };
+    const onTouchCancel = () => {
+      touchAxis = null;
+    };
     const dotHandlers = navdots.map((dot, i) => {
       const h = () => { stopAuto(); snapTo(i); };
       dot.addEventListener("click", h);
@@ -198,6 +219,7 @@ const Index = () => {
     wrap.addEventListener("touchstart", onTouchStart, { passive: true });
     wrap.addEventListener("touchmove", onTouchMove, { passive: true });
     wrap.addEventListener("touchend", onTouchEnd);
+    wrap.addEventListener("touchcancel", onTouchCancel);
 
     const initTO = setTimeout(() => {
       // Start at the first original card (index ORIG), in the middle of the track.
@@ -221,6 +243,7 @@ const Index = () => {
       wrap.removeEventListener("touchstart", onTouchStart);
       wrap.removeEventListener("touchmove", onTouchMove);
       wrap.removeEventListener("touchend", onTouchEnd);
+      wrap.removeEventListener("touchcancel", onTouchCancel);
       navdots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
     };
   }, []);
@@ -243,6 +266,10 @@ const Index = () => {
     let autoTimer: ReturnType<typeof setInterval> | null = null;
     let userInteractTO: ReturnType<typeof setTimeout> | null = null;
     let scrollEndTO: ReturnType<typeof setTimeout> | null = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchScrollL = 0;
+    let touchAxis: "x" | "y" | null = null;
 
     // Pure-math closest detection — no layout reads, no reflow.
     const getClosest = () => {
@@ -334,6 +361,43 @@ const Index = () => {
     wrap.addEventListener("pointerdown", onUserInteract, { passive: true });
     wrap.addEventListener("wheel", onUserInteract, { passive: true });
 
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchScrollL = wrap.scrollLeft;
+      touchAxis = null;
+      pauseAutoTemporarily();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      const deltaX = touch.clientX - touchStartX;
+      const deltaY = touch.clientY - touchStartY;
+      if (!touchAxis) {
+        if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
+        touchAxis = Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
+      }
+      if (touchAxis !== "x") return;
+      wrap.scrollLeft = touchScrollL - deltaX;
+    };
+
+    const onTouchEnd = () => {
+      if (touchAxis === "x") goTo(getClosest());
+      touchAxis = null;
+    };
+
+    const onTouchCancel = () => {
+      touchAxis = null;
+    };
+
+    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
+    wrap.addEventListener("touchmove", onTouchMove, { passive: true });
+    wrap.addEventListener("touchend", onTouchEnd);
+    wrap.addEventListener("touchcancel", onTouchCancel);
+
     const dotHandlers: Array<() => void> = dots.map((dot, i) => {
       const h = () => { pauseAutoTemporarily(); goTo(i); };
       dot.addEventListener("click", h);
@@ -361,6 +425,10 @@ const Index = () => {
       wrap.removeEventListener("scroll", onScrollDebounced);
       wrap.removeEventListener("pointerdown", onUserInteract);
       wrap.removeEventListener("wheel", onUserInteract);
+      wrap.removeEventListener("touchstart", onTouchStart);
+      wrap.removeEventListener("touchmove", onTouchMove);
+      wrap.removeEventListener("touchend", onTouchEnd);
+      wrap.removeEventListener("touchcancel", onTouchCancel);
       dots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
       stopAuto();
     };
