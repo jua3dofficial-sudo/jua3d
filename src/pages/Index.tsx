@@ -83,38 +83,37 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const wrap = document.getElementById("s5wrap");
+    const wrap = document.getElementById("s5wrap") as HTMLDivElement | null;
     if (!wrap) return;
     const cards = Array.from(document.querySelectorAll<HTMLDivElement>(".s5-card"));
     const navdots = Array.from(document.querySelectorAll<HTMLDivElement>(".s5-navdot"));
+    const ORIG = 5;
     let activeIndex = -1;
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let dragScrollL = 0;
-    let touchAxis: "x" | "y" | null = null;
     let autoTimer: ReturnType<typeof setInterval> | null = null;
-    let ticking = false;
+    let userTO: ReturnType<typeof setTimeout> | null = null;
+    let scrollTO: ReturnType<typeof setTimeout> | null = null;
 
     const getClosest = () => {
-      const centre = wrap.getBoundingClientRect().left + wrap.offsetWidth / 2;
+      const centre = wrap.scrollLeft + wrap.offsetWidth / 2;
       let best = 0, bestDist = Infinity;
-      cards.forEach((c, i) => {
-        const r = c.getBoundingClientRect();
-        const d = Math.abs(r.left + r.width / 2 - centre);
+      for (let i = 0; i < cards.length; i++) {
+        const c = cards[i];
+        const cardCentre = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(cardCentre - centre);
         if (d < bestDist) { bestDist = d; best = i; }
-      });
+      }
       return best;
     };
-    const ORIG = 5;
-    const cardWidth = (n: number) => {
-      if (cards.length < n + 1) return 0;
-      return cards[n].offsetLeft - cards[0].offsetLeft;
+    const cardWidth = (n: number) => cards.length < n + 1 ? 0 : cards[n].offsetLeft - cards[0].offsetLeft;
+    const applyActive = (idx: number) => {
+      if (idx === activeIndex) return;
+      activeIndex = idx;
+      cards.forEach((c, i) => c.classList.toggle("active", i === idx));
+      const dotIdx = ((idx % ORIG) + ORIG) % ORIG;
+      navdots.forEach((d, i) => d.classList.toggle("active", i === dotIdx));
     };
     const maybeRecenter = () => {
-      const w3 = cardWidth(3);
-      const w5 = cardWidth(5);
-      const w15 = cardWidth(15);
+      const w3 = cardWidth(3), w5 = cardWidth(5), w15 = cardWidth(15);
       if (w5 <= 0) return;
       const prev = (wrap.style as any).scrollBehavior;
       if (wrap.scrollLeft < w3) {
@@ -129,24 +128,16 @@ const Index = () => {
         activeIndex = -1;
       }
     };
-    const applyActive = (idx: number) => {
-      if (idx === activeIndex) return;
-      activeIndex = idx;
-      cards.forEach((c, i) => c.classList.toggle("active", i === idx));
-      const dotIdx = ((idx % ORIG) + ORIG) % ORIG;
-      navdots.forEach((d, i) => d.classList.toggle("active", i === dotIdx));
-    };
-    const scheduleUpdate = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { maybeRecenter(); applyActive(getClosest()); ticking = false; });
+    const update = () => { maybeRecenter(); applyActive(getClosest()); };
+    const onScroll = () => {
+      if (scrollTO) clearTimeout(scrollTO);
+      scrollTO = setTimeout(update, 150);
     };
     const snapTo = (idx: number) => {
       const card = cards[idx];
       if (!card) return;
       const target = card.offsetLeft - wrap.offsetWidth / 2 + card.offsetWidth / 2;
       wrap.scrollTo({ left: target, behavior: "smooth" });
-      setTimeout(() => { maybeRecenter(); applyActive(getClosest()); }, 420);
     };
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
     const startAuto = () => {
@@ -157,72 +148,25 @@ const Index = () => {
         snapTo(next);
       }, 3000);
     };
+    const pauseAuto = () => {
+      stopAuto();
+      if (userTO) clearTimeout(userTO);
+      userTO = setTimeout(startAuto, 4500);
+    };
+    const onUser = () => pauseAuto();
 
-    const onScroll = () => scheduleUpdate();
-    const onMouseDown = (e: MouseEvent) => {
-      isDragging = true;
-      dragStartX = e.clientX;
-      dragScrollL = wrap.scrollLeft;
-      wrap.style.cursor = "grabbing";
-      stopAuto();
-    };
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-      wrap.scrollLeft = dragScrollL - (e.clientX - dragStartX) * 1.4;
-      scheduleUpdate();
-    };
-    const onMouseUp = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      wrap.style.cursor = "grab";
-      snapTo(getClosest());
-    };
-    const onTouchStart = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-      dragStartX = touch.clientX;
-      dragStartY = touch.clientY;
-      dragScrollL = wrap.scrollLeft;
-      touchAxis = null;
-      stopAuto();
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-      const deltaX = touch.clientX - dragStartX;
-      const deltaY = touch.clientY - dragStartY;
-      if (!touchAxis) {
-        if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
-        touchAxis = Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
-      }
-      if (touchAxis !== "x") return;
-      wrap.scrollLeft = dragScrollL - deltaX * 1.3;
-      scheduleUpdate();
-    };
-    const onTouchEnd = () => {
-      if (touchAxis === "x") snapTo(getClosest());
-      touchAxis = null;
-    };
-    const onTouchCancel = () => {
-      touchAxis = null;
-    };
+    wrap.addEventListener("scroll", onScroll, { passive: true });
+    wrap.addEventListener("pointerdown", onUser, { passive: true });
+    wrap.addEventListener("wheel", onUser, { passive: true });
+    wrap.addEventListener("touchstart", onUser, { passive: true });
+
     const dotHandlers = navdots.map((dot, i) => {
-      const h = () => { stopAuto(); snapTo(i); };
+      const h = () => { pauseAuto(); snapTo(i); };
       dot.addEventListener("click", h);
       return h;
     });
 
-    wrap.addEventListener("scroll", onScroll, { passive: true });
-    wrap.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
-    wrap.addEventListener("touchmove", onTouchMove, { passive: true });
-    wrap.addEventListener("touchend", onTouchEnd);
-    wrap.addEventListener("touchcancel", onTouchCancel);
-
     const initTO = setTimeout(() => {
-      // Start at the first original card (index ORIG), in the middle of the track.
       const startCard = cards[ORIG];
       if (startCard) {
         const prev = (wrap.style as any).scrollBehavior;
@@ -236,14 +180,12 @@ const Index = () => {
     return () => {
       stopAuto();
       clearTimeout(initTO);
+      if (userTO) clearTimeout(userTO);
+      if (scrollTO) clearTimeout(scrollTO);
       wrap.removeEventListener("scroll", onScroll);
-      wrap.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-      wrap.removeEventListener("touchstart", onTouchStart);
-      wrap.removeEventListener("touchmove", onTouchMove);
-      wrap.removeEventListener("touchend", onTouchEnd);
-      wrap.removeEventListener("touchcancel", onTouchCancel);
+      wrap.removeEventListener("pointerdown", onUser);
+      wrap.removeEventListener("wheel", onUser);
+      wrap.removeEventListener("touchstart", onUser);
       navdots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
     };
   }, []);
