@@ -115,4 +115,20 @@
   #root {
     overflow-x: hidden;
   }
+
+  /* Force GPU compositing on each major section so scroll never triggers a full-page CPU repaint */
+  section { transform: translateZ(0); }
+
+  /* Composite each carousel card on its own GPU layer; contain isolates layout/paint from siblings */
+  .prod-card, .s5-card {
+    will-change: transform;
+    contain: layout style paint;
+  }
+
+  /* Native scroll snap for s5 carousel (matches s3) — moves snapping off the JS thread */
+  .s5-wrap {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .s5-card { scroll-snap-align: center; }
 }
