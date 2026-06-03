@@ -348,56 +348,6 @@ const Index = () => {
     return () => io.disconnect();
   }, []);
 
-    const onTouchEnd = () => {
-      if (touchAxis === "x") goTo(getClosest());
-      touchAxis = null;
-    };
-
-    const onTouchCancel = () => {
-      touchAxis = null;
-    };
-
-    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
-    wrap.addEventListener("touchmove", onTouchMove, { passive: true });
-    wrap.addEventListener("touchend", onTouchEnd);
-    wrap.addEventListener("touchcancel", onTouchCancel);
-
-    const dotHandlers: Array<() => void> = dots.map((dot, i) => {
-      const h = () => { pauseAutoTemporarily(); goTo(i); };
-      dot.addEventListener("click", h);
-      return h;
-    });
-
-    const init = () => {
-      // Start in the middle of the track at the first original card.
-      const startCard = cards[ORIG];
-      if (startCard) {
-        const prevBehavior = (wrap.style as any).scrollBehavior;
-        (wrap.style as any).scrollBehavior = "auto";
-        wrap.scrollLeft = startCard.offsetLeft - wrap.offsetWidth / 2 + startCard.offsetWidth / 2;
-        (wrap.style as any).scrollBehavior = prevBehavior || "";
-      }
-      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
-    };
-    const initTimeout = setTimeout(init, 600);
-
-    return () => {
-      clearTimeout(initTimeout);
-      if (userInteractTO) clearTimeout(userInteractTO);
-      if (scrollEndTO) clearTimeout(scrollEndTO);
-      if (supportsScrollEnd) wrap.removeEventListener("scrollend", onScrollEnd);
-      wrap.removeEventListener("scroll", onScrollDebounced);
-      wrap.removeEventListener("pointerdown", onUserInteract);
-      wrap.removeEventListener("wheel", onUserInteract);
-      wrap.removeEventListener("touchstart", onTouchStart);
-      wrap.removeEventListener("touchmove", onTouchMove);
-      wrap.removeEventListener("touchend", onTouchEnd);
-      wrap.removeEventListener("touchcancel", onTouchCancel);
-      dots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
-      stopAuto();
-    };
-  }, []);
-
   useEffect(() => {
     document.title = "JUA 3D Print Lab — Precision Manufacturing in Kerala";
     const meta =
