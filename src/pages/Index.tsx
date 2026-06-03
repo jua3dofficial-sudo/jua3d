@@ -208,12 +208,7 @@ const Index = () => {
     let autoTimer: ReturnType<typeof setInterval> | null = null;
     let userInteractTO: ReturnType<typeof setTimeout> | null = null;
     let scrollEndTO: ReturnType<typeof setTimeout> | null = null;
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchScrollL = 0;
-    let touchAxis: "x" | "y" | null = null;
 
-    // Pure-math closest detection — no layout reads, no reflow.
     const getClosest = () => {
       const centre = wrap.scrollLeft + wrap.offsetWidth / 2;
       let best = 0, bestDist = Infinity;
@@ -227,10 +222,7 @@ const Index = () => {
     };
 
     const ORIG = 7;
-    const cardWidth = (n: number) => {
-      if (cards.length < n + 1) return 0;
-      return cards[n].offsetLeft - cards[0].offsetLeft;
-    };
+    const cardWidth = (n: number) => cards.length < n + 1 ? 0 : cards[n].offsetLeft - cards[0].offsetLeft;
 
     const applyActive = (idx: number) => {
       if (idx === activeIndex) return;
@@ -259,17 +251,10 @@ const Index = () => {
       }
     };
 
-    const updateActive = () => {
-      maybeRecenter();
-      applyActive(getClosest());
-    };
-
-    // scrollend if available, debounced fallback otherwise.
-    const supportsScrollEnd = "onscrollend" in window;
-    const onScrollEnd = () => updateActive();
+    const updateActive = () => { maybeRecenter(); applyActive(getClosest()); };
     const onScrollDebounced = () => {
       if (scrollEndTO) clearTimeout(scrollEndTO);
-      scrollEndTO = setTimeout(updateActive, 60);
+      scrollEndTO = setTimeout(updateActive, 150);
     };
 
     const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
@@ -293,38 +278,75 @@ const Index = () => {
       userInteractTO = setTimeout(() => startAuto(), 4500);
     };
 
-    if (supportsScrollEnd) {
-      wrap.addEventListener("scrollend", onScrollEnd, { passive: true });
-    }
-    // Always attach debounced fallback (cheap; covers browsers without scrollend).
     wrap.addEventListener("scroll", onScrollDebounced, { passive: true });
-
     const onUserInteract = () => pauseAutoTemporarily();
     wrap.addEventListener("pointerdown", onUserInteract, { passive: true });
     wrap.addEventListener("wheel", onUserInteract, { passive: true });
+    wrap.addEventListener("touchstart", onUserInteract, { passive: true });
 
-    const onTouchStart = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-      touchScrollL = wrap.scrollLeft;
-      touchAxis = null;
-      pauseAutoTemporarily();
-    };
+    const dotHandlers: Array<() => void> = dots.map((dot, i) => {
+      const h = () => { pauseAutoTemporarily(); goTo(i); };
+      dot.addEventListener("click", h);
+      return h;
+    });
 
-    const onTouchMove = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-      const deltaX = touch.clientX - touchStartX;
-      const deltaY = touch.clientY - touchStartY;
-      if (!touchAxis) {
-        if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
-        touchAxis = Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
+    const init = () => {
+      const startCard = cards[ORIG];
+      if (startCard) {
+        const prevBehavior = (wrap.style as any).scrollBehavior;
+        (wrap.style as any).scrollBehavior = "auto";
+        wrap.scrollLeft = startCard.offsetLeft - wrap.offsetWidth / 2 + startCard.offsetWidth / 2;
+        (wrap.style as any).scrollBehavior = prevBehavior || "";
       }
-      if (touchAxis !== "x") return;
-      wrap.scrollLeft = touchScrollL - deltaX;
+      setTimeout(() => { applyActive(getClosest()); startAuto(); }, 200);
     };
+    const initTimeout = setTimeout(init, 600);
+
+    return () => {
+      clearTimeout(initTimeout);
+      if (userInteractTO) clearTimeout(userInteractTO);
+      if (scrollEndTO) clearTimeout(scrollEndTO);
+      wrap.removeEventListener("scroll", onScrollDebounced);
+      wrap.removeEventListener("pointerdown", onUserInteract);
+      wrap.removeEventListener("wheel", onUserInteract);
+      wrap.removeEventListener("touchstart", onUserInteract);
+      dots.forEach((dot, i) => dot.removeEventListener("click", dotHandlers[i]));
+      stopAuto();
+    };
+  }, []);
+
+  // Memory pressure: pause off-screen videos and release their decoded buffers
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const vids = Array.from(document.querySelectorAll<HTMLVideoElement>("video"));
+    // Hero intro/loop stay loaded — they're above the fold and central to first paint.
+    const managed = vids.filter(v => v.id !== "vid-intro" && v.id !== "vid-loop");
+    if (!managed.length) return;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const v = e.target as HTMLVideoElement;
+        if (e.isIntersecting) {
+          const ds = v.getAttribute("data-src");
+          if (ds && !v.src) v.src = ds;
+          if (!v.src && v.dataset.savedSrc) v.src = v.dataset.savedSrc;
+          try { v.load(); } catch {}
+          v.play().catch(() => {});
+        } else {
+          try { v.pause(); } catch {}
+          // Release decoded frame buffers to avoid iOS/Chrome memory dumps that blank videos.
+          if (v.src) {
+            v.dataset.savedSrc = v.src;
+            v.removeAttribute("src");
+            try { v.load(); } catch {}
+          }
+        }
+      });
+    }, { rootMargin: "150px 0px", threshold: 0.01 });
+
+    managed.forEach(v => io.observe(v));
+    return () => io.disconnect();
+  }, []);
 
     const onTouchEnd = () => {
       if (touchAxis === "x") goTo(getClosest());
