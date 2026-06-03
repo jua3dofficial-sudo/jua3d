@@ -79,23 +79,24 @@ const Contact = () => {
       : data.design_status === "no" ? "No — needs JUA to design"
       : "Not specified";
     try {
-      await fetch("https://formspree.io/f/mdajpywn", {
+      await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _replyto: data.email,
-          _subject: `New 3D Print Enquiry from ${data.name} — ${orderTypeLabel}`,
+          access_key: "41aa8a67-5e33-4b40-ae46-500b3229189a",
+          subject: `New 3D Print Enquiry from ${data.name} — ${orderTypeLabel}`,
+          from_name: "JUA 3D Print Lab Website",
           name: data.name,
-          business: data.business || "Not provided",
           email: data.email,
           phone: data.phone,
+          business: data.business || "Not provided",
           industry: data.industry || "Not selected",
-          products: data.products,
+          products_needed: data.products,
           design_status: designLabel,
           order_type: orderTypeLabel,
           bulk_quantity: data.bulk_qty || "N/A",
           timeline: data.timeline || "Not specified",
-          notes: data.notes || "None",
+          additional_notes: data.notes || "None",
         }),
       });
     } catch { /* swallow */ }
