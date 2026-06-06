@@ -1133,6 +1133,7 @@ const Index = () => {
         .prod-card[data-index="1"] { width:525px; }
         .prod-card[data-index="2"] { width:483px; }
         .prod-card[data-index="3"] { width:525px; }
+        .prod-card[data-index="4"] { width:483px; }
         .prod-card[data-index="5"] { width:525px; }
         .prod-card[data-index="6"] { width:567px; }
         .prod-card.active { transform:scale(1); opacity:1; }
@@ -1144,6 +1145,7 @@ const Index = () => {
         .prod-card[data-index="1"] .prod-img-wrap { width:475px; height:544px; }
         .prod-card[data-index="2"] .prod-img-wrap { width:437px; height:500px; }
         .prod-card[data-index="3"] .prod-img-wrap { width:475px; height:544px; }
+        .prod-card[data-index="4"] .prod-img-wrap { width:437px; height:500px; }
         .prod-card[data-index="5"] .prod-img-wrap { width:475px; height:544px; }
         .prod-card[data-index="6"] .prod-img-wrap { width:513px; height:587px; }
         .prod-img-wrap img {
@@ -1200,12 +1202,14 @@ const Index = () => {
           .prod-card[data-index="1"] { width:450px; }
           .prod-card[data-index="2"] { width:414px; }
           .prod-card[data-index="3"] { width:450px; }
+          .prod-card[data-index="4"] { width:414px; }
           .prod-card[data-index="5"] { width:450px; }
           .prod-card[data-index="6"] { width:486px; }
           .prod-img-wrap { width:330px; height:388px; }
           .prod-card[data-index="1"] .prod-img-wrap { width:413px; height:485px; }
           .prod-card[data-index="2"] .prod-img-wrap { width:380px; height:446px; }
           .prod-card[data-index="3"] .prod-img-wrap { width:413px; height:485px; }
+          .prod-card[data-index="4"] .prod-img-wrap { width:380px; height:446px; }
           .prod-card[data-index="5"] .prod-img-wrap { width:413px; height:485px; }
           .prod-card[data-index="6"] .prod-img-wrap { width:446px; height:524px; }
           .s3-track { gap:20px; padding:44px 60px 60px; }
