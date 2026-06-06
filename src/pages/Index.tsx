@@ -1219,12 +1219,14 @@ const Index = () => {
           .prod-card[data-index="1"] { width:375px; }
           .prod-card[data-index="2"] { width:345px; }
           .prod-card[data-index="3"] { width:375px; }
+          .prod-card[data-index="4"] { width:345px; }
           .prod-card[data-index="5"] { width:375px; }
           .prod-card[data-index="6"] { width:405px; }
           .prod-img-wrap { width:270px; height:322px; }
           .prod-card[data-index="1"] .prod-img-wrap { width:338px; height:403px; }
           .prod-card[data-index="2"] .prod-img-wrap { width:311px; height:370px; }
           .prod-card[data-index="3"] .prod-img-wrap { width:338px; height:403px; }
+          .prod-card[data-index="4"] .prod-img-wrap { width:311px; height:370px; }
           .prod-card[data-index="5"] .prod-img-wrap { width:338px; height:403px; }
           .prod-card[data-index="6"] .prod-img-wrap { width:365px; height:435px; }
           .s3-header { padding-bottom: 11px; }
@@ -1235,12 +1237,14 @@ const Index = () => {
           .prod-card[data-index="1"] { width:331px; }
           .prod-card[data-index="2"] { width:305px; }
           .prod-card[data-index="3"] { width:331px; }
+          .prod-card[data-index="4"] { width:305px; }
           .prod-card[data-index="5"] { width:331px; }
           .prod-card[data-index="6"] { width:358px; }
           .prod-img-wrap { width:240px; height:290px; }
           .prod-card[data-index="1"] .prod-img-wrap { width:300px; height:363px; }
           .prod-card[data-index="2"] .prod-img-wrap { width:276px; height:334px; }
           .prod-card[data-index="3"] .prod-img-wrap { width:300px; height:363px; }
+          .prod-card[data-index="4"] .prod-img-wrap { width:276px; height:334px; }
           .prod-card[data-index="5"] .prod-img-wrap { width:300px; height:363px; }
           .prod-card[data-index="6"] .prod-img-wrap { width:324px; height:392px; }
           .s3-track { gap:14px; padding:32px 24px 48px; }
