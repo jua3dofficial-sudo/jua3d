@@ -1485,7 +1485,7 @@ const Index = () => {
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_26_44_AM_1_d9suyk.webp", name: "Collectible Rabbit", cat: "Toys & Collectibles" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_30_27_AM_1_u3ddmp.webp", name: "Dental Gum Model", cat: "Medical & Healthcare" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040440/ChatGPT_Image_May_6_2026_09_33_48_AM_wz2kjj.webp", name: "Designer Tissue Box", cat: "Smart Home Utility" },
-                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778040601/ChatGPT_Image_May_6_2026_09_39_12_AM_ursh6k.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
+                  { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/v1780729244/toy_car_jjuzpp.webp", name: "Full Brain Section", cat: "Medical & Healthcare" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041007/ChatGPT_Image_May_6_2026_09_36_02_AM_lvkvmp.webp", name: "Volcano Night Light", cat: "Home Décor & Lifestyle" },
                   { src: "https://res.cloudinary.com/dc2qifrvh/image/upload/f_auto,q_auto/v1778041268/ChatGPT_Image_May_6_2026_09_48_30_AM_zmo8bu.webp", name: "Geometric Vase", cat: "Home Décor & Lifestyle" },
                 ];
